@@ -9,6 +9,14 @@
 #include <QValueAxis>
 
 
+struct ViewCoordItem
+{
+    GraphicsCoordItem    * coord;
+
+    QGraphicsEllipseItem * point;
+};
+
+
 QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, Qt::Orientation orientation)
     : QGraphicsWidget(),
       m_parent( parent ),
@@ -202,13 +210,8 @@ QRectF QPlotMarker::boundingRect() const
 void QPlotMarker::showCoord()
 {
     for ( auto & item : m_items )
-    {
-        auto textItem = dynamic_cast<QGraphicsTextItem *>( item );
 
-        if ( not textItem ) continue;
-
-        textItem->setVisible( not textItem->isVisible() );
-    }
+        item.coord->setVisible( not item.coord->isVisible() );
 }
 
 void QPlotMarker::activate(bool isActivated)
@@ -217,21 +220,17 @@ void QPlotMarker::activate(bool isActivated)
 
     for ( auto item : m_items )
     {
-        auto textItem = dynamic_cast<QGraphicsTextItem *>( item );
-
-        if ( not textItem or textItem == activeItem ) continue;
-
         if ( isActivated )
         {
             auto effect = new QGraphicsOpacityEffect();
 
             effect->setOpacity( 0.2 );
 
-            item->setGraphicsEffect( effect );
+            item.coord->setGraphicsEffect( effect );
         }
         else
         {
-            item->setGraphicsEffect( nullptr );
+            item.coord->setGraphicsEffect( nullptr );
         }
 
     }
@@ -346,9 +345,9 @@ void QPlotMarker::loadPoints(const QPointF & position)
         auto viewPoint( m_parent->mapToPosition( point ) );
 
         auto item = new QGraphicsEllipseItem( viewPoint.x() - RADIUS,
-                                             viewPoint.y() - RADIUS,
-                                             2 * RADIUS,
-                                             2 * RADIUS              );
+                                              viewPoint.y() - RADIUS,
+                                              2 * RADIUS,
+                                              2 * RADIUS              );
 
         item->setPen( QPen( m_markerColor, 2 ) );
 
@@ -372,9 +371,7 @@ void QPlotMarker::loadPoints(const QPointF & position)
         m_parent->scene()->addItem( textItem );
 
 
-        m_items.append( item );
-
-        m_items.append( textItem );
+        m_items.append( { .coord=textItem, .point=item } );
 
     }
 }

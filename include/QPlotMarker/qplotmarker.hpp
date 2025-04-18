@@ -11,6 +11,7 @@
 
 class GraphicsCoordItem;
 class MovableButton;
+struct ViewCoordItem;
 
 
 class QPLOTMARKER_EXPORT QPlotMarker : public QGraphicsWidget
@@ -93,7 +94,7 @@ private:
 
     GraphicsCoordItem * m_coordInfo;
 
-    QList<QGraphicsItem *> m_items;
+    QList<ViewCoordItem> m_items;
 
     bool isPositionAccept(const QPointF & position);
 
