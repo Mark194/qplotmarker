@@ -1,0 +1,49 @@
+# Подключаем необходимые модули Qt
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Charts SvgWidgets)
+
+# Заменяем qt_add_library на стандартный add_library
+add_library(qplotmarker
+    SHARED
+    qplotmarker.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker.hpp
+    entity/movable_button.hpp entity/movable_button.cpp
+    entity/graphics_coord_item.hpp entity/graphics_coord_item.cpp
+    effects/fast_colorize_effect.hpp effects/fast_colorize_effect.cpp
+)
+
+# Остальные настройки остаются без изменений
+target_include_directories(qplotmarker
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+# Указываем публичные заголовочные файлы
+set_target_properties(qplotmarker PROPERTIES
+    PUBLIC_HEADER
+        "${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker.h;
+         ${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker_global.h"
+)
+
+target_link_libraries(qplotmarker
+    PUBLIC
+        Qt${QT_VERSION_MAJOR}::Core
+        Qt${QT_VERSION_MAJOR}::Charts
+        Qt${QT_VERSION_MAJOR}::SvgWidgets
+)
+
+set_target_properties(qplotmarker PROPERTIES
+    VERSION ${PROJECT_VERSION}
+    SOVERSION 1
+    DEFINE_SYMBOL QPLOTMARKER_LIBRARY
+)
+
+install(TARGETS qplotmarker
+    EXPORT QPlotMarkerTargets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/QPlotMarker
+)
