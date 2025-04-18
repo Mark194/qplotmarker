@@ -9,6 +9,8 @@ add_library(qplotmarker
     entity/movable_button.hpp entity/movable_button.cpp
     entity/graphics_coord_item.hpp entity/graphics_coord_item.cpp
     effects/fast_colorize_effect.hpp effects/fast_colorize_effect.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplot_marker_group.hpp
+    qplot_marker_group.cpp
 )
 
 # Остальные настройки остаются без изменений
@@ -23,8 +25,9 @@ target_include_directories(qplotmarker
 # Указываем публичные заголовочные файлы
 set_target_properties(qplotmarker PROPERTIES
     PUBLIC_HEADER
-        "${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker.h;
-         ${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker_global.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker.hpp;
+         ${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker_global.hpp;
+         ${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarkergroup.hpp"
 )
 
 target_link_libraries(qplotmarker
