@@ -13,6 +13,8 @@ GraphicsCoordItem::GraphicsCoordItem(QGraphicsItem * parent)
 
 void GraphicsCoordItem::setCoord(qreal value)
 {
+    m_coord = value;
+
     setPlainText( QString::number( value ) );
 }
 

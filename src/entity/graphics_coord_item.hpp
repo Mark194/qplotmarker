@@ -6,10 +6,14 @@
 
 class GraphicsCoordItem : public QGraphicsTextItem
 {
+    Q_PROPERTY(qreal coord READ coord WRITE setCoord)
+
 public:
     GraphicsCoordItem(QGraphicsItem * parent = nullptr);
 
     void setCoord( qreal value );
+    qreal coord() const;
+
 
     void setItemColor(const QColor & itemColor);
 
@@ -26,4 +30,6 @@ private:
     const qreal RECT_MARGIN = -3;
 
     QColor      m_itemColor;
+
+    qreal       m_coord;
 };

@@ -63,6 +63,10 @@ public:
 
     bool hasFocus() const;
 
+    qreal markerValue() const;
+
+
+
     // QGraphicsItem interface
 
     QRectF boundingRect() const;

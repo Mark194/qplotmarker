@@ -120,6 +120,7 @@ void QPlotMarker::move(const QPointF & position)
 {
     if ( not isPositionAccept( position ) ) return;
 
+    QGraphicsItem::setPos( position );
 
     QRectF plotArea = m_parent->plotArea();
 
@@ -194,6 +195,11 @@ void QPlotMarker::moveEnd()
 bool QPlotMarker::hasFocus() const
 {
     return m_controlItem->hasFocus();
+}
+
+qreal QPlotMarker::markerValue() const
+{
+    return m_coordInfo->coord();
 }
 
 QRectF QPlotMarker::boundingRect() const
