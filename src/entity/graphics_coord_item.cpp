@@ -18,6 +18,11 @@ void GraphicsCoordItem::setCoord(qreal value)
     setPlainText( QString::number( value ) );
 }
 
+qreal GraphicsCoordItem::coord() const
+{
+    return m_coord;
+}
+
 void GraphicsCoordItem::setItemColor(const QColor & itemColor)
 {
     m_itemColor = itemColor;

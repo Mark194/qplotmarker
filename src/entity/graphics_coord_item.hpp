@@ -6,6 +6,8 @@
 
 class GraphicsCoordItem : public QGraphicsTextItem
 {
+    Q_OBJECT
+
     Q_PROPERTY(qreal coord READ coord WRITE setCoord)
 
 public:

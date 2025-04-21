@@ -49,8 +49,6 @@ QPlotMarker::~QPlotMarker()
 
     delete m_coordInfo;
 
-    qDeleteAll( m_items );
-
     m_items.clear();
 }
 
@@ -308,16 +306,25 @@ QPair<QPointF, QPointF> findTwoNearestPoints( const QPointF & targetPoint, QLine
     return {};
 }
 
+namespace std
+{
+template <> struct hash<QPointF>
+{
+    size_t operator()(const QPointF &key, size_t seed) const
+    {
+        return qHashMulti( seed, key.x(), key.y() );
+    }
+};
+}
+
 const quint8 RADIUS = 3;
 
 void QPlotMarker::loadPoints(const QPointF & position)
 {
     if ( m_items.size() > 0 )
-    {
-        qDeleteAll( m_items );
 
         m_items.clear();
-    }
+
 
     QSet<QPointF> points;
 
