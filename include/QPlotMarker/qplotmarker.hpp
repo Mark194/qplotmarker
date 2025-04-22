@@ -66,14 +66,17 @@ public:
     qreal markerValue() const;
 
 
+    void setIntersectionPointSize(quint8 size);
+
+    void setIntersectionLineSize(quint8 size);
+
+
+    void setLabelFormat(const QString & format);
+
 
     // QGraphicsItem interface
 
     QRectF boundingRect() const;
-
-    void setIntersectionPointSize(quint8 size);
-
-    void setIntersectionLineSize(quint8 size);
 
 Q_SIGNALS:
     void colorChanged(const QColor & color);

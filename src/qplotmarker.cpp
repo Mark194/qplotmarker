@@ -255,6 +255,15 @@ void QPlotMarker::setIntersectionLineSize(quint8 size)
     m_line->setPen( pen );
 }
 
+void QPlotMarker::setLabelFormat(const QString & format)
+{
+    m_coordInfo->setLabelFormat( format );
+
+    for ( auto & item : m_items )
+
+        item.coord->setLabelFormat( format );
+}
+
 bool QPlotMarker::isPositionAccept(const QPointF & position)
 {
     QRectF plotArea = m_parent->plotArea();
@@ -346,7 +355,7 @@ void QPlotMarker::loadPoints(const QPointF & position)
     auto markerLineOld = m_line->line();
 
     QLineF markerLine( m_parent->mapToValue( markerLineOld.p1() ),
-                      m_parent->mapToValue( markerLineOld.p2() )   );
+                       m_parent->mapToValue( markerLineOld.p2() )   );
 
     for ( auto series : m_parent->series() )
     {

@@ -19,6 +19,8 @@ public:
 
     void setItemColor(const QColor & itemColor);
 
+    void setLabelFormat(const QString & format);
+
     // QGraphicsItem interface
 
     void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);
@@ -34,4 +36,6 @@ private:
     QColor      m_itemColor;
 
     qreal       m_coord;
+
+    QString     m_labelFormat;
 };

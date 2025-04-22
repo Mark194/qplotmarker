@@ -15,7 +15,13 @@ void GraphicsCoordItem::setCoord(qreal value)
 {
     m_coord = value;
 
-    setPlainText( QString::number( value ) );
+    if ( m_labelFormat.isEmpty() )
+
+        setPlainText( QString::number( value ) );
+    else
+
+        setPlainText( QString::asprintf( m_labelFormat.toUtf8().constData(),
+                                         value)                              );
 }
 
 qreal GraphicsCoordItem::coord() const
@@ -28,6 +34,13 @@ void GraphicsCoordItem::setItemColor(const QColor & itemColor)
     m_itemColor = itemColor;
 
     update();
+}
+
+void GraphicsCoordItem::setLabelFormat(const QString & format)
+{
+    m_labelFormat = format;
+
+    setCoord( m_coord );
 }
 
 void GraphicsCoordItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
