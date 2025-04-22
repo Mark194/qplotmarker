@@ -25,11 +25,15 @@ public:
 
     void clear();
 
+    void setSyncMovement(bool isSync);
+
 public slots:
 
     void move(const QPointF & point);
 
 private:
+
+    bool m_isSyncMovement;
 
     QList<QPlotMarker *> m_markers;
 };

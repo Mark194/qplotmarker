@@ -5,6 +5,7 @@
 
 
 QPlotMarkerGroup::QPlotMarkerGroup(QObject * parent)
+    : m_isSyncMovement(true)
 {
 
 }
@@ -32,6 +33,26 @@ void QPlotMarkerGroup::removeMarker(QPlotMarker * marker)
 void QPlotMarkerGroup::clear()
 {
     m_markers.clear();
+}
+
+void QPlotMarkerGroup::setSyncMovement(bool isSync)
+{
+    if ( m_isSyncMovement == isSync ) return;
+
+    m_isSyncMovement = isSync;
+
+    for ( auto marker : m_markers )
+
+        if ( m_isSyncMovement )
+
+            connect( marker, &QPlotMarker::onPositionChanged,
+                     this,   &QPlotMarkerGroup::move          );
+
+        else
+
+            disconnect( marker, &QPlotMarker::onPositionChanged,
+                        this,   &QPlotMarkerGroup::move          );
+
 }
 
 void QPlotMarkerGroup::move(const QPointF & point)
