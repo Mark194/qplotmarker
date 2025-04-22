@@ -24,7 +24,8 @@ QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, Qt::Orientation 
       m_line( new QGraphicsLineItem( this ) ),
       m_orientation( orientation ),
       m_coordInfo( new GraphicsCoordItem( this ) ),
-      m_movement( MovementStyle::MOVEMENT_DEFAULT )
+      m_movement( MovementStyle::MOVEMENT_DEFAULT ),
+      m_intersectionPointSize( 2 )
 {
     setFlag( QGraphicsItem::ItemIsSelectable );
 
@@ -362,7 +363,7 @@ void QPlotMarker::loadPoints(const QPointF & position)
                                               2 * RADIUS,
                                               2 * RADIUS              );
 
-        item->setPen( QPen( m_markerColor, 2 ) );
+        item->setPen( QPen( m_markerColor, m_intersectionPointSize ) );
 
         item->setBrush( m_markerColor );
 

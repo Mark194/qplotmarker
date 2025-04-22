@@ -100,6 +100,9 @@ private:
 
     QList<ViewCoordItem> m_items;
 
+    quint8 m_intersectionPointSize;
+
+
     bool isPositionAccept(const QPointF & position);
 
     void change(const QRectF & plotArea);
