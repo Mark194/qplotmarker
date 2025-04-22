@@ -246,6 +246,15 @@ void QPlotMarker::setIntersectionPointSize(quint8 size)
     m_intersectionPointSize = size;
 }
 
+void QPlotMarker::setIntersectionLineSize(quint8 size)
+{
+    auto pen = m_line->pen();
+
+    pen.setWidth( size );
+
+    m_line->setPen( pen );
+}
+
 bool QPlotMarker::isPositionAccept(const QPointF & position)
 {
     QRectF plotArea = m_parent->plotArea();

@@ -73,6 +73,8 @@ public:
 
     void setIntersectionPointSize(quint8 size);
 
+    void setIntersectionLineSize(quint8 size);
+
 Q_SIGNALS:
     void colorChanged(const QColor & color);
     void movementStyleChanged(MovementStyle style);
