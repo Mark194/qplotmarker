@@ -241,6 +241,11 @@ void QPlotMarker::activate(bool isActivated)
     }
 }
 
+void QPlotMarker::setIntersectionPointSize(quint8 size)
+{
+    m_intersectionPointSize = size;
+}
+
 bool QPlotMarker::isPositionAccept(const QPointF & position)
 {
     QRectF plotArea = m_parent->plotArea();
