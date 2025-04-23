@@ -20,11 +20,11 @@ struct ViewCoordItem
 QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, Qt::Orientation orientation)
     : QGraphicsWidget(),
       m_parent( parent ),
+      m_movement( MovementStyle::MOVEMENT_DEFAULT ),
+      m_orientation( orientation ),
       m_controlItem( new MovableButton( this ) ),
       m_line( new QGraphicsLineItem( this ) ),
-      m_orientation( orientation ),
       m_coordInfo( new GraphicsCoordItem( this ) ),
-      m_movement( MovementStyle::MOVEMENT_DEFAULT ),
       m_intersectionPointSize( 2 )
 {
     setFlag( QGraphicsItem::ItemIsSelectable );
