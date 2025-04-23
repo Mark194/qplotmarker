@@ -5,10 +5,14 @@
 #include <QGraphicsSvgItem>
 
 
+class QPlotMarker;
+
+
 class MovableButton : public QGraphicsItem
 {
 public:
-    MovableButton(QGraphicsItem * parent = nullptr);
+
+    MovableButton(QPlotMarker * parent = nullptr);
 
     void setButtonIcon( const QString & fileName );
 
@@ -27,6 +31,7 @@ public:
                QWidget * widget) override;
 
 protected:
+
     void mousePressEvent(QGraphicsSceneMouseEvent * event) override;
 
     void mouseMoveEvent(QGraphicsSceneMouseEvent * event) override;
@@ -35,12 +40,11 @@ protected:
 
 private:
 
+    QPlotMarker      * m_plotMarker;
+
     QGraphicsSvgItem * m_buttonIcon;
 
     QGraphicsSvgItem * m_buttonControl;
 
     qreal m_size;
-
-
-
 };

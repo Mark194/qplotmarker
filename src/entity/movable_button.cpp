@@ -10,8 +10,9 @@
 #include <effects/fast_colorize_effect.hpp>
 
 
-MovableButton::MovableButton(QGraphicsItem * parent)
+MovableButton::MovableButton(QPlotMarker * parent)
     : QGraphicsItem( parent ),
+      m_plotMarker(parent),
       m_buttonIcon( new QGraphicsSvgItem( this ) ),
       m_buttonControl( new QGraphicsSvgItem( this ) ),
       m_size( 100 )
@@ -85,20 +86,17 @@ void MovableButton::paint(QPainter * painter, const QStyleOptionGraphicsItem * o
 
 void MovableButton::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {
-    auto plotMarker = dynamic_cast<QPlotMarker *>( parentItem() );
-
-
     if ( ( event->modifiers() & Qt::ControlModifier ) != 0 )
     {
-        plotMarker->setSelect( not plotMarker->isSelected() );
+        m_plotMarker->setSelect( not m_plotMarker->isSelected() );
 
         return;
     }
 
 
-    plotMarker->setSelect( true );
+    m_plotMarker->setSelect( true );
 
-    plotMarker->move( event->scenePos() );
+    m_plotMarker->move( event->scenePos() );
 }
 
 std::optional<QPointF> findNearestPoint(
@@ -112,8 +110,10 @@ std::optional<QPointF> findNearestPoint(
 
     std::optional<QPointF> nearesPoint;
 
-    auto [begin, end] = findLeft? std::make_pair( points.constEnd() - 1, points.constBegin() - 1) :
-                            std::make_pair( points.constBegin(),   points.constEnd() );
+    auto [begin, end] = findLeft? std::make_pair( points.constEnd() - 1,
+                                                  points.constBegin() - 1) :
+                                  std::make_pair( points.constBegin(),
+                                                  points.constEnd()         );
 
     const int step = findLeft? -1 : 1;
 
@@ -135,22 +135,25 @@ std::optional<QPointF> findNearestPoint(
 
 void MovableButton::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
 {
-    auto plotMarker = dynamic_cast<QPlotMarker *>( parentItem() );
-
-    if ( plotMarker->movementStyle() != QPlotMarker::MOVEMENT_BY_POINTS )
+    if ( m_plotMarker->movementStyle() != QPlotMarker::MOVEMENT_BY_POINTS )
     {
-        plotMarker->move( event->scenePos() );
+        m_plotMarker->move( event->scenePos() );
 
         return;
     }
 
     bool findLeft = event->scenePos().x() < event->lastScenePos().x();
 
-    auto series = dynamic_cast<QLineSeries * >( plotMarker->chart()->series().first() );
+    auto serieses = m_plotMarker->chart()->series();
+
+    if ( serieses.isEmpty() ) return;
+
+    auto series = dynamic_cast<QLineSeries * >( serieses.first() );
 
     if ( not series ) return;
 
-    auto valuePoint = plotMarker->chart()->mapToValue( event->scenePos(), series );
+    auto valuePoint = m_plotMarker->chart()->mapToValue( event->scenePos(),
+                                                         series             );
 
     auto point = findNearestPoint( valuePoint, series, findLeft );
 
@@ -159,9 +162,10 @@ void MovableButton::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
     point = findLeft? series->points().first() : series->points().last();
 
 
-    auto scenePoint = plotMarker->chart()->mapToPosition( point.value(), series );
+    auto scenePoint = m_plotMarker->chart()->mapToPosition( point.value(),
+                                                            series          );
 
-    plotMarker->move( scenePoint );
+    m_plotMarker->move( scenePoint );
 }
 
 void MovableButton::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
@@ -172,7 +176,5 @@ void MovableButton::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 
     Q_UNUSED(event)
 
-    auto plotMarker = dynamic_cast<QPlotMarker *>( parentItem() );
-
-    plotMarker->setSelect( false );
+    m_plotMarker->setSelect( false );
 }
