@@ -57,7 +57,13 @@ void QPlotMarker::setColor(const QColor & color)
 {
     m_markerColor = color;
 
-    m_line->setPen( QPen( m_markerColor, 2 ) );
+
+    auto pen = m_line->pen();
+
+    pen.setColor( m_markerColor );
+
+    m_line->setPen( pen );
+
 
     m_controlItem->setColor( m_markerColor );
 }
