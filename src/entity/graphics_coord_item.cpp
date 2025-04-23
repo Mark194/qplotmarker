@@ -63,9 +63,7 @@ void GraphicsCoordItem::paint(QPainter * painter, const QStyleOptionGraphicsItem
 
     auto rect = boundingRect();
 
-    rect = rect.marginsAdded( { RECT_MARGIN, RECT_MARGIN, 0, 0 } );
-
-    painter->drawText( rect, toPlainText() );
+    painter->drawText( rect, Qt::AlignCenter, toPlainText() );
 }
 
 

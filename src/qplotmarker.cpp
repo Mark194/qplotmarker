@@ -25,7 +25,7 @@ QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, Qt::Orientation 
       m_controlItem( new MovableButton( this ) ),
       m_line( new QGraphicsLineItem( this ) ),
       m_coordInfo( new GraphicsCoordItem( this ) ),
-      m_intersectionPointSize( 2 )
+      m_intersectionPointSize( 3 )
 {
     setFlag( QGraphicsItem::ItemIsSelectable );
 
@@ -251,7 +251,7 @@ void QPlotMarker::activate(bool isActivated)
     }
 }
 
-void QPlotMarker::setIntersectionPointSize(quint8 size)
+void QPlotMarker::setIntersectionPointSize(qreal size)
 {
     m_intersectionPointSize = size;
 }
@@ -355,7 +355,6 @@ inline uint qHash(const QPointF &point, uint seed = 0) noexcept {
 }
 
 #else
-
 namespace std
 {
 template <> struct hash<QPointF>
@@ -366,10 +365,7 @@ template <> struct hash<QPointF>
     }
 };
 }
-
 #endif
-
-const quint8 RADIUS = 3;
 
 void QPlotMarker::loadPoints(const QPointF & position)
 {
@@ -409,12 +405,12 @@ void QPlotMarker::loadPoints(const QPointF & position)
     {
         auto viewPoint( m_parent->mapToPosition( point ) );
 
-        auto item = new QGraphicsEllipseItem( viewPoint.x() - RADIUS,
-                                              viewPoint.y() - RADIUS,
-                                              2 * RADIUS,
-                                              2 * RADIUS              );
+        auto item = new QGraphicsEllipseItem( viewPoint.x() - m_intersectionPointSize,
+                                              viewPoint.y() - m_intersectionPointSize,
+                                              2 * m_intersectionPointSize,
+                                              2 * m_intersectionPointSize              );
 
-        item->setPen( QPen( m_markerColor, m_intersectionPointSize ) );
+        item->setPen( QPen( m_markerColor, 2 ) );
 
         item->setBrush( m_markerColor );
 

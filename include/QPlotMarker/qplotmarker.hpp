@@ -78,7 +78,7 @@ public:
     qreal markerValue() const;
 
 
-    void setIntersectionPointSize(quint8 size);
+    void setIntersectionPointSize(qreal size);
 
     void setIntersectionLineSize(quint8 size);
 
@@ -122,7 +122,7 @@ private:
 
     QList<ViewCoordItem> m_items;
 
-    quint8 m_intersectionPointSize;
+    qreal m_intersectionPointSize;
 
 
     bool isPositionAccept(const QPointF & position);

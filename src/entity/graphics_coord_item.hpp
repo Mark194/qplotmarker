@@ -31,8 +31,6 @@ Q_SIGNALS:
 
 private:
 
-    const qreal RECT_MARGIN = -3;
-
     QColor      m_itemColor;
 
     qreal       m_coord;
