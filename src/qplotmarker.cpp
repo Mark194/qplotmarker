@@ -330,6 +330,17 @@ QPair<QPointF, QPointF> findTwoNearestPoints( const QPointF & targetPoint, QLine
     return {};
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+
+inline uint qHash(const QPointF &point, uint seed = 0) noexcept {
+    QtPrivate::QHashCombine hash;
+    seed = hash(seed, point.x());
+    seed = hash(seed, point.y());
+    return seed;
+}
+
+#else
+
 namespace std
 {
 template <> struct hash<QPointF>
@@ -340,6 +351,8 @@ template <> struct hash<QPointF>
     }
 };
 }
+
+#endif
 
 const quint8 RADIUS = 3;
 

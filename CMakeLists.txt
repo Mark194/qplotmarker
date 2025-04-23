@@ -11,8 +11,16 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 # Поиск Qt
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Charts SvgWidgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Charts SvgWidgets)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Charts)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Charts)
+
+
+if(QT_VERSION_MAJOR EQUAL 5)
+    find_package(Qt5 REQUIRED COMPONENTS Svg)
+elseif(QT_VERSION_MAJOR EQUAL 6)
+    find_package(Qt6 REQUIRED COMPONENTS SvgWidgets)
+endif()
+
 
 # Опции проекта
 option(BUILD_SHARED_LIBS "Build shared library" ON)

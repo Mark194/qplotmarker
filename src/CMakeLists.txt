@@ -1,5 +1,12 @@
 # Подключаем необходимые модули Qt
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Charts SvgWidgets)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Charts)
+
+if(QT_VERSION_MAJOR EQUAL 5)
+    find_package(Qt5 REQUIRED COMPONENTS Svg)
+elseif(QT_VERSION_MAJOR EQUAL 6)
+    find_package(Qt6 REQUIRED COMPONENTS SvgWidgets)
+endif()
+
 
 # Заменяем qt_add_library на стандартный add_library
 add_library(qplotmarker
@@ -30,12 +37,22 @@ set_target_properties(qplotmarker PROPERTIES
          ${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarkergroup.hpp"
 )
 
-target_link_libraries(qplotmarker
-    PUBLIC
-        Qt${QT_VERSION_MAJOR}::Core
-        Qt${QT_VERSION_MAJOR}::Charts
-        Qt${QT_VERSION_MAJOR}::SvgWidgets
-)
+
+if(QT_VERSION_MAJOR EQUAL 5)
+    target_link_libraries(qplotmarker
+        PUBLIC
+            Qt${QT_VERSION_MAJOR}::Core
+            Qt${QT_VERSION_MAJOR}::Charts
+            Qt${QT_VERSION_MAJOR}::Svg
+    )
+elseif(QT_VERSION_MAJOR EQUAL 6)
+    target_link_libraries(qplotmarker
+        PUBLIC
+            Qt${QT_VERSION_MAJOR}::Core
+            Qt${QT_VERSION_MAJOR}::Charts
+            Qt${QT_VERSION_MAJOR}::SvgWidgets
+    )
+endif()
 
 set_target_properties(qplotmarker PROPERTIES
     VERSION ${PROJECT_VERSION}
