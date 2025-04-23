@@ -27,6 +27,9 @@ public:
 
     void setSyncMovement(bool isSync);
 
+
+    QList<QPlotMarker *> markers() const;
+
 public slots:
 
     void move(const QPointF & point);

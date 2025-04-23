@@ -70,3 +70,8 @@ void QPlotMarkerGroup::move(const QPointF & point)
         marker->blockSignals( false );
     }
 }
+
+QList<QPlotMarker *> QPlotMarkerGroup::markers() const
+{
+    return m_markers;
+}
