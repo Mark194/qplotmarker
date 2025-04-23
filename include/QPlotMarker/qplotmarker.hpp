@@ -83,6 +83,9 @@ public:
     void setIntersectionLineSize(quint8 size);
 
 
+    quint8 intersectionLineSize() const;
+
+
     void setLabelFormat(const QString & format);
 
 

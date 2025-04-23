@@ -265,6 +265,11 @@ void QPlotMarker::setIntersectionLineSize(quint8 size)
     m_line->setPen( pen );
 }
 
+quint8 QPlotMarker::intersectionLineSize() const
+{
+    return m_line->pen().width();
+}
+
 void QPlotMarker::setLabelFormat(const QString & format)
 {
     m_coordInfo->setLabelFormat( format );
