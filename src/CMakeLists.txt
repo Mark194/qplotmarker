@@ -1,3 +1,5 @@
+
+
 # Подключаем необходимые модули Qt
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Charts)
 
@@ -8,9 +10,7 @@ elseif(QT_VERSION_MAJOR EQUAL 6)
 endif()
 
 
-# Заменяем qt_add_library на стандартный add_library
-add_library(qplotmarker
-    SHARED
+set(QPLOTMARKER_SOURCES
     qplotmarker.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker.hpp
     entity/movable_button.hpp entity/movable_button.cpp
@@ -19,6 +19,14 @@ add_library(qplotmarker
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplot_marker_group.hpp
     qplot_marker_group.cpp
 )
+
+# Заменяем qt_add_library на стандартный add_library
+# Альтернативный вариант с явным условием
+if(BUILD_SHARED_LIBS)
+   add_library(qplotmarker SHARED ${QPLOTMARKER_SOURCES})
+else()
+   add_library(qplotmarker STATIC ${QPLOTMARKER_SOURCES})
+endif()
 
 # Остальные настройки остаются без изменений
 target_include_directories(qplotmarker

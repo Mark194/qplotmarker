@@ -10,6 +10,39 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+
+
+
+# Опции проекта
+option(BUILD_SHARED_LIBS "Build shared library" OFF)
+option(BUILD_TESTS "Build tests" OFF)
+option(BUILD_EXAMPLES "Build examples" OFF)
+
+
+# Проверка доступности статического Qt
+if(NOT BUILD_SHARED_LIBS)
+    message("-- Build static library")
+    set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
+    set(QT_USE_STATIC_LIBS ON)
+
+    # Для MinGW/GCC
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc -static-libstdc++")
+    endif()
+
+    # Для MSVC
+    if(MSVC)
+        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    endif()
+
+    add_definitions(-DSTATICLIB)
+
+else()
+    message("-- Build dynamic library")
+endif()
+
+
 # Поиск Qt
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Charts)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Charts)
@@ -20,12 +53,6 @@ if(QT_VERSION_MAJOR EQUAL 5)
 elseif(QT_VERSION_MAJOR EQUAL 6)
     find_package(Qt6 REQUIRED COMPONENTS SvgWidgets)
 endif()
-
-
-# Опции проекта
-option(BUILD_SHARED_LIBS "Build shared library" ON)
-option(BUILD_TESTS "Build tests" OFF)
-option(BUILD_EXAMPLES "Build examples" OFF)
 
 # Подпроекты
 add_subdirectory(src)
