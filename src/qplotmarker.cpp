@@ -231,6 +231,10 @@ void QPlotMarker::activate(bool isActivated)
 
     for ( auto item : m_items )
     {
+        if ( not item.coord or item.coord == activeItem )
+
+            continue;
+
         if ( isActivated )
         {
             auto effect = new QGraphicsOpacityEffect();
