@@ -5,7 +5,7 @@
 
 
 QPlotMarkerGroup::QPlotMarkerGroup(QObject * parent)
-    : m_isSyncMovement(true)
+    : m_isSyncMovement(false)
 {
 
 }
