@@ -97,3 +97,4 @@ export(EXPORT QPlotMarkerTargets
     FILE ${CMAKE_CURRENT_BINARY_DIR}/QPlotMarkerTargets.cmake
     NAMESPACE QPlotMarker::
 )
+add_subdirectory(examples/base_example)
