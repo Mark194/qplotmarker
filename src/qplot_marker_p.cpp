@@ -8,6 +8,8 @@
 
 #include <entity/graphics_coord_item.hpp>
 
+#include <utility/plot_geometry_utils.hpp>
+
 
 QPlotMarkerPrivate::QPlotMarkerPrivate(QPlotMarker * q)
     : q_ptr( q ),
@@ -62,73 +64,7 @@ bool QPlotMarkerPrivate::isPositionAcceptable(const QPointF & position) const
         return position.y() >= plotArea.top() and position.y() <= plotArea.bottom();
 }
 
-qreal distance( const QPointF & pointOne, const QPointF & pointTwo )
-{
-    return std::sqrt( std::pow( pointTwo.x() - pointOne.x(), 2 ) +
-                     std::pow( pointTwo.y() - pointTwo.y(), 2 )   );
-}
 
-QPair<QPointF, QPointF> findTwoNearestPoints( const QPointF & targetPoint, QLineSeries * lineSeries )
-{
-    qreal minDistanceOne = std::numeric_limits<qreal>::max();
-
-    qreal minDistanceTwo = std::numeric_limits<qreal>::max();
-
-
-    QPointF closestPointOne, closestPointTwo;
-
-    for ( const QPointF & point : lineSeries->points() )
-    {
-        qreal dist = distance( point, targetPoint );
-
-        if ( dist < minDistanceOne )
-        {
-            minDistanceTwo = minDistanceOne;
-
-            closestPointTwo = closestPointOne;
-
-            minDistanceOne = dist;
-
-            closestPointOne = point;
-        }
-
-        else if ( dist < minDistanceTwo )
-        {
-            minDistanceTwo = dist;
-
-            closestPointTwo = point;
-        }
-    }
-
-    if ( minDistanceOne != std::numeric_limits<qreal>::max() and
-        minDistanceTwo != std::numeric_limits<qreal>::max()     )
-
-    return qMakePair( closestPointOne, closestPointTwo );
-
-    return {};
-}
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-
-inline uint qHash(const QPointF &point, uint seed = 0) noexcept {
-    QtPrivate::QHashCombine hash;
-    seed = hash(seed, point.x());
-    seed = hash(seed, point.y());
-    return seed;
-}
-
-#else
-namespace std
-{
-template <> struct hash<QPointF>
-{
-    size_t operator()(const QPointF &key, size_t seed) const
-    {
-        return qHashMulti( seed, key.x(), key.y() );
-    }
-};
-}
-#endif
 
 
 
@@ -152,8 +88,10 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
 
         auto lineSeries = dynamic_cast<QLineSeries *>( series );
 
-        auto twoPoint = findTwoNearestPoints( m_parentChart->mapToValue( position, series ),
-                                              lineSeries                                        );
+
+        auto point = m_parentChart->mapToValue( position, series );
+
+        auto twoPoint = PlotGeometryUtils::findTwoNearestPoints( point, lineSeries );
 
         QLineF segment( twoPoint.first, twoPoint.second );
 

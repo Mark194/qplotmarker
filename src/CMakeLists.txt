@@ -26,7 +26,8 @@ if(BUILD_SHARED_LIBS)
    add_library(qplotmarker SHARED ${QPLOTMARKER_SOURCES})
 else()
    add_library(qplotmarker STATIC ${QPLOTMARKER_SOURCES}
-       qplot_marker_p.hpp qplot_marker_p.cpp)
+       qplot_marker_p.hpp qplot_marker_p.cpp
+       utility/plot_geometry_utils.hpp utility/plot_geometry_utils.cpp)
 endif()
 
 # Остальные настройки остаются без изменений

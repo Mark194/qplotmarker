@@ -1,0 +1,114 @@
+#include "plot_geometry_utils.hpp"
+
+PlotGeometryUtils::PlotGeometryUtils() {}
+
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+
+inline uint qHash(const QPointF &point, uint seed = 0) noexcept {
+    QtPrivate::QHashCombine hash;
+    seed = hash(seed, point.x());
+    seed = hash(seed, point.y());
+    return seed;
+}
+
+#else
+namespace std
+{
+template <> struct hash<QPointF>
+{
+    size_t operator()(const QPointF &key, size_t seed) const
+    {
+        return qHashMulti( seed, key.x(), key.y() );
+    }
+};
+}
+#endif
+
+
+qreal PlotGeometryUtils::distance(
+    const QPointF & pointOne,
+    const QPointF & pointTwo
+)
+{
+    return std::sqrt( std::pow( pointTwo.x() - pointOne.x(), 2 ) +
+                      std::pow( pointTwo.y() - pointTwo.y(), 2 )   );
+}
+
+QPair<QPointF, QPointF> PlotGeometryUtils::findTwoNearestPoints(
+    const QPointF & targetPoint,
+    QLineSeries * lineSeries
+)
+{
+    qreal minDistanceOne = std::numeric_limits<qreal>::max();
+
+    qreal minDistanceTwo = std::numeric_limits<qreal>::max();
+
+
+    QPointF closestPointOne, closestPointTwo;
+
+    for ( const QPointF & point : lineSeries->points() )
+    {
+        qreal dist = distance( point, targetPoint );
+
+        if ( dist < minDistanceOne )
+        {
+            minDistanceTwo = minDistanceOne;
+
+            closestPointTwo = closestPointOne;
+
+            minDistanceOne = dist;
+
+            closestPointOne = point;
+        }
+
+        else if ( dist < minDistanceTwo )
+        {
+            minDistanceTwo = dist;
+
+            closestPointTwo = point;
+        }
+    }
+
+    if ( minDistanceOne != std::numeric_limits<qreal>::max() and
+        minDistanceTwo != std::numeric_limits<qreal>::max()     )
+
+    return qMakePair( closestPointOne, closestPointTwo );
+
+    return {};
+}
+
+std::optional<QPointF> PlotGeometryUtils::findNearestPoint(
+    const QPointF & targetPoint,
+    QLineSeries * series,
+    bool findLeft
+)
+{
+    if ( not series or series->count() == 0 ) return {};
+
+    const auto points = series->points();
+
+    std::optional<QPointF> nearesPoint;
+
+    auto [begin, end] = findLeft? std::make_pair( points.constEnd() - 1,
+                                                  points.constBegin() - 1) :
+                            std::make_pair( points.constBegin(),
+                                           points.constEnd()         );
+
+    const int step = findLeft? -1 : 1;
+
+    for ( auto it = begin; it != end; it += step )
+    {
+        const QPointF & point = *it;
+
+        if ( findLeft and targetPoint.x() < point.x() ) continue;
+
+        if ( not findLeft and targetPoint.x() > point.x() ) continue;
+
+        nearesPoint = point;
+
+        break;
+    }
+
+    return nearesPoint;
+}

@@ -9,6 +9,8 @@
 
 #include <effects/fast_colorize_effect.hpp>
 
+#include <utility/plot_geometry_utils.hpp>
+
 
 MovableButton::MovableButton(QPlotMarker * parent)
     : QGraphicsItem( parent ),
@@ -99,40 +101,6 @@ void MovableButton::mousePressEvent(QGraphicsSceneMouseEvent * event)
     m_plotMarker->move( event->scenePos() );
 }
 
-std::optional<QPointF> findNearestPoint(
-    const QPointF & targetPoint,
-    QLineSeries * series,
-    bool findLeft = false         )
-{
-    if ( not series or series->count() == 0 ) return {};
-
-    const auto points = series->points();
-
-    std::optional<QPointF> nearesPoint;
-
-    auto [begin, end] = findLeft? std::make_pair( points.constEnd() - 1,
-                                                  points.constBegin() - 1) :
-                                  std::make_pair( points.constBegin(),
-                                                  points.constEnd()         );
-
-    const int step = findLeft? -1 : 1;
-
-    for ( auto it = begin; it != end; it += step )
-    {
-        const QPointF & point = *it;
-
-        if ( findLeft and targetPoint.x() < point.x() ) continue;
-
-        if ( not findLeft and targetPoint.x() > point.x() ) continue;
-
-        nearesPoint = point;
-
-        break;
-    }
-
-    return nearesPoint;
-}
-
 void MovableButton::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
 {
     if ( m_plotMarker->movementStyle() != QPlotMarker::MOVEMENT_BY_POINTS )
@@ -155,7 +123,7 @@ void MovableButton::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
     auto valuePoint = m_plotMarker->chart()->mapToValue( event->scenePos(),
                                                          series             );
 
-    auto point = findNearestPoint( valuePoint, series, findLeft );
+    auto point = PlotGeometryUtils::findNearestPoint( valuePoint, series, findLeft );
 
     if ( not point )
 
