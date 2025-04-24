@@ -6,7 +6,7 @@
 #include <QLineSeries>
 
 
-#include <QPlotMarker/qplotmarker.hpp>
+#include <QPlotMarker/QPlotMarker>
 
 
 class GraphicsCoordItem;

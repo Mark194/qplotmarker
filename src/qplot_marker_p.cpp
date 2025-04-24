@@ -24,6 +24,11 @@ QPlotMarkerPrivate::QPlotMarkerPrivate(QPlotMarker * q)
       m_intersectionLineSize(2)
 {}
 
+QPlotMarkerPrivate::~QPlotMarkerPrivate()
+{
+
+}
+
 void QPlotMarkerPrivate::init(QChart * parent, const QColor & color, Qt::Orientation orientation)
 {
     q_ptr->setFlag( QGraphicsItem::ItemIsSelectable );
@@ -64,8 +69,33 @@ bool QPlotMarkerPrivate::isPositionAcceptable(const QPointF & position) const
         return position.y() >= plotArea.top() and position.y() <= plotArea.bottom();
 }
 
+void QPlotMarkerPrivate::handlePositionChange(const QRectF & plotArea)
+{
+
+}
 
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+
+inline uint qHash(const QPointF &point, uint seed = 0) noexcept {
+    QtPrivate::QHashCombine hash;
+    seed = hash(seed, point.x());
+    seed = hash(seed, point.y());
+    return seed;
+}
+
+#else
+namespace std
+{
+template <> struct hash<QPointF>
+{
+    size_t operator()(const QPointF &key, size_t seed) const
+    {
+        return qHashMulti( seed, key.x(), key.y() );
+    }
+};
+}
+#endif
 
 
 void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
@@ -110,9 +140,9 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
         auto viewPoint( m_parentChart->mapToPosition( point ) );
 
         auto item = new QGraphicsEllipseItem( viewPoint.x() - m_intersectionPointSize,
-                                             viewPoint.y() - m_intersectionPointSize,
-                                             2 * m_intersectionPointSize,
-                                             2 * m_intersectionPointSize              );
+                                              viewPoint.y() - m_intersectionPointSize,
+                                              2 * m_intersectionPointSize,
+                                              2 * m_intersectionPointSize              );
 
         item->setPen( QPen( m_markerColor, 2 ) );
 

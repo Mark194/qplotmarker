@@ -3,7 +3,7 @@
 #include <QtCharts/QLineSeries>
 
 
-#include "qplotmarker.h"
+#include <QPlotMarker/QPlotMarker>
 
 
 int main(int argc, char *argv[])

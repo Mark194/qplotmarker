@@ -18,6 +18,8 @@ set(QPLOTMARKER_SOURCES
     effects/fast_colorize_effect.hpp effects/fast_colorize_effect.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplot_marker_group.hpp
     qplot_marker_group.cpp
+    qplot_marker_p.hpp qplot_marker_p.cpp
+    utility/plot_geometry_utils.hpp utility/plot_geometry_utils.cpp
 )
 
 # Заменяем qt_add_library на стандартный add_library
@@ -25,10 +27,10 @@ set(QPLOTMARKER_SOURCES
 if(BUILD_SHARED_LIBS)
    add_library(qplotmarker SHARED ${QPLOTMARKER_SOURCES})
 else()
-   add_library(qplotmarker STATIC ${QPLOTMARKER_SOURCES}
-       qplot_marker_p.hpp qplot_marker_p.cpp
-       utility/plot_geometry_utils.hpp utility/plot_geometry_utils.cpp)
+   add_library(qplotmarker STATIC ${QPLOTMARKER_SOURCES})
 endif()
+
+target_compile_definitions(qplotmarker PRIVATE MY_LIBRARY_EXPORT)
 
 # Остальные настройки остаются без изменений
 target_include_directories(qplotmarker
@@ -42,9 +44,7 @@ target_include_directories(qplotmarker
 # Указываем публичные заголовочные файлы
 set_target_properties(qplotmarker PROPERTIES
     PUBLIC_HEADER
-        "${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker.hpp;
-         ${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker_global.hpp;
-         ${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarkergroup.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker.hpp;${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplot_marker_group.hpp;${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker_global.hpp;${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/QPlotMarker;"
 )
 
 

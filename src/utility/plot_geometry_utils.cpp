@@ -2,30 +2,6 @@
 
 PlotGeometryUtils::PlotGeometryUtils() {}
 
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-
-inline uint qHash(const QPointF &point, uint seed = 0) noexcept {
-    QtPrivate::QHashCombine hash;
-    seed = hash(seed, point.x());
-    seed = hash(seed, point.y());
-    return seed;
-}
-
-#else
-namespace std
-{
-template <> struct hash<QPointF>
-{
-    size_t operator()(const QPointF &key, size_t seed) const
-    {
-        return qHashMulti( seed, key.x(), key.y() );
-    }
-};
-}
-#endif
-
-
 qreal PlotGeometryUtils::distance(
     const QPointF & pointOne,
     const QPointF & pointTwo

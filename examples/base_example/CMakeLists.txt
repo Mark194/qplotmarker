@@ -9,17 +9,22 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Charts Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Charts Widgets)
+set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
+set(QT_USE_STATIC_LIBS ON)
+
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Charts Widgets SvgWidgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Charts Widgets SvgWidgets)
+
+message(${QPLOTMARKER_DIR})
 
 # Проверяем наличие QPLOTMARKER_DIR
-if(NOT DEFINED ENV{QPLOTMARKER_DIR})
-    message(FATAL_ERROR "QPLOTMARKER_DIR не установлен! Укажите путь к QPlotMarker.")
+if(${QPLOTMARKER_DIR})
+    message(FATAL_ERROR "QPLOTMARKER_DIR not set! Specify the path to QPlotMarker.")
 endif()
 
 # Добавляем путь к заголовкам и библиотеке
-set(QPLOTMARKER_INCLUDE_DIR "$ENV{QPLOTMARKER_DIR}/include")
-set(QPLOTMARKER_LIB_DIR "$ENV{QPLOTMARKER_DIR}/build")
+set(QPLOTMARKER_INCLUDE_DIR "${QPLOTMARKER_DIR}/include")
+set(QPLOTMARKER_LIB_DIR "${QPLOTMARKER_DIR}/lib")
 
 # Проверяем, существует ли библиотека
 find_library(QPLOTMARKER_LIB
@@ -27,6 +32,10 @@ find_library(QPLOTMARKER_LIB
     HINTS ${QPLOTMARKER_LIB_DIR}
     REQUIRED
 )
+
+message(STATUS "Found QPlotMarker library: ${QPLOTMARKER_LIB_PATH}")
+
+include_directories(${QPLOTMARKER_INCLUDE_DIR})
 
 set(PROJECT_SOURCES
         main.cpp
@@ -55,7 +64,12 @@ else()
     endif()
 endif()
 
-target_link_libraries(base_example PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(base_example
+    PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Charts
+    Qt${QT_VERSION_MAJOR}::SvgWidgets
+)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

@@ -11,8 +11,6 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 
-
-
 # Опции проекта
 option(BUILD_SHARED_LIBS "Build shared library" OFF)
 option(BUILD_TESTS "Build tests" OFF)
@@ -97,4 +95,3 @@ export(EXPORT QPlotMarkerTargets
     FILE ${CMAKE_CURRENT_BINARY_DIR}/QPlotMarkerTargets.cmake
     NAMESPACE QPlotMarker::
 )
-add_subdirectory(examples/base_example)
