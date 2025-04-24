@@ -10,9 +10,12 @@
 #include <QGraphicsScene>
 #include <QValueAxis>
 
+#include <QDir>
+#include <qsvgrenderer.h>
+
 
 QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, Qt::Orientation orientation)
-    : QGraphicsWidget(),
+    : QGraphicsWidget(parent),
       d_ptr( new QPlotMarkerPrivate( this ) )
 {
     Q_D(QPlotMarker);
@@ -115,7 +118,7 @@ void QPlotMarker::move(const QPointF & position)
 
     if ( not d->isPositionAcceptable( position ) ) return;
 
-    QGraphicsItem::setPos( position );
+    // QGraphicsItem::setPos( position );
 
     QRectF plotArea = d->m_parentChart->plotArea();
 

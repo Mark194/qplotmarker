@@ -42,14 +42,14 @@ endif()
 
 
 # Поиск Qt
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Charts)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Charts)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Charts Svg)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Charts Svg)
 
 
 if(QT_VERSION_MAJOR EQUAL 5)
     find_package(Qt5 REQUIRED COMPONENTS Svg)
 elseif(QT_VERSION_MAJOR EQUAL 6)
-    find_package(Qt6 REQUIRED COMPONENTS SvgWidgets)
+    find_package(Qt6 REQUIRED COMPONENTS SvgWidgets Svg)
 endif()
 
 # Подпроекты

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="marker_eye">marker/marker_eye.svg</file>
+        <file alias="marker_icon">marker/marker_icon.svg</file>
+        <file alias="marker_selected_eye">marker_selected/marker_selected_control.svg</file>
+        <file alias="marker_selected_icon">marker_selected/marker_selected_icon.svg</file>
+    </qresource>
+</RCC>

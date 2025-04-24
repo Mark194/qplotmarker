@@ -48,6 +48,11 @@ void QPlotMarkerPrivate::init(QChart * parent, const QColor & color, Qt::Orienta
     m_controlItem->setColor( m_markerColor );
 
 
+    m_coordInfo = new GraphicsCoordItem( q_ptr );
+
+    m_coordInfo->setItemColor( m_markerColor );
+
+
     q_ptr->setSelected( false );
 
     QObject::connect( m_parentChart, &QChart::plotAreaChanged,
@@ -71,7 +76,7 @@ bool QPlotMarkerPrivate::isPositionAcceptable(const QPointF & position) const
 
 void QPlotMarkerPrivate::handlePositionChange(const QRectF & plotArea)
 {
-
+    q_ptr->moveBegin();
 }
 
 

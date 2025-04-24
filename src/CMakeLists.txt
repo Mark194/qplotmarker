@@ -1,12 +1,10 @@
 
 
 # Подключаем необходимые модули Qt
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Charts)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Charts Svg)
 
-if(QT_VERSION_MAJOR EQUAL 5)
-    find_package(Qt5 REQUIRED COMPONENTS Svg)
-elseif(QT_VERSION_MAJOR EQUAL 6)
-    find_package(Qt6 REQUIRED COMPONENTS SvgWidgets)
+if(QT_VERSION_MAJOR EQUAL 6)
+    find_package(Qt6 REQUIRED COMPONENTS Svg SvgWidgets)
 endif()
 
 
@@ -20,15 +18,17 @@ set(QPLOTMARKER_SOURCES
     qplot_marker_group.cpp
     qplot_marker_p.hpp qplot_marker_p.cpp
     utility/plot_geometry_utils.hpp utility/plot_geometry_utils.cpp
+    ../resources/marker_icons.qrc
 )
 
-# Заменяем qt_add_library на стандартный add_library
-# Альтернативный вариант с явным условием
+
 if(BUILD_SHARED_LIBS)
    add_library(qplotmarker SHARED ${QPLOTMARKER_SOURCES})
 else()
    add_library(qplotmarker STATIC ${QPLOTMARKER_SOURCES})
 endif()
+
+
 
 target_compile_definitions(qplotmarker PRIVATE MY_LIBRARY_EXPORT)
 
@@ -60,6 +60,7 @@ elseif(QT_VERSION_MAJOR EQUAL 6)
         PUBLIC
             Qt${QT_VERSION_MAJOR}::Core
             Qt${QT_VERSION_MAJOR}::Charts
+            Qt${QT_VERSION_MAJOR}::Svg
             Qt${QT_VERSION_MAJOR}::SvgWidgets
     )
 endif()
