@@ -21,76 +21,64 @@
 #include "qplotmarker_global.hpp"
 
 
-class GraphicsCoordItem;
-class MovableButton;
-struct ViewCoordItem;
+class QPlotMarkerPrivate;
 
 
 class QPLOTMARKER_EXPORT QPlotMarker : public QGraphicsWidget
 {
     Q_OBJECT
-
+    Q_DECLARE_PRIVATE(QPlotMarker)
     Q_PROPERTY(QColor markerColor READ color WRITE setColor NOTIFY colorChanged)
     Q_PROPERTY(MovementStyle movement READ movementStyle WRITE setMovementStyle NOTIFY movementStyleChanged)
     Q_PROPERTY(Qt::Orientation orientation READ orientation)
-    Q_ENUMS(MovementStyle)
 
 public:
-
-    const qreal DEFAULT_PIXMAP_SIZE = 25.0;
 
     enum MovementStyle
     {
         MOVEMENT_DEFAULT,
         MOVEMENT_BY_POINTS
     };
+    Q_ENUM(MovementStyle)
 
 
-    QPlotMarker(QChart * parent,
-                const QColor & color = "black",
-                Qt::Orientation orientation = Qt::Horizontal);
+    explicit QPlotMarker(QChart * parent,
+                         const QColor & color = "black",
+                         Qt::Orientation orientation = Qt::Horizontal);
 
     virtual ~QPlotMarker();
 
-    void setColor(const QColor & color);
-    QColor color() const;
 
-    void setMovementStyle( MovementStyle style );
+    QColor color() const;
+    void setColor(const QColor & color);
+
     MovementStyle movementStyle() const;
+    void setMovementStyle( MovementStyle style );
+
 
     Qt::Orientation orientation() const;
 
 
-    void setSelect(bool isSelect);
-
+    void setSelected(bool isSelect);
     QChart * chart() const;
 
 
     void move(const QPointF & position);
-
     void moveBegin();
-
     void moveEnd();
 
 
     bool hasFocus() const;
-
     qreal markerValue() const;
 
 
     void setIntersectionPointSize(qreal size);
-
     void setIntersectionLineSize(quint8 size);
-
-
     quint8 intersectionLineSize() const;
-
 
     void setLabelFormat(const QString & format);
 
-
     // QGraphicsItem interface
-
     QRectF boundingRect() const;
 
 Q_SIGNALS:
@@ -100,34 +88,14 @@ Q_SIGNALS:
 
 public slots:
 
-    void showCoord();
+    void showCoordinates();
 
     void activate( bool isActivated );
 
+protected:
+
+    QScopedPointer<QPlotMarkerPrivate> d_ptr;
+
 private:
-
-    QChart        * m_parent;
-
-    QColor          m_markerColor;
-
-    MovementStyle   m_movement;
-
-    Qt::Orientation m_orientation;
-
-    MovableButton * m_controlItem;
-
-    QGraphicsLineItem * m_line;
-
-    GraphicsCoordItem * m_coordInfo;
-
-    QList<ViewCoordItem> m_items;
-
-    qreal m_intersectionPointSize;
-
-
-    bool isPositionAccept(const QPointF & position);
-
-    void change(const QRectF & plotArea);
-
-    void loadPoints(const QPointF & position);
+    Q_DISABLE_COPY(QPlotMarker)
 };

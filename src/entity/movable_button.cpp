@@ -88,13 +88,13 @@ void MovableButton::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {
     if ( ( event->modifiers() & Qt::ControlModifier ) != 0 )
     {
-        m_plotMarker->setSelect( not m_plotMarker->isSelected() );
+        m_plotMarker->setSelected( not m_plotMarker->isSelected() );
 
         return;
     }
 
 
-    m_plotMarker->setSelect( true );
+    m_plotMarker->setSelected( true );
 
     m_plotMarker->move( event->scenePos() );
 }
@@ -176,5 +176,5 @@ void MovableButton::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 
     Q_UNUSED(event)
 
-    m_plotMarker->setSelect( false );
+    m_plotMarker->setSelected( false );
 }

@@ -25,7 +25,8 @@ set(QPLOTMARKER_SOURCES
 if(BUILD_SHARED_LIBS)
    add_library(qplotmarker SHARED ${QPLOTMARKER_SOURCES})
 else()
-   add_library(qplotmarker STATIC ${QPLOTMARKER_SOURCES})
+   add_library(qplotmarker STATIC ${QPLOTMARKER_SOURCES}
+       qplot_marker_p.hpp qplot_marker_p.cpp)
 endif()
 
 # Остальные настройки остаются без изменений

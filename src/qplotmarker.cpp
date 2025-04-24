@@ -1,6 +1,8 @@
 #include "../include/QPlotMarker/qplotmarker.hpp"
 
 
+#include "qplot_marker_p.hpp"
+
 #include <entity/graphics_coord_item.hpp>
 #include <entity/movable_button.hpp>
 
@@ -9,132 +11,120 @@
 #include <QValueAxis>
 
 
-struct ViewCoordItem
-{
-    GraphicsCoordItem    * coord;
-
-    QGraphicsEllipseItem * point;
-};
-
-
 QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, Qt::Orientation orientation)
     : QGraphicsWidget(),
-      m_parent( parent ),
-      m_movement( MovementStyle::MOVEMENT_DEFAULT ),
-      m_orientation( orientation ),
-      m_controlItem( new MovableButton( this ) ),
-      m_line( new QGraphicsLineItem( this ) ),
-      m_coordInfo( new GraphicsCoordItem( this ) ),
-      m_intersectionPointSize( 3 )
+      d_ptr( new QPlotMarkerPrivate( this ) )
 {
-    setFlag( QGraphicsItem::ItemIsSelectable );
+    Q_D(QPlotMarker);
 
-    m_line->setPen( QPen( color, 2, Qt::DotLine, Qt::RoundCap  ) );
-
-    m_controlItem->setColor( color );
-
-    m_coordInfo->setItemColor( color );
-
-    m_markerColor = color;
-
-    setSelect( false );
-
-    connect( parent, &QChart::plotAreaChanged, this, &QPlotMarker::change );
+    d->init( parent, color, orientation );
 }
 
 QPlotMarker::~QPlotMarker()
 {
-    delete m_controlItem;
 
-    delete m_line;
-
-    delete m_coordInfo;
-
-    m_items.clear();
 }
 
 void QPlotMarker::setColor(const QColor & color)
 {
-    m_markerColor = color;
+    Q_D(QPlotMarker);
+
+    d->m_markerColor = color;
 
 
-    auto pen = m_line->pen();
+    auto pen = d->m_line->pen();
 
-    pen.setColor( m_markerColor );
+    pen.setColor( color );
 
-    m_line->setPen( pen );
+    d->m_line->setPen( pen );
 
 
-    m_controlItem->setColor( m_markerColor );
+    d->m_controlItem->setColor( color );
+
+    emit colorChanged( color );
 }
 
 QColor QPlotMarker::color() const
 {
-    return m_markerColor;
+    Q_D(const QPlotMarker);
+
+    return d->m_markerColor;
 }
 
 void QPlotMarker::setMovementStyle(MovementStyle style)
 {
-    m_movement = style;
+    Q_D(QPlotMarker);
 
-    moveBegin();
+    d->m_movement = style;
+
+    move( QGraphicsItem::pos() );
 }
 
 QPlotMarker::MovementStyle QPlotMarker::movementStyle() const
 {
-    return m_movement;
+    Q_D(const QPlotMarker);
+
+    return d->m_movement;
 }
 
 Qt::Orientation QPlotMarker::orientation() const
 {
-    return m_orientation;
+    Q_D(const QPlotMarker);
+
+    return d->m_orientation;
 }
 
 QChart * QPlotMarker::chart() const
 {
-    return m_parent;
+    Q_D(const QPlotMarker);
+
+    return d->m_parentChart;
 }
 
-void QPlotMarker::setSelect(bool isSelect)
+void QPlotMarker::setSelected(bool isSelect)
 {
+    Q_D(QPlotMarker);
+
     if ( isSelect )
     {
-        m_controlItem->setButtonIcon( ":/marker_selected_icon" );
+        d->m_controlItem->setButtonIcon( ":/marker_selected_icon" );
 
-        m_controlItem->setButtonControl( ":/marker_selected_eye" );
+        d->m_controlItem->setButtonControl( ":/marker_selected_eye" );
     }
     else
     {
-        m_controlItem->setButtonIcon( ":/marker_icon" );
+        d->m_controlItem->setButtonIcon( ":/marker_icon" );
 
-        m_controlItem->setButtonControl( ":/marker_eye" );
+        d->m_controlItem->setButtonControl( ":/marker_eye" );
     }
 
 
-    if ( m_orientation == Qt::Horizontal )
+    if ( d->m_orientation == Qt::Horizontal )
 
-    m_controlItem->setRotation( 90 );
+        d->m_controlItem->setRotation( 90 );
 
 
-    m_controlItem->setSize( DEFAULT_PIXMAP_SIZE );
+    d->m_controlItem->setSize( 25.0 );
 
     QGraphicsItem::setSelected( isSelect );
 }
 
 void QPlotMarker::move(const QPointF & position)
 {
-    if ( not isPositionAccept( position ) ) return;
+    Q_D(QPlotMarker);
+
+    if ( not d->isPositionAcceptable( position ) ) return;
 
     QGraphicsItem::setPos( position );
 
-    QRectF plotArea = m_parent->plotArea();
+    QRectF plotArea = d->m_parentChart->plotArea();
 
 
-    auto controlRect = m_controlItem->mapToScene( m_controlItem->boundingRect() ).boundingRect();
+    auto controlRect = d->m_controlItem->mapToScene( d->m_controlItem->boundingRect() ).boundingRect();
 
-    if ( m_orientation == Qt::Vertical )
+    if ( d->m_orientation == Qt::Vertical )
     {
-        m_line->setLine( position.x(), plotArea.top(), position.x(), plotArea.bottom() );
+        d->m_line->setLine( position.x(), plotArea.top(), position.x(), plotArea.bottom() );
 
 
         qreal halfPixmapWidth = controlRect.width() / 2.0;
@@ -142,33 +132,33 @@ void QPlotMarker::move(const QPointF & position)
         auto pixmapHeight = controlRect.height();
 
 
-        m_controlItem->setPos( position.x() - halfPixmapWidth, plotArea.top() - pixmapHeight );
+        d->m_controlItem->setPos( position.x() - halfPixmapWidth, plotArea.top() - pixmapHeight );
 
 
-        m_coordInfo->setCoord( m_parent->mapToValue( position ).x() );
+        d->m_coordInfo->setCoord( d->m_parentChart->mapToValue( position ).x() );
 
-        m_coordInfo->setPos( position.x() + m_coordInfo->textWidth(), plotArea.bottom() );
+        d->m_coordInfo->setPos( position.x() + d->m_coordInfo->textWidth(), plotArea.bottom() );
 
 
-        loadPoints( position );
+        d->loadIntersectionPoints( position );
     }
     else
     {
-        m_line->setLine( plotArea.left(), position.y(), plotArea.right(), position.y() );
+        d->m_line->setLine( plotArea.left(), position.y(), plotArea.right(), position.y() );
 
         qreal halfPixmapWidth = controlRect.width() / 2.0;
 
-        m_controlItem->setPos( plotArea.right() + controlRect.width(),
-                              position.y() - halfPixmapWidth           );
+        d->m_controlItem->setPos( plotArea.right() + controlRect.width(),
+                                  position.y() - halfPixmapWidth           );
 
 
-        m_coordInfo->setCoord( m_parent->mapToValue( position ).y() );
+        d->m_coordInfo->setCoord( d->m_parentChart->mapToValue( position ).y() );
 
-        auto valueAxis = (QValueAxis *) m_parent->axes( Qt::Horizontal ).first();
+        auto valueAxis = (QValueAxis *) d->m_parentChart->axes( Qt::Horizontal ).first();
 
-        auto startX = m_parent->mapToPosition( { valueAxis->min(), 0 } );
+        auto startX = d->m_parentChart->mapToPosition( { valueAxis->min(), 0 } );
 
-        m_coordInfo->setPos( startX.x() - m_coordInfo->boundingRect().width(), position.y() );
+        d->m_coordInfo->setPos( startX.x() - d->m_coordInfo->boundingRect().width(), position.y() );
     }
 
     emit onPositionChanged( position );
@@ -177,59 +167,77 @@ void QPlotMarker::move(const QPointF & position)
 
 void QPlotMarker::moveBegin()
 {
-    if ( m_orientation == Qt::Vertical )
+    Q_D(QPlotMarker);
 
-        move( { m_parent->plotArea().x(), m_parent->plotArea().y() } );
+    if ( d->m_orientation == Qt::Vertical )
+
+        move( { d->m_parentChart->plotArea().x(),
+                d->m_parentChart->plotArea().y() } );
 
     else
 
-        move( { m_parent->plotArea().right(), m_parent->plotArea().topRight().y() } );
+        move( { d->m_parentChart->plotArea().right(),
+                d->m_parentChart->plotArea().topRight().y() } );
 }
 
 void QPlotMarker::moveEnd()
 {
-    if ( m_orientation == Qt::Vertical )
+    Q_D(QPlotMarker);
 
-        move( { m_parent->plotArea().x(), m_parent->plotArea().y() } );
+    if ( d->m_orientation == Qt::Vertical )
+
+        move( { d->m_parentChart->plotArea().x(),
+                d->m_parentChart->plotArea().y() } );
 
     else
 
-        move( { m_parent->plotArea().right(), m_parent->plotArea().topRight().y() } );
+        move( { d->m_parentChart->plotArea().right(),
+                d->m_parentChart->plotArea().topRight().y() } );
 }
 
 bool QPlotMarker::hasFocus() const
 {
-    return m_controlItem->hasFocus();
+    Q_D(const QPlotMarker);
+
+    return d->m_controlItem->hasFocus();
 }
 
 qreal QPlotMarker::markerValue() const
 {
-    return m_coordInfo->coord();
+    Q_D(const QPlotMarker);
+
+    return d->m_coordInfo->coord();
 }
 
 QRectF QPlotMarker::boundingRect() const
 {
+    Q_D(const QPlotMarker);
+
     return
     {
-        m_parent->plotArea().left(),
+        d->m_parentChart->plotArea().left(),
         x(),
-        m_line->boundingRect().width() + m_controlItem->boundingRect().width(),
-        m_controlItem->boundingRect().height()
+        d->m_line->boundingRect().width() + d->m_controlItem->boundingRect().width(),
+        d->m_controlItem->boundingRect().height()
     };
 }
 
-void QPlotMarker::showCoord()
+void QPlotMarker::showCoordinates()
 {
-    for ( auto & item : m_items )
+    Q_D(QPlotMarker);
+
+    for ( auto & item : d->m_intersectionItems )
 
         item.coord->setVisible( not item.coord->isVisible() );
 }
 
 void QPlotMarker::activate(bool isActivated)
 {
+    Q_D(QPlotMarker);
+
     auto activeItem = dynamic_cast<QGraphicsTextItem *>( sender() );
 
-    for ( auto item : m_items )
+    for ( auto item : d->m_intersectionItems )
     {
         if ( not item.coord or item.coord == activeItem )
 
@@ -253,186 +261,36 @@ void QPlotMarker::activate(bool isActivated)
 
 void QPlotMarker::setIntersectionPointSize(qreal size)
 {
-    m_intersectionPointSize = size;
+    Q_D(QPlotMarker);
+
+    d->m_intersectionPointSize = size;
 }
 
 void QPlotMarker::setIntersectionLineSize(quint8 size)
 {
-    auto pen = m_line->pen();
+    Q_D(QPlotMarker);
+
+    auto pen = d->m_line->pen();
 
     pen.setWidth( size );
 
-    m_line->setPen( pen );
+    d->m_line->setPen( pen );
 }
 
 quint8 QPlotMarker::intersectionLineSize() const
 {
-    return m_line->pen().width();
+    Q_D(const QPlotMarker);
+
+    return d->m_line->pen().width();
 }
 
 void QPlotMarker::setLabelFormat(const QString & format)
 {
-    m_coordInfo->setLabelFormat( format );
+    Q_D(QPlotMarker);
 
-    for ( auto & item : m_items )
+    d->m_coordInfo->setLabelFormat( format );
+
+    for ( auto & item : d->m_intersectionItems )
 
         item.coord->setLabelFormat( format );
-}
-
-bool QPlotMarker::isPositionAccept(const QPointF & position)
-{
-    QRectF plotArea = m_parent->plotArea();
-
-    if ( m_orientation == Qt::Vertical )
-
-        return position.x() >= plotArea.left() and position.x() <= plotArea.right();
-
-    else
-
-        return position.y() >= plotArea.top() and position.y() <= plotArea.bottom();
-}
-
-void QPlotMarker::change(const QRectF & plotArea)
-{
-    Q_UNUSED(plotArea)
-
-    moveBegin();
-}
-
-qreal distance( const QPointF & pointOne, const QPointF & pointTwo )
-{
-    return std::sqrt( std::pow( pointTwo.x() - pointOne.x(), 2 ) +
-                      std::pow( pointTwo.y() - pointTwo.y(), 2 )   );
-}
-
-QPair<QPointF, QPointF> findTwoNearestPoints( const QPointF & targetPoint, QLineSeries * lineSeries )
-{
-    qreal minDistanceOne = std::numeric_limits<qreal>::max();
-
-    qreal minDistanceTwo = std::numeric_limits<qreal>::max();
-
-
-    QPointF closestPointOne, closestPointTwo;
-
-    for ( const QPointF & point : lineSeries->points() )
-    {
-        qreal dist = distance( point, targetPoint );
-
-        if ( dist < minDistanceOne )
-        {
-            minDistanceTwo = minDistanceOne;
-
-            closestPointTwo = closestPointOne;
-
-            minDistanceOne = dist;
-
-            closestPointOne = point;
-        }
-
-        else if ( dist < minDistanceTwo )
-        {
-            minDistanceTwo = dist;
-
-            closestPointTwo = point;
-        }
-    }
-
-    if ( minDistanceOne != std::numeric_limits<qreal>::max() and
-         minDistanceTwo != std::numeric_limits<qreal>::max()     )
-
-        return qMakePair( closestPointOne, closestPointTwo );
-
-    return {};
-}
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-
-inline uint qHash(const QPointF &point, uint seed = 0) noexcept {
-    QtPrivate::QHashCombine hash;
-    seed = hash(seed, point.x());
-    seed = hash(seed, point.y());
-    return seed;
-}
-
-#else
-namespace std
-{
-template <> struct hash<QPointF>
-{
-    size_t operator()(const QPointF &key, size_t seed) const
-    {
-        return qHashMulti( seed, key.x(), key.y() );
-    }
-};
-}
-#endif
-
-void QPlotMarker::loadPoints(const QPointF & position)
-{
-    if ( m_items.size() > 0 )
-
-        m_items.clear();
-
-
-    QSet<QPointF> points;
-
-    auto markerLineOld = m_line->line();
-
-    QLineF markerLine( m_parent->mapToValue( markerLineOld.p1() ),
-                       m_parent->mapToValue( markerLineOld.p2() )   );
-
-    for ( auto series : m_parent->series() )
-    {
-        if ( not series->isVisible() ) continue;
-
-        auto lineSeries = dynamic_cast<QLineSeries *>( series );
-
-        auto twoPoint = findTwoNearestPoints( m_parent->mapToValue( position, series ), lineSeries );
-
-        QLineF segment( twoPoint.first, twoPoint.second );
-
-        QPointF intersectPoint;
-
-        auto intersectType = markerLine.intersects( segment, &intersectPoint );
-
-        if ( intersectType == QLineF::BoundedIntersection )
-
-        points.insert( { intersectPoint.x(),
-                       QString::number( intersectPoint.y(), 'g', 3 ).toDouble() } );
-    }
-
-    for ( auto & point : points )
-    {
-        auto viewPoint( m_parent->mapToPosition( point ) );
-
-        auto item = new QGraphicsEllipseItem( viewPoint.x() - m_intersectionPointSize,
-                                              viewPoint.y() - m_intersectionPointSize,
-                                              2 * m_intersectionPointSize,
-                                              2 * m_intersectionPointSize              );
-
-        item->setPen( QPen( m_markerColor, 2 ) );
-
-        item->setBrush( m_markerColor );
-
-        m_parent->scene()->addItem( item );
-
-
-        auto textItem = new GraphicsCoordItem();
-
-        textItem->setItemColor( m_markerColor );
-
-        textItem->setCoord( point.y() );
-
-        textItem->setVisible( false );
-
-        textItem->setPos( viewPoint );
-
-        connect( textItem, &GraphicsCoordItem::onActivated, this, &QPlotMarker::activate );
-
-        m_parent->scene()->addItem( textItem );
-
-
-        m_items.append( { .coord=textItem, .point=item } );
-
-    }
 }
