@@ -78,7 +78,10 @@ void QPlotMarkerPrivate::handlePositionChange(const QRectF & plotArea)
 {
     Q_UNUSED(plotArea)
 
-    q_ptr->move( m_markerPosition );
+    qreal x = qBound( plotArea.left(), m_markerPosition.x(), plotArea.right()  );
+    qreal y = qBound( plotArea.top(),  m_markerPosition.y(), plotArea.bottom() );
+
+    q_ptr->move( { x, y } );
 }
 
 
