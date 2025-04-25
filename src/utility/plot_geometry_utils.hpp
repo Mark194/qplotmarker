@@ -1,7 +1,19 @@
 #pragma once
 
 
-#include <QLineSeries>
+#include <QObject>
+
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+
+#include <QtCharts>
+
+using namespace QtCharts;
+
+#endif
+
+
+#include <QXYSeries>
 #include <QPointF>
 
 
