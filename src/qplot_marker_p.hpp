@@ -53,6 +53,8 @@ public:
     quint8      m_intersectionLineSize = 0;
     QString     m_labelFormat;
 
+    QPointF     m_markerPosition;
+
 
     QList<QAbstractSeries *> m_ignoreSeries;
 

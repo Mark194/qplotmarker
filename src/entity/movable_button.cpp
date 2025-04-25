@@ -86,6 +86,31 @@ void MovableButton::paint(QPainter * painter, const QStyleOptionGraphicsItem * o
     Q_UNUSED(widget)
 }
 
+void MovableButton::move(const QPointF & position, bool isFindLeft)
+{
+    auto serieses = m_plotMarker->chart()->series();
+
+    if ( serieses.isEmpty() ) return;
+
+    auto series = dynamic_cast<QXYSeries * >( serieses.first() );
+
+    if ( not series ) return;
+
+    auto valuePoint = m_plotMarker->chart()->mapToValue( position, series  );
+
+    auto point = PlotGeometryUtils::findNearestPoint( valuePoint, series, isFindLeft );
+
+    if ( not point )
+
+    point = isFindLeft? series->points().first() : series->points().last();
+
+
+    auto scenePoint = m_plotMarker->chart()->mapToPosition( point.value(),
+                                                            series          );
+
+    m_plotMarker->move( scenePoint );
+}
+
 void MovableButton::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {
     if ( ( event->modifiers() & Qt::ControlModifier ) != 0 )
@@ -94,7 +119,6 @@ void MovableButton::mousePressEvent(QGraphicsSceneMouseEvent * event)
 
         return;
     }
-
 
     m_plotMarker->setSelected( true );
 
@@ -110,30 +134,9 @@ void MovableButton::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
         return;
     }
 
-    bool findLeft = event->scenePos().x() < event->lastScenePos().x();
+    bool isFindLeft = event->scenePos().x() < event->lastScenePos().x();
 
-    auto serieses = m_plotMarker->chart()->series();
-
-    if ( serieses.isEmpty() ) return;
-
-    auto series = dynamic_cast<QXYSeries * >( serieses.first() );
-
-    if ( not series ) return;
-
-    auto valuePoint = m_plotMarker->chart()->mapToValue( event->scenePos(),
-                                                         series             );
-
-    auto point = PlotGeometryUtils::findNearestPoint( valuePoint, series, findLeft );
-
-    if ( not point )
-
-        point = findLeft? series->points().first() : series->points().last();
-
-
-    auto scenePoint = m_plotMarker->chart()->mapToPosition( point.value(),
-                                                            series          );
-
-    m_plotMarker->move( scenePoint );
+    move( event->scenePos(), isFindLeft );
 }
 
 void MovableButton::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)

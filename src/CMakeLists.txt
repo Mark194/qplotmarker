@@ -30,7 +30,11 @@ endif()
 
 
 
-target_compile_definitions(qplotmarker PRIVATE MY_LIBRARY_EXPORT)
+target_compile_definitions(qplotmarker
+    PRIVATE
+    MY_LIBRARY_EXPORT
+    QT_FORCE_ASSERTS
+)
 
 # Остальные настройки остаются без изменений
 target_include_directories(qplotmarker

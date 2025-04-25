@@ -66,10 +66,10 @@ std::optional<QPointF> PlotGeometryUtils::findNearestPoint(
 
     std::optional<QPointF> nearesPoint;
 
-    auto [begin, end] = findLeft? std::make_pair( points.constEnd() - 1,
-                                                  points.constBegin() - 1) :
-                            std::make_pair( points.constBegin(),
-                                           points.constEnd()         );
+    auto [begin, end] = findLeft? std::make_pair( points.constEnd()   - 1,
+                                                  points.constBegin() - 1  ) :
+                                  std::make_pair( points.constBegin(),
+                                                  points.constEnd()         );
 
     const int step = findLeft? -1 : 1;
 
@@ -77,9 +77,9 @@ std::optional<QPointF> PlotGeometryUtils::findNearestPoint(
     {
         const QPointF & point = *it;
 
-        if ( findLeft and targetPoint.x() < point.x() ) continue;
+        if ( findLeft and targetPoint.x() <= point.x() ) continue;
 
-        if ( not findLeft and targetPoint.x() > point.x() ) continue;
+        if ( not findLeft and targetPoint.x() >= point.x() ) continue;
 
         nearesPoint = point;
 

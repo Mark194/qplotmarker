@@ -30,6 +30,8 @@ public:
                const QStyleOptionGraphicsItem * option,
                QWidget * widget) override;
 
+    void move(const QPointF & position, bool isFindLeft);
+
 protected:
 
     void mousePressEvent(QGraphicsSceneMouseEvent * event) override;

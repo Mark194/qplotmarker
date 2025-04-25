@@ -13,6 +13,8 @@
 #include <QDir>
 #include <qsvgrenderer.h>
 
+#include <utility/plot_geometry_utils.hpp>
+
 
 QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, Qt::Orientation orientation)
     : QGraphicsWidget(),
@@ -120,8 +122,11 @@ void QPlotMarker::move(const QPointF & position)
 
     if ( not d->isPositionAcceptable( position ) ) return;
 
-    QRectF plotArea = d->m_parentChart->plotArea();
 
+    d->m_markerPosition = position;
+
+
+    QRectF plotArea = d->m_parentChart->plotArea();
 
     auto controlRect = d->m_controlItem->mapToScene( d->m_controlItem->boundingRect() ).boundingRect();
 
@@ -198,6 +203,35 @@ void QPlotMarker::moveEnd()
 
         move( { d->m_parentChart->plotArea().right(),
                 d->m_parentChart->plotArea().bottomRight().y() } );
+}
+
+void QPlotMarker::moveToNextPoint()
+{
+    Q_D(QPlotMarker);
+
+    Q_ASSERT_X(d->m_movement == QPlotMarker::MOVEMENT_BY_POINTS,
+               "moveToNextPoint()",
+               "The mode of moving by points is not set!");
+
+    d->m_controlItem->move( d->m_markerPosition, false );
+}
+
+void QPlotMarker::moveToPreviousPoint()
+{
+    Q_D(QPlotMarker);
+
+    Q_ASSERT_X(d->m_movement == QPlotMarker::MOVEMENT_BY_POINTS,
+               "moveToPreviousPoint()",
+               "The mode of moving by points is not set!");
+
+    d->m_controlItem->move( d->m_markerPosition, true );
+}
+
+QPointF QPlotMarker::pos() const
+{
+    Q_D(const QPlotMarker);
+
+    return d->m_markerPosition;
 }
 
 bool QPlotMarker::hasFocus() const

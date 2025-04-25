@@ -66,6 +66,10 @@ public:
     void move(const QPointF & position);
     void moveBegin();
     void moveEnd();
+    void moveToNextPoint();
+    void moveToPreviousPoint();
+
+    QPointF pos() const;
 
 
     bool hasFocus() const;
