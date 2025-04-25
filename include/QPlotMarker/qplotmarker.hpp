@@ -78,6 +78,11 @@ public:
 
     void setLabelFormat(const QString & format);
 
+
+    void addIgnoreSeries(const QList<QAbstractSeries *> & series );
+
+    QList<QAbstractSeries *> ignoreSeries() const;
+
     // QGraphicsItem interface
     QRectF boundingRect() const;
 

@@ -13,7 +13,7 @@ qreal PlotGeometryUtils::distance(
 
 QPair<QPointF, QPointF> PlotGeometryUtils::findTwoNearestPoints(
     const QPointF & targetPoint,
-    QLineSeries * lineSeries
+    QXYSeries * lineSeries
 )
 {
     qreal minDistanceOne = std::numeric_limits<qreal>::max();
@@ -56,9 +56,9 @@ QPair<QPointF, QPointF> PlotGeometryUtils::findTwoNearestPoints(
 
 std::optional<QPointF> PlotGeometryUtils::findNearestPoint(
     const QPointF & targetPoint,
-    QLineSeries * series,
+    QXYSeries * series,
     bool findLeft
-)
+    )
 {
     if ( not series or series->count() == 0 ) return {};
 

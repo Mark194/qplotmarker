@@ -12,10 +12,20 @@ public:
 
     static qreal distance( const QPointF & pointOne, const QPointF & pointTwo );
 
-    static QPair<QPointF, QPointF> findTwoNearestPoints( const QPointF & targetPoint,
-                                                         QLineSeries * lineSeries     );
+    static QPair<QPointF, QPointF> findTwoNearestPoints(const QPointF & targetPoint,
+                                                        QXYSeries * lineSeries     );
 
     static std::optional<QPointF> findNearestPoint( const QPointF & targetPoint,
-                                                    QLineSeries * series,
+                                                    QXYSeries * series,
                                                     bool findLeft = false );
+
+    template<typename T>
+    static QList<T> subtractLists(const QList<T> &list1, const QList<T> &list2) {
+
+        if ( list2.empty() ) return list1;
+
+        QSet<T> set1 = QSet<T>(list1.begin(), list1.end());
+        QSet<T> set2 = QSet<T>(list2.begin(), list2.end());
+        return (set1 - set2).values(); // Возвращает QList
+    }
 };

@@ -117,11 +117,19 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
     QLineF markerLine( m_parentChart->mapToValue( markerLineOld.p1() ),
                        m_parentChart->mapToValue( markerLineOld.p2() )   );
 
-    for ( auto series : m_parentChart->series() )
+    auto standardSeries = m_parentChart->series();
+
+
+    auto serieses = PlotGeometryUtils::subtractLists<QAbstractSeries *>( m_parentChart->series(),
+                                                                         m_ignoreSeries           );
+
+    for ( auto series : serieses )
     {
         if ( not series->isVisible() ) continue;
 
-        auto lineSeries = dynamic_cast<QLineSeries *>( series );
+        auto lineSeries = dynamic_cast<QXYSeries *>( series );
+
+        if ( not lineSeries ) continue;
 
 
         auto point = m_parentChart->mapToValue( position, series );

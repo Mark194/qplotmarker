@@ -120,8 +120,6 @@ void QPlotMarker::move(const QPointF & position)
 
     if ( not d->isPositionAcceptable( position ) ) return;
 
-    // QGraphicsItem::setPos( position );
-
     QRectF plotArea = d->m_parentChart->plotArea();
 
 
@@ -298,4 +296,18 @@ void QPlotMarker::setLabelFormat(const QString & format)
     for ( auto & item : d->m_intersectionItems )
 
         item.coord->setLabelFormat( format );
+}
+
+void QPlotMarker::addIgnoreSeries(const QList<QAbstractSeries *> & series)
+{
+    Q_D(QPlotMarker);
+
+    d->m_ignoreSeries = series;
+}
+
+QList<QAbstractSeries *> QPlotMarker::ignoreSeries() const
+{
+    Q_D(const QPlotMarker);
+
+    return d->m_ignoreSeries;
 }

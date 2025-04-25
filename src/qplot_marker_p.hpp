@@ -53,6 +53,9 @@ public:
     quint8      m_intersectionLineSize = 0;
     QString     m_labelFormat;
 
+
+    QList<QAbstractSeries *> m_ignoreSeries;
+
 private:
     Q_DISABLE_COPY(QPlotMarkerPrivate)
 };

@@ -116,7 +116,7 @@ void MovableButton::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
 
     if ( serieses.isEmpty() ) return;
 
-    auto series = dynamic_cast<QLineSeries * >( serieses.first() );
+    auto series = dynamic_cast<QXYSeries * >( serieses.first() );
 
     if ( not series ) return;
 
