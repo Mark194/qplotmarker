@@ -334,6 +334,22 @@ void QPlotMarker::setLabelFormat(const QString & format)
         item.coord->setLabelFormat( format );
 }
 
+void QPlotMarker::addIgnoreSeries(QAbstractSeries * series)
+{
+    Q_D(QPlotMarker);
+
+    if ( d->m_ignoreSeries.contains( series ) ) return;
+
+    d->m_ignoreSeries.append( series );
+}
+
+void QPlotMarker::removeIgnoreSeries(QAbstractSeries * series)
+{
+    Q_D(QPlotMarker);
+
+    d->m_ignoreSeries.removeOne( series );
+}
+
 void QPlotMarker::setIgnoreSeries(const QList<QAbstractSeries *> & series)
 {
     Q_D(QPlotMarker);

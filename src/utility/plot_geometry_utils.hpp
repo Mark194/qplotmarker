@@ -38,6 +38,6 @@ public:
 
         QSet<T> set1 = QSet<T>(list1.begin(), list1.end());
         QSet<T> set2 = QSet<T>(list2.begin(), list2.end());
-        return (set1 - set2).values(); // Возвращает QList
+        return (set1 - set2).values();
     }
 };

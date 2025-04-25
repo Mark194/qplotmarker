@@ -63,6 +63,7 @@ public:
 
 
     void move(const QPointF & position);
+    void move(qreal );
     void moveBegin();
     void moveEnd();
     void moveToNextPoint();
@@ -82,6 +83,8 @@ public:
     void setLabelFormat(const QString & format);
 
 
+    void addIgnoreSeries( QAbstractSeries * series );
+    void removeIgnoreSeries( QAbstractSeries * series );
     void setIgnoreSeries(const QList<QAbstractSeries *> & series );
 
     QList<QAbstractSeries *> ignoreSeries() const;
