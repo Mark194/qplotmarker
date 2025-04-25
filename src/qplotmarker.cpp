@@ -18,6 +18,8 @@ QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, Qt::Orientation 
     : QGraphicsWidget(parent),
       d_ptr( new QPlotMarkerPrivate( this ) )
 {
+    Q_INIT_RESOURCE(marker_icons);
+
     Q_D(QPlotMarker);
 
     d->init( parent, color, orientation );
