@@ -93,6 +93,8 @@ public:
     void setControlIconSize(qreal size);
 
 
+    void update();
+
     // QGraphicsItem interface
     QRectF boundingRect() const;
 

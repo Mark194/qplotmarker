@@ -403,3 +403,10 @@ void QPlotMarker::setControlIconSize(qreal size)
 
     d->m_controlItem->setSize( size );
 }
+
+void QPlotMarker::update()
+{
+    Q_D(QPlotMarker);
+
+    move( d->m_markerPosition );
+}
