@@ -59,7 +59,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(base_example
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        ../../resources/marker_icons.qrc
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET base_example APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -86,7 +85,6 @@ target_link_libraries(base_example
     Qt${QT_VERSION_MAJOR}::Charts
     Qt${QT_VERSION_MAJOR}::Svg
     Qt${QT_VERSION_MAJOR}::SvgWidgets
-    qplotmarker
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
