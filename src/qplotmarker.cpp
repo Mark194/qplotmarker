@@ -334,7 +334,7 @@ void QPlotMarker::setLabelFormat(const QString & format)
         item.coord->setLabelFormat( format );
 }
 
-void QPlotMarker::addIgnoreSeries(const QList<QAbstractSeries *> & series)
+void QPlotMarker::setIgnoreSeries(const QList<QAbstractSeries *> & series)
 {
     Q_D(QPlotMarker);
 
