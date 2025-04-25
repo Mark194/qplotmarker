@@ -10,8 +10,6 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    // qDebug() << "X)";
-
     // // Создаем график и серию данных
     QChart *chart = new QChart();
     QLineSeries *series = new QLineSeries();
@@ -35,22 +33,13 @@ int main(int argc, char *argv[])
     // // Создаем маркер
     QPlotMarker *marker = new QPlotMarker(chart, Qt::red, Qt::Vertical);
 
-    // qDebug() << "X)";
-
-    // // Настраиваем маркер
-    // // marker->setMovementStyle(QPlotMarker::MOVEMENT_BY_POINTS);
     marker->setLabelFormat("%.2f"); // Формат отображаемых координат
 
-    // // Подключаем сигнал изменения позиции
-    QObject::connect(marker, &QPlotMarker::onPositionChanged, [](const QPointF &pos) {
-        qDebug() << "Маркер перемещен в позицию:" << pos;
-    });
 
-    // // Позиционируем маркер
-    marker->moveBegin(); // Устанавливаем маркер на x=3
+    chartView->scene()->addItem( marker );
 
-    // // Создаем view для отображения графика
 
+    marker->moveBegin();
 
     return a.exec();
 }
