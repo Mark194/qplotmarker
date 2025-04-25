@@ -76,7 +76,9 @@ bool QPlotMarkerPrivate::isPositionAcceptable(const QPointF & position) const
 
 void QPlotMarkerPrivate::handlePositionChange(const QRectF & plotArea)
 {
-    q_ptr->moveBegin();
+    Q_UNUSED(plotArea)
+
+    q_ptr->move( m_markerPosition );
 }
 
 
