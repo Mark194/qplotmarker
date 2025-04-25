@@ -6,9 +6,9 @@
 
 #include "entity/movable_button.hpp"
 
-#include <entity/graphics_coord_item.hpp>
+#include "entity/graphics_coord_item.hpp"
 
-#include <utility/plot_geometry_utils.hpp>
+#include "utility/plot_geometry_utils.hpp"
 
 
 QPlotMarkerPrivate::QPlotMarkerPrivate(QPlotMarker * q)
