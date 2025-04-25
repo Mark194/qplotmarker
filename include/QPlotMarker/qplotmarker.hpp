@@ -63,7 +63,7 @@ public:
 
 
     void move(const QPointF & position);
-    void move(qreal );
+    void move(qreal percent);
     void moveBegin();
     void moveEnd();
     void moveToNextPoint();

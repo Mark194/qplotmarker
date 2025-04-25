@@ -174,6 +174,34 @@ void QPlotMarker::move(const QPointF & position)
     emit onPositionChanged( position );
 }
 
+void QPlotMarker::move(qreal percent)
+{
+    Q_D(QPlotMarker);
+
+    Q_ASSERT_X(percent <= 1.0 and percent >= -1.0,
+               "move(qreal percent)",
+               "Incorrect percentage value [-1.0:1.0]!");
+
+    auto plotArea = d->m_parentChart->plotArea();
+
+    auto position = d->m_markerPosition;
+
+    if ( d->m_orientation == Qt::Vertical )
+    {
+        auto step = plotArea.width() * percent;
+
+        position.setX( position.x() + step );
+    }
+    else
+    {
+        auto step = plotArea.height() * percent;
+
+        position.setY( position.y() + step );
+    }
+
+    move( position );
+}
+
 
 void QPlotMarker::moveBegin()
 {
