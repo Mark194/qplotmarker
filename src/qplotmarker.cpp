@@ -140,7 +140,8 @@ void QPlotMarker::move(const QPointF & position)
 
         d->m_coordInfo->setCoord( d->m_parentChart->mapToValue( position ).x() );
 
-        d->m_coordInfo->setPos( position.x() + d->m_coordInfo->textWidth(), plotArea.bottom() );
+        d->m_coordInfo->setPos( position.x() - d->m_coordInfo->boundingRect().width() / 2,
+                                plotArea.bottom()                                         );
 
 
         d->loadIntersectionPoints( position );
@@ -161,7 +162,8 @@ void QPlotMarker::move(const QPointF & position)
 
         auto startX = d->m_parentChart->mapToPosition( { valueAxis->min(), 0 } );
 
-        d->m_coordInfo->setPos( startX.x() - d->m_coordInfo->boundingRect().width(), position.y() );
+        d->m_coordInfo->setPos( startX.x() - d->m_coordInfo->boundingRect().width(),
+                                position.y() - d->m_coordInfo->boundingRect().height() / 2 );
     }
 
     emit onPositionChanged( position );
