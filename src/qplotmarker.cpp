@@ -111,8 +111,6 @@ void QPlotMarker::setSelected(bool isSelect)
         d->m_controlItem->setRotation( 90 );
 
 
-    d->m_controlItem->setSize( 25.0 );
-
     QGraphicsItem::setSelected( isSelect );
 }
 
@@ -390,4 +388,18 @@ QList<QAbstractSeries *> QPlotMarker::ignoreSeries() const
     Q_D(const QPlotMarker);
 
     return d->m_ignoreSeries;
+}
+
+qreal QPlotMarker::controlIconSize() const
+{
+    Q_D(const QPlotMarker);
+
+    return d->m_controlItem->size();
+}
+
+void QPlotMarker::setControlIconSize(qreal size)
+{
+    Q_D(QPlotMarker);
+
+    d->m_controlItem->setSize( size );
 }

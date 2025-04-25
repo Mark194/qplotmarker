@@ -18,6 +18,7 @@ public:
 
     void setButtonControl( const QString & fileName );
 
+    qreal size() const;
     void setSize(qreal size);
 
     void setColor(const QColor & color);

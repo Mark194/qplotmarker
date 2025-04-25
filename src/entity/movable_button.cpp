@@ -17,7 +17,7 @@ MovableButton::MovableButton(QPlotMarker * parent)
       m_plotMarker(parent),
       m_buttonIcon( new QGraphicsSvgItem( this ) ),
       m_buttonControl( new QGraphicsSvgItem( this ) ),
-      m_size( 100 )
+      m_size( 25.0 )
 {
     setFlag( QGraphicsItem::ItemIsFocusable );
 
@@ -31,11 +31,20 @@ MovableButton::MovableButton(QPlotMarker * parent)
 void MovableButton::setButtonIcon(const QString & fileName)
 {
     m_buttonIcon->setSharedRenderer( new QSvgRenderer( fileName ) );
+
+    setSize( m_size );
 }
 
 void MovableButton::setButtonControl(const QString & fileName)
 {
     m_buttonControl->setSharedRenderer( new QSvgRenderer( fileName ) );
+
+    setSize( m_size );
+}
+
+qreal MovableButton::size() const
+{
+    return m_size;
 }
 
 void MovableButton::setSize(qreal size)

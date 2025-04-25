@@ -89,6 +89,10 @@ public:
 
     QList<QAbstractSeries *> ignoreSeries() const;
 
+    qreal controlIconSize() const;
+    void setControlIconSize(qreal size);
+
+
     // QGraphicsItem interface
     QRectF boundingRect() const;
 
