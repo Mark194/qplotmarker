@@ -15,7 +15,6 @@
 
 #include <QChart>
 #include <QGraphicsSvgItem>
-#include <QLineSeries>
 
 
 #include "qplotmarker_global.hpp"
