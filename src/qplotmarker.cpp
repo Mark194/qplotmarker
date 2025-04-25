@@ -191,13 +191,13 @@ void QPlotMarker::moveEnd()
 
     if ( d->m_orientation == Qt::Vertical )
 
-        move( { d->m_parentChart->plotArea().x(),
+        move( { d->m_parentChart->plotArea().topRight().x(),
                 d->m_parentChart->plotArea().y() } );
 
     else
 
         move( { d->m_parentChart->plotArea().right(),
-                d->m_parentChart->plotArea().topRight().y() } );
+                d->m_parentChart->plotArea().bottomRight().y() } );
 }
 
 bool QPlotMarker::hasFocus() const
