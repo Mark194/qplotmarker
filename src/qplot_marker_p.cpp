@@ -38,14 +38,14 @@ void QPlotMarkerPrivate::init(QChart * parent, const QColor & color, Qt::Orienta
     m_orientation = orientation;
 
 
-    m_line = new QGraphicsLineItem( q_ptr );
-
-    m_line->setPen( QPen( color, 2, Qt::DotLine, Qt::RoundCap  ) );
-
-
     m_controlItem = new MovableButton( q_ptr );
 
     m_controlItem->setColor( m_markerColor );
+
+
+    m_line = new QGraphicsLineItem( q_ptr );
+
+    m_line->setPen( QPen( color, 2, Qt::DotLine, Qt::RoundCap  ) );
 
 
     m_coordInfo = new GraphicsCoordItem( q_ptr );

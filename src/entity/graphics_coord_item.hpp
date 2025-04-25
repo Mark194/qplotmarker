@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include <QBrush>
 #include <QGraphicsTextItem>
 
 
@@ -28,6 +29,12 @@ public:
 Q_SIGNALS:
 
     void onActivated(bool);
+
+protected:
+
+    void hoverEnterEvent(QGraphicsSceneHoverEvent * event);
+
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent * event);
 
 private:
 

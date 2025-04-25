@@ -5,11 +5,14 @@
 #include <QPainter>
 #include <QPalette>
 #include <QPen>
+#include <QStyle>
+#include <QStyleFactory>
 
 
 GraphicsCoordItem::GraphicsCoordItem(QGraphicsItem * parent)
     : QGraphicsTextItem( parent )
-{}
+{
+}
 
 void GraphicsCoordItem::setCoord(qreal value)
 {
@@ -22,6 +25,9 @@ void GraphicsCoordItem::setCoord(qreal value)
 
         setPlainText( QString::asprintf( m_labelFormat.toUtf8().constData(),
                                          value)                              );
+
+
+    update();
 }
 
 qreal GraphicsCoordItem::coord() const
@@ -49,21 +55,36 @@ void GraphicsCoordItem::paint(QPainter * painter, const QStyleOptionGraphicsItem
 
     Q_UNUSED(widget)
 
+    QPalette vistaPalette = QApplication::palette();
 
-    auto palette = qApp->palette();
+    painter->setBrush( vistaPalette.color( QPalette::Base ) );
 
-    painter->setBrush( palette.color( QPalette::Base ) );
-
-    painter->setPen( QPen( m_itemColor, 1 ) );
+    painter->setPen( QPen( m_itemColor, 2 ) );
 
     painter->drawRect( boundingRect() );
 
 
-    painter->setPen( palette.color( QPalette::WindowText ) );
+    painter->setPen( vistaPalette.color( QPalette::WindowText ) );
 
     auto rect = boundingRect();
 
-    painter->drawText( rect, Qt::AlignCenter, toPlainText() );
+    rect = rect.marginsAdded( { -3, -3, 0, 0 } );
+
+    painter->drawText( rect, toPlainText() );
+
 }
 
+void GraphicsCoordItem::hoverEnterEvent(QGraphicsSceneHoverEvent * event)
+{
+    Q_UNUSED( event )
+
+    emit onActivated( true );
+}
+
+void GraphicsCoordItem::hoverLeaveEvent(QGraphicsSceneHoverEvent * event)
+{
+    Q_UNUSED( event )
+
+    emit onActivated( false );
+}
 

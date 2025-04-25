@@ -15,7 +15,7 @@
 
 
 QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, Qt::Orientation orientation)
-    : QGraphicsWidget(parent),
+    : QGraphicsWidget(),
       d_ptr( new QPlotMarkerPrivate( this ) )
 {
     Q_INIT_RESOURCE(marker_icons);

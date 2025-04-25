@@ -127,7 +127,7 @@ void MovableButton::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
 
     if ( not point )
 
-    point = findLeft? series->points().first() : series->points().last();
+        point = findLeft? series->points().first() : series->points().last();
 
 
     auto scenePoint = m_plotMarker->chart()->mapToPosition( point.value(),
