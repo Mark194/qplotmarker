@@ -107,7 +107,7 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
 {
     if ( m_intersectionItems.size() > 0 )
 
-    m_intersectionItems.clear();
+        clearInterSectionPoints();
 
 
     QSet<QPointF> points;
@@ -115,7 +115,7 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
     auto markerLineOld = m_line->line();
 
     QLineF markerLine( m_parentChart->mapToValue( markerLineOld.p1() ),
-                      m_parentChart->mapToValue( markerLineOld.p2() )   );
+                       m_parentChart->mapToValue( markerLineOld.p2() )   );
 
     for ( auto series : m_parentChart->series() )
     {
@@ -174,4 +174,16 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
         m_intersectionItems.append( { .coord=textItem, .point=item } );
 
     }
+}
+
+void QPlotMarkerPrivate::clearInterSectionPoints()
+{
+    for ( auto item : m_intersectionItems )
+    {
+        if ( item.coord ) delete item.coord;
+
+        if ( item.point ) delete item.point;
+    }
+
+    m_intersectionItems.clear();
 }
