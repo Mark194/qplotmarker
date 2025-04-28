@@ -287,13 +287,15 @@ QRectF QPlotMarker::boundingRect() const
     };
 }
 
-void QPlotMarker::showCoordinates()
+void QPlotMarker::showCoordinates(bool isVisible)
 {
     Q_D(QPlotMarker);
 
+    d->m_isVisibleCoords = isVisible;
+
     for ( auto & item : d->m_intersectionItems )
 
-        item.coord->setVisible( not item.coord->isVisible() );
+        item.coord->setVisible( isVisible );
 }
 
 void QPlotMarker::activate(bool isActivated)

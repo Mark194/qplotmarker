@@ -57,6 +57,8 @@ public:
 
     QList<QAbstractSeries *> m_ignoreSeries;
 
+    bool m_isVisibleCoords;
+
 private:
     Q_DISABLE_COPY(QPlotMarkerPrivate)
 };

@@ -105,7 +105,7 @@ Q_SIGNALS:
 
 public slots:
 
-    void showCoordinates();
+    void showCoordinates(bool isVisible);
 
     void activate( bool isActivated );
 

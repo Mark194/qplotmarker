@@ -22,7 +22,8 @@ QPlotMarkerPrivate::QPlotMarkerPrivate(QPlotMarker * q)
       m_line(nullptr),
       m_coordInfo(nullptr),
       m_intersectionPointSize(3),
-      m_intersectionLineSize(2)
+      m_intersectionLineSize(2),
+      m_isVisibleCoords(false)
 {}
 
 QPlotMarkerPrivate::~QPlotMarkerPrivate()
@@ -172,7 +173,7 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
 
         textItem->setCoord( point.y() );
 
-        textItem->setVisible( false );
+        textItem->setVisible( m_isVisibleCoords );
 
         textItem->setPos( viewPoint );
 
