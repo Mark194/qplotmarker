@@ -28,7 +28,8 @@ set(QPLOTMARKER_SOURCES
 if(BUILD_SHARED_LIBS)
    add_library(qplotmarker SHARED ${QPLOTMARKER_SOURCES})
 else()
-   add_library(qplotmarker STATIC ${QPLOTMARKER_SOURCES})
+   add_library(qplotmarker STATIC ${QPLOTMARKER_SOURCES}
+       effects/glow_effect.hpp effects/glow_effect.cpp)
 endif()
 
 

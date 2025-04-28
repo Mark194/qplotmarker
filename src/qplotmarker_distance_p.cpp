@@ -7,6 +7,8 @@
 #include <QPlotMarker/qplotmarker_distance.hpp>
 
 
+#include "effects/glow_effect.hpp"
+
 #include "entity/graphics_coord_item.hpp"
 
 
@@ -39,9 +41,29 @@ void QPlotMarkerDistancePrivate::init(QPlotMarker * one, QPlotMarker * other)
 
     m_otherMarker   = other;
 
+
     m_line = new QGraphicsLineItem( q_ptr );
 
+
     m_line->setPen( QPen( one->color(), 2, Qt::DotLine, Qt::RoundCap  ) );
+
+
+    if ( m_oneMarker->color() != m_otherMarker->color() )
+    {
+        GlowEffect * effect = new GlowEffect();
+
+        effect->setSource( m_line );
+
+        QLinearGradient gradient;
+
+        gradient.setColorAt( 0, m_oneMarker->color() );
+
+        gradient.setColorAt( 1, m_otherMarker->color() );
+
+        effect->setGradient( gradient );
+
+        m_line->setGraphicsEffect( effect );
+    }
 
 
     m_coordInfo = new GraphicsCoordItem( q_ptr );
