@@ -157,7 +157,7 @@ void MovableButton::move(const QPointF & position, bool isFindLeft)
         }
     }
 
-    m_plotMarker->move( closestPoint );
+    m_plotMarker->move( m_plotMarker->chart()->mapToPosition( closestPoint ) );
 }
 
 void MovableButton::mousePressEvent(QGraphicsSceneMouseEvent * event)
