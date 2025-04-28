@@ -33,8 +33,6 @@ int main(int argc, char *argv[])
     // // Создаем маркер
     QPlotMarker *marker = new QPlotMarker(chart, Qt::red, Qt::Vertical);
 
-    marker->setMovementStyle( QPlotMarker::MOVEMENT_BY_POINTS );
-
     marker->setLabelFormat("%.2f"); // Формат отображаемых координат
 
 
