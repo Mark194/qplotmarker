@@ -170,6 +170,8 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
 
         auto textItem = new GraphicsCoordItem();
 
+        textItem->setFont( m_coordInfo->font() );
+
         textItem->setItemColor( m_markerColor );
 
         textItem->setCoord( point.y() );
