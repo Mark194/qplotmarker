@@ -20,9 +20,6 @@ void QPlotMarkerGroup::addMarker(QGraphicsItem * marker)
 void QPlotMarkerGroup::addMarker(QPlotMarker * marker)
 {
     m_markers.append( marker );
-
-    connect( marker, &QPlotMarker::positionChanged,
-             this,   &QPlotMarkerGroup::move          );
 }
 
 void QPlotMarkerGroup::removeMarker(QPlotMarker * marker)
