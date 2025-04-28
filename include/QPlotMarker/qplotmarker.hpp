@@ -92,9 +92,6 @@ public:
     qreal controlIconSize() const;
     void setControlIconSize(qreal size);
 
-
-    void update();
-
     // QGraphicsItem interface
     QRectF boundingRect() const;
 
@@ -108,6 +105,8 @@ public slots:
     void showCoordinates();
 
     void activate( bool isActivated );
+
+    void update();
 
 protected:
 

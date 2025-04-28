@@ -2,6 +2,7 @@
 
 
 #include <QGraphicsScene>
+#include <QValueAxis>
 
 
 #include "entity/movable_button.hpp"
@@ -56,9 +57,17 @@ void QPlotMarkerPrivate::init(QChart * parent, const QColor & color, Qt::Orienta
     q_ptr->setSelected( false );
 
     QObject::connect( m_parentChart, &QChart::plotAreaChanged,
-                      q_ptr, [this](const QRectF & plotArea) {
-                          this->handlePositionChange( plotArea );
-                      } );
+                      q_ptr,         &QPlotMarker::update       );
+
+    Q_ASSERT_X( not m_parentChart->axes().isEmpty(),
+                "QPlotMarkerPrivate::init()",
+                "The axles are missing!"            );
+
+    for ( auto axis : m_parentChart->axes() )
+
+        if ( auto valueAxis = dynamic_cast<QValueAxis *>( axis ) )
+
+            QObject::connect( valueAxis, &QValueAxis::rangeChanged, q_ptr, &QPlotMarker::update );
 }
 
 bool QPlotMarkerPrivate::isPositionAcceptable(const QPointF & position) const
@@ -72,16 +81,6 @@ bool QPlotMarkerPrivate::isPositionAcceptable(const QPointF & position) const
     else
 
         return position.y() >= plotArea.top() and position.y() <= plotArea.bottom();
-}
-
-void QPlotMarkerPrivate::handlePositionChange(const QRectF & plotArea)
-{
-    Q_UNUSED(plotArea)
-
-    qreal x = qBound( plotArea.left(), m_markerPosition.x(), plotArea.right()  );
-    qreal y = qBound( plotArea.top(),  m_markerPosition.y(), plotArea.bottom() );
-
-    q_ptr->move( { x, y } );
 }
 
 
@@ -147,8 +146,8 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
 
         if ( intersectType == QLineF::BoundedIntersection )
 
-        points.insert( { intersectPoint.x(),
-                       QString::number( intersectPoint.y(), 'g', 3 ).toDouble() } );
+            points.insert( { intersectPoint.x(),
+                           QString::number( intersectPoint.y(), 'g', 3 ).toDouble() } );
     }
 
     for ( auto & point : points )

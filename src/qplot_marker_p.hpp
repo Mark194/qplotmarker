@@ -32,7 +32,6 @@ public:
     void init(QChart * parent, const QColor & color, Qt::Orientation orientation);
 
     bool isPositionAcceptable(const QPointF& position) const;
-    void handlePositionChange(const QRectF& plotArea);
     void loadIntersectionPoints(const QPointF& position);
 
     void clearInterSectionPoints();

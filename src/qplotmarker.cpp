@@ -408,5 +408,10 @@ void QPlotMarker::update()
 {
     Q_D(QPlotMarker);
 
-    move( d->m_markerPosition );
+    auto plotArea = d->m_parentChart->plotArea();
+
+    qreal x = qBound( plotArea.left(), d->m_markerPosition.x(), plotArea.right()  );
+    qreal y = qBound( plotArea.top(),  d->m_markerPosition.y(), plotArea.bottom() );
+
+    move( { x, y } );
 }
