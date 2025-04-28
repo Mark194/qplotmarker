@@ -24,7 +24,11 @@ QPlotMarkerPrivate::QPlotMarkerPrivate(QPlotMarker * q)
       m_intersectionPointSize(3),
       m_intersectionLineSize(2),
       m_isVisibleCoords(false),
-      m_isSelectedLock(false)
+      m_isSelectedLock(false),
+      m_buttonSelectedIcon(":/marker_selected_icon"),
+      m_buttonsSelectedControl(":/marker_selected_eye"),
+      m_buttonIcon(":/marker_icon"),
+      m_buttonControl(":/marker_eye")
 {}
 
 QPlotMarkerPrivate::~QPlotMarkerPrivate()

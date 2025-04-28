@@ -41,6 +41,15 @@ public:
     Q_ENUM(MovementStyle)
 
 
+    enum MarkerButtonIcon
+    {
+        MARKER_BUTTON_ICON,
+        MARKER_BUTTON_CONTROL,
+        MARKER_BUTTON_SELECTED_ICON,
+        MARKER_BUTTON_SELECTED_CONTROL
+    };
+    Q_ENUM(MarkerButtonIcon)
+
     explicit QPlotMarker(QChart * parent,
                          const QColor & color = "black",
                          Qt::Orientation orientation = Qt::Horizontal);
@@ -99,6 +108,10 @@ public:
 
     void setCoordFont(const QFont & font);
     void setCoordPen(const QPen & pen);
+
+    QString markerIcon(MarkerButtonIcon typeIcon) const;
+    void setMarkerIcon(const QString & fileName, MarkerButtonIcon typeIcon);
+
 
     // QGraphicsItem interface
     QRectF boundingRect() const;

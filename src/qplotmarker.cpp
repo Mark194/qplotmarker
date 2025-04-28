@@ -97,15 +97,15 @@ void QPlotMarker::setSelected(bool isSelect)
 
     if ( isSelect )
     {
-        d->m_controlItem->setButtonIcon( ":/marker_selected_icon" );
+        d->m_controlItem->setButtonIcon( d->m_buttonSelectedIcon );
 
-        d->m_controlItem->setButtonControl( ":/marker_selected_eye" );
+        d->m_controlItem->setButtonControl( d->m_buttonsSelectedControl );
     }
     else
     {
-        d->m_controlItem->setButtonIcon( ":/marker_icon" );
+        d->m_controlItem->setButtonIcon( d->m_buttonIcon );
 
-        d->m_controlItem->setButtonControl( ":/marker_eye" );
+        d->m_controlItem->setButtonControl( d->m_buttonControl );
     }
 
 
@@ -443,6 +443,44 @@ void QPlotMarker::setCoordPen(const QPen & pen)
     for ( auto item : d->m_intersectionItems )
 
         item.coord->setPen( pen );
+}
+
+QString QPlotMarker::markerIcon(MarkerButtonIcon typeIcon) const
+{
+    Q_D(const QPlotMarker);
+
+    switch ( typeIcon )
+    {
+        case QPlotMarker::MARKER_BUTTON_ICON: return d->m_buttonIcon;
+
+        case QPlotMarker::MARKER_BUTTON_CONTROL: return d->m_buttonControl;
+
+        case QPlotMarker::MARKER_BUTTON_SELECTED_ICON: return d->m_buttonSelectedIcon;
+
+        case QPlotMarker::MARKER_BUTTON_SELECTED_CONTROL: return d->m_buttonsSelectedControl;
+
+        default: return {};
+    }
+}
+
+void QPlotMarker::setMarkerIcon(const QString & fileName, MarkerButtonIcon typeIcon)
+{
+    Q_D(QPlotMarker);
+
+    switch ( typeIcon )
+    {
+        case QPlotMarker::MARKER_BUTTON_ICON:               d->m_buttonIcon = fileName;
+
+        case QPlotMarker::MARKER_BUTTON_CONTROL:            d->m_buttonControl = fileName;
+
+        case QPlotMarker::MARKER_BUTTON_SELECTED_ICON:      d->m_buttonSelectedIcon = fileName;
+
+        case QPlotMarker::MARKER_BUTTON_SELECTED_CONTROL:   d->m_buttonsSelectedControl = fileName;
+
+        default: return;
+    }
+
+    update();
 }
 
 void QPlotMarker::update()

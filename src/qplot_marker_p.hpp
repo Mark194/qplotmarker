@@ -60,6 +60,11 @@ public:
     bool m_isVisibleCoords;
     bool m_isSelectedLock;
 
+    QString m_buttonIcon;
+    QString m_buttonControl;
+    QString m_buttonSelectedIcon;
+    QString m_buttonsSelectedControl;
+
 private:
     Q_DISABLE_COPY(QPlotMarkerPrivate)
 };
