@@ -169,7 +169,7 @@ void QPlotMarker::move(const QPointF & position)
                                 position.y() - d->m_coordInfo->boundingRect().height() / 2 );
     }
 
-    emit onPositionChanged( position );
+    emit positionChanged( position );
 }
 
 void QPlotMarker::move(qreal percent)

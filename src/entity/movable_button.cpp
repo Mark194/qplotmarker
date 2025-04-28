@@ -122,6 +122,8 @@ void MovableButton::move(const QPointF & position, bool isFindLeft)
 
 void MovableButton::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {
+    emit m_plotMarker->clicked( event->button() );
+
     if ( ( event->modifiers() & Qt::ControlModifier ) != 0 )
     {
         m_plotMarker->setSelected( not m_plotMarker->isSelected() );
@@ -157,4 +159,9 @@ void MovableButton::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
     Q_UNUSED(event)
 
     m_plotMarker->setSelected( false );
+}
+
+void MovableButton::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
+{
+    emit m_plotMarker->doubleClicked( event->button() );
 }

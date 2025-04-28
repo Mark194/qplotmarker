@@ -98,7 +98,9 @@ public:
 Q_SIGNALS:
     void colorChanged(const QColor & color);
     void movementStyleChanged(MovementStyle style);
-    void onPositionChanged(const QPointF & position);
+    void positionChanged(const QPointF & position);
+    void clicked(Qt::MouseButton button);
+    void doubleClicked(Qt::MouseButton button);
 
 public slots:
 
