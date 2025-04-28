@@ -21,7 +21,7 @@ void QPlotMarkerGroup::addMarker(QPlotMarker * marker)
 {
     m_markers.append( marker );
 
-    connect( marker, &QPlotMarker::onPositionChanged,
+    connect( marker, &QPlotMarker::positionChanged,
              this,   &QPlotMarkerGroup::move          );
 }
 
@@ -45,12 +45,12 @@ void QPlotMarkerGroup::setSyncMovement(bool isSync)
 
         if ( m_isSyncMovement )
 
-            connect( marker, &QPlotMarker::onPositionChanged,
+            connect( marker, &QPlotMarker::positionChanged,
                      this,   &QPlotMarkerGroup::move          );
 
         else
 
-            disconnect( marker, &QPlotMarker::onPositionChanged,
+            disconnect( marker, &QPlotMarker::positionChanged,
                         this,   &QPlotMarkerGroup::move          );
 
 }

@@ -41,6 +41,8 @@ protected:
 
     void mouseReleaseEvent(QGraphicsSceneMouseEvent * event) override;
 
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event) override;
+
 private:
 
     QPlotMarker      * m_plotMarker;
@@ -50,4 +52,5 @@ private:
     QGraphicsSvgItem * m_buttonControl;
 
     qreal m_size;
+
 };
