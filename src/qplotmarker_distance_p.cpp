@@ -88,7 +88,14 @@ void QPlotMarkerDistancePrivate::paint()
     auto plotArea = m_oneMarker->chart()->plotArea();
 
 
-    m_line->setLine( pointOne.x(), plotArea.y(), pointOther.x(), plotArea.topRight().y() );
+    if ( m_oneMarker->orientation() == Qt::Vertical )
+
+        m_line->setLine( pointOne.x(), plotArea.y(), pointOther.x(), plotArea.topRight().y() );
+
+    else
+
+        m_line->setLine( plotArea.topRight().x(), pointOne.y(),
+                         plotArea.topRight().x(), pointOther.y() );
 
 
     m_coordInfo->setCoord( q_ptr->markersDistance( m_oneMarker, m_otherMarker ) );
