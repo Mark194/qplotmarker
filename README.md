@@ -54,6 +54,65 @@ By default, installation goes to /usr/local/ on Linux/macOS or C:\Program Files 
 
 [Library releases]: https://github.com/Mark194/qplotmarker/releases
 
+<!--Integration-->
+## Integration
+
+### QMake Integration
+Since `qplotmarker.pri` is not provided, manually add the library to your project:
+
+qmake
+## Add include path
+INCLUDEPATH += $$PWD/thirdparty/qplotmarker/include
+
+## Link static library
+LIBS += -L$$PWD/thirdparty/qplotmarker/lib -lqplotmarker
+
+## OR compile sources directly (if needed)
+SOURCES += $$PWD/thirdparty/qplotmarker/src/*.cpp
+HEADERS += $$PWD/thirdparty/qplotmarker/include/*.h
+
+
+### CMake Integration
+
+## Method 1: Using find_package (Recommended if installed system-wide)
+
+```cmake```
+
+```find_package(qplotmarker REQUIRED)```
+
+```target_link_libraries(your_target PRIVATE qplotmarker::qplotmarker)```
+
+## Method 2: Manual configuration (For custom locations)
+
+```
+# For header files
+
+target_include_directories(your_target PRIVATE
+    path/to/qplotmarker/include
+)
+
+# For static library
+target_link_libraries(your_target PRIVATE 
+    path/to/qplotmarker/lib/libqplotmarker.a
+)
+
+# Or for shared library
+target_link_libraries(your_target PRIVATE 
+    path/to/qplotmarker/lib/libqplotmarker.so
+```
+
+## Method 3: Using FetchContent (For direct GitHub integration)
+
+```
+include(FetchContent)
+FetchContent_Declare(
+    qplotmarker
+    GIT_REPOSITORY https://github.com/Mark194/qplotmarker.git
+    GIT_TAG        v1.0.0
+)
+FetchContent_MakeAvailable(qplotmarker)
+target_link_libraries(your_target PRIVATE qplotmarker)
+```
 
 <!--Support-->
 ## Support
