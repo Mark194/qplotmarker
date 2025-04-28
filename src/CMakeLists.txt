@@ -21,6 +21,7 @@ set(QPLOTMARKER_SOURCES
     utility/plot_geometry_utils.hpp utility/plot_geometry_utils.cpp
     ../resources/marker_icons.qrc
     qplotmarker_distance.cpp
+    qplotmarker_distance_p.hpp qplotmarker_distance_p.cpp
 )
 
 
