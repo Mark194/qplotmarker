@@ -1,6 +1,9 @@
 #include "movable_button.hpp"
 
 
+#include <limits>
+
+
 #include <QGraphicsSceneMouseEvent>
 #include <QSvgRenderer>
 
@@ -101,23 +104,60 @@ void MovableButton::move(const QPointF & position, bool isFindLeft)
 
     if ( serieses.isEmpty() ) return;
 
-    auto series = dynamic_cast<QXYSeries * >( serieses.first() );
+    QList<QXYSeries *> successSeries;
 
-    if ( not series ) return;
+    auto ignoreSeries = m_plotMarker->ignoreSeries();
 
-    auto valuePoint = m_plotMarker->chart()->mapToValue( position, series  );
+    for ( auto series : serieses )
+    {
+        auto seriesXY = dynamic_cast<QXYSeries *>( series );
 
-    auto point = PlotGeometryUtils::findNearestPoint( valuePoint, series, isFindLeft );
+        if ( seriesXY
+             and seriesXY->count() != 0
+             and not ignoreSeries.contains( series ) )
 
-    if ( not point )
+            successSeries.append( seriesXY );
+    }
 
-    point = isFindLeft? series->points().first() : series->points().last();
+    if ( successSeries.isEmpty() ) return;
 
 
-    auto scenePoint = m_plotMarker->chart()->mapToPosition( point.value(),
-                                                            series          );
+    QList<QPointF> nearestPoints;
 
-    m_plotMarker->move( scenePoint );
+    for ( auto series : successSeries )
+    {
+        auto valuePoint = m_plotMarker->chart()->mapToValue( position, series  );
+
+        auto point = PlotGeometryUtils::findNearestPoint( valuePoint, series, isFindLeft );
+
+        if ( not point ) point = isFindLeft? series->points().first() : series->points().last();
+
+        nearestPoints.append( point.value() );
+    }
+
+    QPointF closestPoint;
+
+    qreal minDistSq = std::numeric_limits<qreal>::max();
+
+    auto targetValue = m_plotMarker->chart()->mapToValue( position );
+
+    bool isFind = false;
+
+    for ( const auto & point : nearestPoints )
+    {
+        qreal dist = PlotGeometryUtils::distance( point, targetValue );
+
+        if ( dist < minDistSq )
+        {
+            minDistSq = dist;
+
+            closestPoint = point;
+
+            isFind = true;
+        }
+    }
+
+    m_plotMarker->move( closestPoint );
 }
 
 void MovableButton::mousePressEvent(QGraphicsSceneMouseEvent * event)

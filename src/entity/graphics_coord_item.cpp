@@ -33,6 +33,16 @@ void GraphicsCoordItem::setCoord(qreal value)
     update();
 }
 
+QPen GraphicsCoordItem::pen() const
+{
+    return m_coordPen;
+}
+
+void GraphicsCoordItem::setPen(const QPen & pen)
+{
+    m_coordPen = pen;
+}
+
 qreal GraphicsCoordItem::coord() const
 {
     return m_coord;
