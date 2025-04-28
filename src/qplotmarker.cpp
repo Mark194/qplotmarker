@@ -406,6 +406,28 @@ void QPlotMarker::setControlIconSize(qreal size)
     d->m_controlItem->setSize( size );
 }
 
+void QPlotMarker::setCoordFont(const QFont & font)
+{
+    Q_D(QPlotMarker);
+
+    d->m_coordInfo->setFont( font );
+
+    for ( auto item : d->m_intersectionItems )
+
+        item.coord->setFont( font );
+}
+
+void QPlotMarker::setCoordPen(const QPen & pen)
+{
+    Q_D(QPlotMarker);
+
+    d->m_coordInfo->setPen( pen );
+
+    for ( auto item : d->m_intersectionItems )
+
+        item.coord->setPen( pen );
+}
+
 void QPlotMarker::update()
 {
     Q_D(QPlotMarker);

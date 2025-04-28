@@ -12,6 +12,9 @@
 GraphicsCoordItem::GraphicsCoordItem(QGraphicsItem * parent)
     : QGraphicsTextItem( parent )
 {
+    QPalette vistaPalette = QApplication::palette();
+
+    m_coordPen = vistaPalette.color( QPalette::WindowText );
 }
 
 void GraphicsCoordItem::setCoord(qreal value)
@@ -55,6 +58,7 @@ void GraphicsCoordItem::paint(QPainter * painter, const QStyleOptionGraphicsItem
 
     Q_UNUSED(widget)
 
+
     QPalette vistaPalette = QApplication::palette();
 
     painter->setBrush( vistaPalette.color( QPalette::Base ) );
@@ -64,14 +68,13 @@ void GraphicsCoordItem::paint(QPainter * painter, const QStyleOptionGraphicsItem
     painter->drawRect( boundingRect() );
 
 
-    painter->setPen( vistaPalette.color( QPalette::WindowText ) );
+    painter->setPen( m_coordPen );
 
     auto rect = boundingRect();
 
-    rect = rect.marginsAdded( { -3, -3, 0, 0 } );
+    painter->setFont( font() );
 
-    painter->drawText( rect, toPlainText() );
-
+    painter->drawText( rect, Qt::AlignCenter, toPlainText() );
 }
 
 void GraphicsCoordItem::hoverEnterEvent(QGraphicsSceneHoverEvent * event)

@@ -92,6 +92,9 @@ public:
     qreal controlIconSize() const;
     void setControlIconSize(qreal size);
 
+    void setCoordFont(const QFont & font);
+    void setCoordPen(const QPen & pen);
+
     // QGraphicsItem interface
     QRectF boundingRect() const;
 

@@ -3,6 +3,7 @@
 
 #include <QBrush>
 #include <QGraphicsTextItem>
+#include <QPen>
 
 
 class GraphicsCoordItem : public QGraphicsTextItem
@@ -14,8 +15,11 @@ class GraphicsCoordItem : public QGraphicsTextItem
 public:
     GraphicsCoordItem(QGraphicsItem * parent = nullptr);
 
-    void setCoord( qreal value );
     qreal coord() const;
+    void setCoord( qreal value );
+
+    QPen pen() const;
+    void setPen(const QPen & pen);
 
 
     void setItemColor(const QColor & itemColor);
@@ -43,4 +47,6 @@ private:
     qreal       m_coord;
 
     QString     m_labelFormat;
+
+    QPen        m_coordPen;
 };
