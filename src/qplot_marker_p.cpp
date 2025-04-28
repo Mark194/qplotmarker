@@ -23,7 +23,8 @@ QPlotMarkerPrivate::QPlotMarkerPrivate(QPlotMarker * q)
       m_coordInfo(nullptr),
       m_intersectionPointSize(3),
       m_intersectionLineSize(2),
-      m_isVisibleCoords(false)
+      m_isVisibleCoords(false),
+      m_isSelectedLock(false)
 {}
 
 QPlotMarkerPrivate::~QPlotMarkerPrivate()

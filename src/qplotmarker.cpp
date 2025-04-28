@@ -92,6 +92,9 @@ void QPlotMarker::setSelected(bool isSelect)
 {
     Q_D(QPlotMarker);
 
+    if ( d->m_isSelectedLock ) return;
+
+
     if ( isSelect )
     {
         d->m_controlItem->setButtonIcon( ":/marker_selected_icon" );
@@ -112,6 +115,20 @@ void QPlotMarker::setSelected(bool isSelect)
 
 
     QGraphicsItem::setSelected( isSelect );
+}
+
+bool QPlotMarker::isIgnoreSelected() const
+{
+    Q_D(const QPlotMarker);
+
+    return d->m_isSelectedLock;
+}
+
+void QPlotMarker::setIsIgnoreSelected(bool isIgnore)
+{
+    Q_D(QPlotMarker);
+
+    d->m_isSelectedLock = isIgnore;
 }
 
 void QPlotMarker::move(const QPointF & position)

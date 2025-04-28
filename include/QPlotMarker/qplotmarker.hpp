@@ -59,6 +59,11 @@ public:
 
 
     void setSelected(bool isSelect);
+
+    bool isIgnoreSelected() const;
+    void setIsIgnoreSelected(bool isIgnore);
+
+
     QChart * chart() const;
 
 
