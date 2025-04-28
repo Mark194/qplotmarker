@@ -14,11 +14,13 @@ set(QPLOTMARKER_SOURCES
     entity/movable_button.hpp entity/movable_button.cpp
     entity/graphics_coord_item.hpp entity/graphics_coord_item.cpp
     effects/fast_colorize_effect.hpp effects/fast_colorize_effect.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplot_marker_group.hpp
-    qplot_marker_group.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker_group.hpp
+    qplotmarker_group.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker_distance.hpp
     qplot_marker_p.hpp qplot_marker_p.cpp
     utility/plot_geometry_utils.hpp utility/plot_geometry_utils.cpp
     ../resources/marker_icons.qrc
+    qplotmarker_distance.cpp
 )
 
 
@@ -48,7 +50,7 @@ target_include_directories(qplotmarker
 # Указываем публичные заголовочные файлы
 set_target_properties(qplotmarker PROPERTIES
     PUBLIC_HEADER
-        "${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker.hpp;${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplot_marker_group.hpp;${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker_global.hpp;${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/QPlotMarker;"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker.hpp;${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker_group.hpp;${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker_global.hpp;${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/QPlotMarker;${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/qplotmarker_distance.hpp;${CMAKE_CURRENT_SOURCE_DIR}/../include/QPlotMarker/QPlotMarkerDistance;"
 )
 
 
