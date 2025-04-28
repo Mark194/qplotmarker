@@ -27,6 +27,8 @@ int main(
     // qDebug() << "X)";
 
 
+    QString markerFormat = "%.2f";
+
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->resize(800, 600);
@@ -34,12 +36,16 @@ int main(
 
     QPlotMarker *one = new QPlotMarker(chart, Qt::red, Qt::Vertical);
 
+    one->setLabelFormat( markerFormat );
+
     chartView->scene()->addItem( one );
 
     one->moveBegin();
 
 
     QPlotMarker *other = new QPlotMarker(chart, Qt::red, Qt::Vertical);
+
+    other->setLabelFormat( markerFormat );
 
     chartView->scene()->addItem( other );
 
@@ -50,7 +56,7 @@ int main(
 
     distance->setMarker( one, other );
 
-    distance->setLabelFormat("%.2f");
+    distance->setLabelFormat( markerFormat );
 
     chartView->scene()->addItem( distance );
 
