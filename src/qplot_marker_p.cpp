@@ -148,7 +148,7 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
         if ( intersectType == QLineF::BoundedIntersection )
 
             points.insert( { intersectPoint.x(),
-                           QString::number( intersectPoint.y(), 'g', 3 ).toDouble() } );
+                           QString::number( intersectPoint.y(), 'f', 3 ).toDouble() } );
     }
 
     for ( auto & point : points )
