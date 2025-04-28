@@ -99,13 +99,9 @@ Q_SIGNALS:
     void colorChanged(const QColor & color);
     void movementStyleChanged(MovementStyle style);
     void positionChanged(const QPointF & position);
-<<<<<<< HEAD
+
     void clicked(Qt::MouseButton button);
     void doubleClicked(Qt::MouseButton button);
-=======
-    void clicked();
-    void doubleClicked();
->>>>>>> origin/main
 
 public slots:
 
