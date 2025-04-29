@@ -135,56 +135,7 @@ void QPlotMarker::move(const QPointF & position)
 {
     Q_D(QPlotMarker);
 
-    if ( not d->isPositionAcceptable( position ) ) return;
-
-
-    d->m_markerPosition = position;
-
-
-    QRectF plotArea = d->m_parentChart->plotArea();
-
-    auto controlRect = d->m_controlItem->mapToScene( d->m_controlItem->boundingRect() ).boundingRect();
-
-    if ( d->m_orientation == Qt::Vertical )
-    {
-        d->m_line->setLine( position.x(), plotArea.top(), position.x(), plotArea.bottom() );
-
-
-        qreal halfPixmapWidth = controlRect.width() / 2.0;
-
-        auto pixmapHeight = controlRect.height();
-
-
-        d->m_controlItem->setPos( position.x() - halfPixmapWidth, plotArea.top() - pixmapHeight );
-
-
-        d->m_coordInfo->setCoord( d->m_parentChart->mapToValue( position ).x() );
-
-        d->m_coordInfo->setPos( position.x() - d->m_coordInfo->boundingRect().width() / 2,
-                                plotArea.bottom()                                         );
-
-
-        d->loadIntersectionPoints( position );
-    }
-    else
-    {
-        d->m_line->setLine( plotArea.left(), position.y(), plotArea.right(), position.y() );
-
-        qreal halfPixmapWidth = controlRect.width() / 2.0;
-
-        d->m_controlItem->setPos( plotArea.right() + controlRect.width(),
-                                  position.y() - halfPixmapWidth           );
-
-
-        d->m_coordInfo->setCoord( d->m_parentChart->mapToValue( position ).y() );
-
-        auto valueAxis = (QValueAxis *) d->m_parentChart->axes( Qt::Horizontal ).first();
-
-        auto startX = d->m_parentChart->mapToPosition( { valueAxis->min(), 0 } );
-
-        d->m_coordInfo->setPos( startX.x() - d->m_coordInfo->boundingRect().width(),
-                                position.y() - d->m_coordInfo->boundingRect().height() / 2 );
-    }
+    d->moveMarkerToPosition( position );
 
     emit positionChanged( position );
 }

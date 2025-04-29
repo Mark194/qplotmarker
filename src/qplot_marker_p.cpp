@@ -194,6 +194,60 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
     }
 }
 
+void QPlotMarkerPrivate::moveMarkerToPosition(const QPointF & position)
+{
+    if ( not isPositionAcceptable( position ) ) return;
+
+
+    m_markerPosition = position;
+
+
+    QRectF plotArea = m_parentChart->plotArea();
+
+    auto controlRect = m_controlItem->mapToScene( m_controlItem->boundingRect() ).boundingRect();
+
+    if ( m_orientation == Qt::Vertical )
+    {
+        m_line->setLine( position.x(), plotArea.top(), position.x(), plotArea.bottom() );
+
+
+        qreal halfPixmapWidth = controlRect.width() / 2.0;
+
+        auto pixmapHeight = controlRect.height();
+
+
+        m_controlItem->setPos( position.x() - halfPixmapWidth, plotArea.top() - pixmapHeight );
+
+
+        m_coordInfo->setCoord( m_parentChart->mapToValue( position ).x() );
+
+        m_coordInfo->setPos( position.x() - m_coordInfo->boundingRect().width() / 2,
+                               plotArea.bottom()                                     );
+
+
+        loadIntersectionPoints( position );
+    }
+    else
+    {
+        m_line->setLine( plotArea.left(), position.y(), plotArea.right(), position.y() );
+
+        qreal halfPixmapWidth = controlRect.width() / 2.0;
+
+        m_controlItem->setPos( plotArea.right() + controlRect.width(),
+                               position.y() - halfPixmapWidth           );
+
+
+        m_coordInfo->setCoord( m_parentChart->mapToValue( position ).y() );
+
+        auto valueAxis = (QValueAxis *) m_parentChart->axes( Qt::Horizontal ).first();
+
+        auto startX = m_parentChart->mapToPosition( { valueAxis->min(), 0 } );
+
+        m_coordInfo->setPos( startX.x() - m_coordInfo->boundingRect().width(),
+                             position.y() - m_coordInfo->boundingRect().height() / 2 );
+    }
+}
+
 void QPlotMarkerPrivate::clearInterSectionPoints()
 {
     for ( auto item : m_intersectionItems )
