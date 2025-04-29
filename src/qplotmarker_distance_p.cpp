@@ -16,7 +16,8 @@ QPlotMarkerDistancePrivate::QPlotMarkerDistancePrivate(QPlotMarkerDistance * q)
     : q_ptr(q),
       m_line( new QGraphicsLineItem( q_ptr ) ),
       m_coordInfo( new GraphicsCoordItem( q_ptr ) ),
-      m_alignment(Qt::AlignBottom)
+      m_alignment(Qt::AlignBottom),
+      m_precentAlignment(0.0)
 {
 
 }
@@ -145,6 +146,11 @@ qreal QPlotMarkerDistancePrivate::controlDifference()
         case Qt::AlignBottom:
 
             return 0;
+
+        case Qt::AlignJustify:
+
+            return orientation == Qt::Vertical? controlRect.height() * m_precentAlignment :
+                                                controlRect.width() * m_precentAlignment;
 
         default: return 0;
     }

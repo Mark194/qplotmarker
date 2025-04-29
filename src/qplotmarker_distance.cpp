@@ -72,6 +72,19 @@ void QPlotMarkerDistance::setAlignment(Qt::AlignmentFlag alignment)
     }
 }
 
+void QPlotMarkerDistance::setAlignment(qreal precentAlignment)
+{
+    Q_D(QPlotMarkerDistance);
+
+    Q_ASSERT_X(precentAlignment >= 0.0 and precentAlignment <= 1.0,
+               "QPlotMarkerDistance::setAlignment(qreal precentAlignment)",
+               "PrecentAlignment must be in range [0.0;1.0]!");
+
+    d->m_precentAlignment = precentAlignment;
+
+    d->setAlignment( Qt::AlignJustify );
+}
+
 qreal QPlotMarkerDistance::markersDistance(QPlotMarker * one, QPlotMarker * other)
 {
     return std::abs( other->markerValue() - one->markerValue() );

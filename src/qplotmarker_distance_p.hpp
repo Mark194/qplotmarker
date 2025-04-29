@@ -32,6 +32,8 @@ public:
 
     Qt::AlignmentFlag m_alignment;
 
+    qreal m_precentAlignment;
+
 private:
     Q_DISABLE_COPY(QPlotMarkerDistancePrivate)
 

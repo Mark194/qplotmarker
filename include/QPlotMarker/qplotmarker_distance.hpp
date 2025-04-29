@@ -34,6 +34,8 @@ public:
 
     void setAlignment(Qt::AlignmentFlag alignment);
 
+    void setAlignment(qreal precentAlignment);
+
     static qreal markersDistance(QPlotMarker * one, QPlotMarker * other);
 
 
