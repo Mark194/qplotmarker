@@ -38,6 +38,20 @@ void QPlotMarkerDistance::setLabelFormat(const QString & format)
     d->m_coordInfo->setLabelFormat( format );
 }
 
+void QPlotMarkerDistance::setCoordFont(const QFont & font)
+{
+    Q_D(QPlotMarkerDistance);
+
+    d->m_coordInfo->setFont( font );
+}
+
+void QPlotMarkerDistance::setCoordPen(const QPen & pen)
+{
+    Q_D(QPlotMarkerDistance);
+
+    d->m_coordInfo->setPen( pen );
+}
+
 qreal QPlotMarkerDistance::markersDistance(QPlotMarker * one, QPlotMarker * other)
 {
     return other->markerValue() - one->markerValue();

@@ -28,6 +28,8 @@ public:
 
     void setLabelFormat(const QString & format);
 
+    void setCoordFont(const QFont & font);
+    void setCoordPen(const QPen & pen);
 
     static qreal markersDistance(QPlotMarker * one, QPlotMarker * other);
 
