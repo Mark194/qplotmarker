@@ -22,14 +22,14 @@ set(QPLOTMARKER_SOURCES
     ../resources/marker_icons.qrc
     qplotmarker_distance.cpp
     qplotmarker_distance_p.hpp qplotmarker_distance_p.cpp
+    effects/glow_effect.cpp effects/glow_effect.hpp
 )
 
 
 if(BUILD_SHARED_LIBS)
    add_library(qplotmarker SHARED ${QPLOTMARKER_SOURCES})
 else()
-   add_library(qplotmarker STATIC ${QPLOTMARKER_SOURCES}
-       effects/glow_effect.hpp effects/glow_effect.cpp)
+   add_library(qplotmarker STATIC ${QPLOTMARKER_SOURCES})
 endif()
 
 
