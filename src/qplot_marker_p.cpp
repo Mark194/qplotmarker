@@ -256,21 +256,21 @@ void QPlotMarkerPrivate::updateOnMoveByPoints(const QPointF & targetPoint)
 
     if ( not leftClosestPoint and not rightClosestPoint )
     {
-        moveMarkerToPosition( targetPoint );
+        moveMarkerToPosition( q_ptr->chart()->mapToPosition( targetPoint ) );
 
         return;
     }
 
     if ( not leftClosestPoint  )
     {
-        moveMarkerToPosition( rightClosestPoint.value() );
+        moveMarkerToPosition( q_ptr->chart()->mapToPosition( rightClosestPoint.value() ) );
 
         return;
     }
 
     if ( not rightClosestPoint )
     {
-        moveMarkerToPosition( leftClosestPoint.value() );
+        moveMarkerToPosition( q_ptr->chart()->mapToPosition( leftClosestPoint.value() ) );
 
         return;
     }
@@ -281,11 +281,11 @@ void QPlotMarkerPrivate::updateOnMoveByPoints(const QPointF & targetPoint)
 
     if ( leftDist < rightDist )
 
-        moveMarkerToPosition( leftClosestPoint.value() );
+        moveMarkerToPosition( q_ptr->chart()->mapToPosition( leftClosestPoint.value() ) );
 
     else
 
-        moveMarkerToPosition( rightClosestPoint.value() );
+        moveMarkerToPosition( q_ptr->chart()->mapToPosition( rightClosestPoint.value() ) );
 }
 
 void QPlotMarkerPrivate::clearInterSectionPoints()
