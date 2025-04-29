@@ -443,5 +443,13 @@ void QPlotMarker::update()
     qreal x = qBound( plotArea.left(), d->m_markerPosition.x(), plotArea.right()  );
     qreal y = qBound( plotArea.top(),  d->m_markerPosition.y(), plotArea.bottom() );
 
-    move( { x, y } );
+    QPointF targetPoint( x, y );
+
+    if ( d->m_movement == QPlotMarker::MOVEMENT_DEFAULT )
+
+        move( targetPoint );
+
+    else
+
+        d->updateOnMoveByPoints( targetPoint );
 }

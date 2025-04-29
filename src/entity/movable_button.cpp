@@ -100,64 +100,11 @@ void MovableButton::paint(QPainter * painter, const QStyleOptionGraphicsItem * o
 
 void MovableButton::move(const QPointF & position, bool isFindLeft)
 {
-    auto serieses = m_plotMarker->chart()->series();
+    auto closestPoint = PlotGeometryUtils::findClosestPoint( m_plotMarker, position, isFindLeft );
 
-    if ( serieses.isEmpty() ) return;
+    if ( not closestPoint ) return;
 
-    QList<QXYSeries *> successSeries;
-
-    auto ignoreSeries = m_plotMarker->ignoreSeries();
-
-    for ( auto series : serieses )
-    {
-        auto seriesXY = dynamic_cast<QXYSeries *>( series );
-
-        if ( seriesXY
-             and seriesXY->count() != 0
-             and not ignoreSeries.contains( series ) )
-
-            successSeries.append( seriesXY );
-    }
-
-    if ( successSeries.isEmpty() ) return;
-
-
-    QList<QPointF> nearestPoints;
-
-    for ( auto series : successSeries )
-    {
-        auto valuePoint = m_plotMarker->chart()->mapToValue( position, series  );
-
-        auto point = PlotGeometryUtils::findNearestPoint( valuePoint, series, isFindLeft );
-
-        if ( not point ) point = isFindLeft? series->points().first() : series->points().last();
-
-        nearestPoints.append( point.value() );
-    }
-
-    QPointF closestPoint;
-
-    qreal minDistSq = std::numeric_limits<qreal>::max();
-
-    auto targetValue = m_plotMarker->chart()->mapToValue( position );
-
-    bool isFind = false;
-
-    for ( const auto & point : nearestPoints )
-    {
-        qreal dist = PlotGeometryUtils::distance( point, targetValue );
-
-        if ( dist < minDistSq )
-        {
-            minDistSq = dist;
-
-            closestPoint = point;
-
-            isFind = true;
-        }
-    }
-
-    m_plotMarker->move( m_plotMarker->chart()->mapToPosition( closestPoint ) );
+    m_plotMarker->move( m_plotMarker->chart()->mapToPosition( closestPoint.value() ) );
 }
 
 void MovableButton::mousePressEvent(QGraphicsSceneMouseEvent * event)

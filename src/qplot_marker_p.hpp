@@ -34,6 +34,7 @@ public:
     bool isPositionAcceptable(const QPointF& position) const;
     void loadIntersectionPoints(const QPointF& position);
     void moveMarkerToPosition(const QPointF & position);
+    void updateOnMoveByPoints(const QPointF & targetPoint);
     void clearInterSectionPoints();
 
     QPlotMarker * const q_ptr;

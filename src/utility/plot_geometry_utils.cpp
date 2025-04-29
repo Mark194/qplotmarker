@@ -1,4 +1,5 @@
 #include "plot_geometry_utils.hpp"
+#include "QPlotMarker/qplotmarker.hpp"
 
 PlotGeometryUtils::PlotGeometryUtils() {}
 
@@ -87,4 +88,69 @@ std::optional<QPointF> PlotGeometryUtils::findNearestPoint(
     }
 
     return nearesPoint;
+}
+
+std::optional<QPointF> PlotGeometryUtils::findClosestPoint(
+    QPlotMarker * marker,
+    const QPointF & position,
+    bool isFindLeft)
+{
+    auto serieses = marker->chart()->series();
+
+    if ( serieses.isEmpty() ) return {};
+
+    QList<QXYSeries *> successSeries;
+
+    auto ignoreSeries = marker->ignoreSeries();
+
+    for ( auto series : serieses )
+    {
+        auto seriesXY = dynamic_cast<QXYSeries *>( series );
+
+        if ( seriesXY
+            and seriesXY->count() != 0
+            and not ignoreSeries.contains( series ) )
+
+        successSeries.append( seriesXY );
+    }
+
+    if ( successSeries.isEmpty() ) return {};
+
+
+    QList<QPointF> nearestPoints;
+
+    for ( auto series : successSeries )
+    {
+        auto valuePoint = marker->chart()->mapToValue( position, series  );
+
+        auto point = PlotGeometryUtils::findNearestPoint( valuePoint, series, isFindLeft );
+
+        if ( not point ) point = isFindLeft? series->points().first() : series->points().last();
+
+        nearestPoints.append( point.value() );
+    }
+
+    QPointF closestPoint;
+
+    qreal minDistSq = std::numeric_limits<qreal>::max();
+
+    auto targetValue = marker->chart()->mapToValue( position );
+
+    bool isFind = false;
+
+    for ( const auto & point : nearestPoints )
+    {
+        qreal dist = PlotGeometryUtils::distance( point, targetValue );
+
+        if ( dist < minDistSq )
+        {
+            minDistSq = dist;
+
+            closestPoint = point;
+
+            isFind = true;
+        }
+    }
+
+    return { closestPoint };
 }

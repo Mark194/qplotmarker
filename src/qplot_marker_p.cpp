@@ -248,6 +248,46 @@ void QPlotMarkerPrivate::moveMarkerToPosition(const QPointF & position)
     }
 }
 
+void QPlotMarkerPrivate::updateOnMoveByPoints(const QPointF & targetPoint)
+{
+    auto leftClosestPoint  = PlotGeometryUtils::findClosestPoint( q_ptr, targetPoint, true );
+
+    auto rightClosestPoint = PlotGeometryUtils::findClosestPoint( q_ptr, targetPoint, false );
+
+    if ( not leftClosestPoint and not rightClosestPoint )
+    {
+        moveMarkerToPosition( targetPoint );
+
+        return;
+    }
+
+    if ( not leftClosestPoint  )
+    {
+        moveMarkerToPosition( rightClosestPoint.value() );
+
+        return;
+    }
+
+    if ( not rightClosestPoint )
+    {
+        moveMarkerToPosition( leftClosestPoint.value() );
+
+        return;
+    }
+
+    auto leftDist  = PlotGeometryUtils::distance( targetPoint, leftClosestPoint.value()  );
+
+    auto rightDist = PlotGeometryUtils::distance( targetPoint, rightClosestPoint.value() );
+
+    if ( leftDist < rightDist )
+
+        moveMarkerToPosition( leftClosestPoint.value() );
+
+    else
+
+        moveMarkerToPosition( rightClosestPoint.value() );
+}
+
 void QPlotMarkerPrivate::clearInterSectionPoints()
 {
     for ( auto item : m_intersectionItems )

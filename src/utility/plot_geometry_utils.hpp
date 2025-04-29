@@ -17,6 +17,9 @@ using namespace QtCharts;
 #include <QPointF>
 
 
+class QPlotMarker;
+
+
 class PlotGeometryUtils
 {
 public:
@@ -30,6 +33,10 @@ public:
     static std::optional<QPointF> findNearestPoint( const QPointF & targetPoint,
                                                     QXYSeries * series,
                                                     bool findLeft = false );
+
+    static std::optional<QPointF> findClosestPoint(QPlotMarker * marker,
+                                                   const QPointF & position,
+                                                   bool isLeft);
 
     template<typename T>
     static QList<T> subtractLists(const QList<T> &list1, const QList<T> &list2) {
