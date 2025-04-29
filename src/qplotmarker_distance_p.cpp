@@ -13,7 +13,9 @@
 
 
 QPlotMarkerDistancePrivate::QPlotMarkerDistancePrivate(QPlotMarkerDistance * q)
-    : q_ptr(q)
+    : q_ptr(q),
+      m_line( new QGraphicsLineItem( q_ptr ) ),
+      m_coordInfo( new GraphicsCoordItem( q_ptr ) )
 {
 
 }
@@ -42,9 +44,6 @@ void QPlotMarkerDistancePrivate::init(QPlotMarker * one, QPlotMarker * other)
     m_otherMarker   = other;
 
 
-    m_line = new QGraphicsLineItem( q_ptr );
-
-
     m_line->setPen( QPen( one->color(), 2, Qt::DotLine, Qt::RoundCap  ) );
 
 
@@ -64,9 +63,6 @@ void QPlotMarkerDistancePrivate::init(QPlotMarker * one, QPlotMarker * other)
 
         m_line->setGraphicsEffect( effect );
     }
-
-
-    m_coordInfo = new GraphicsCoordItem( q_ptr );
 
     m_coordInfo->setItemColor( one->color() );
 
