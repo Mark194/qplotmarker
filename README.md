@@ -8,7 +8,7 @@
 **QPlotMarker** – an interactive marker for **QChart** (Qt). Supports color and orientation (vertical/horizontal) changes, snaps to data points, and displays intersection coordinates.
 
 <!--Установка-->
-## Install
+# Install
 You must have installed [project dependencies](https://github.com/Mark194/qplotmarker#dependencies)
 
 1. Clone repository 
@@ -55,26 +55,24 @@ By default, installation goes to /usr/local/ on Linux/macOS or C:\Program Files 
 [Library releases]: https://github.com/Mark194/qplotmarker/releases
 
 <!--Integration-->
-## Integration
+# Integration
 
-### QMake Integration
-Since `qplotmarker.pri` is not provided, manually add the library to your project:
+## QMake Integration
 
-qmake
-## Add include path
+### 1. Add include path
 INCLUDEPATH += $$PWD/thirdparty/qplotmarker/include
 
-## Link static library
+### 2. Link static library
 LIBS += -L$$PWD/thirdparty/qplotmarker/lib -lqplotmarker
 
-## OR compile sources directly (if needed)
+### OR compile sources directly (if needed)
 SOURCES += $$PWD/thirdparty/qplotmarker/src/*.cpp
 HEADERS += $$PWD/thirdparty/qplotmarker/include/*.h
 
 
-### CMake Integration
+## CMake Integration
 
-## Method 1: Using find_package (Recommended if installed system-wide)
+### Method 1: Using find_package (Recommended if installed system-wide)
 
 ```cmake```
 
@@ -82,7 +80,7 @@ HEADERS += $$PWD/thirdparty/qplotmarker/include/*.h
 
 ```target_link_libraries(your_target PRIVATE qplotmarker::qplotmarker)```
 
-## Method 2: Manual configuration (For custom locations)
+### Method 2: Manual configuration (For custom locations)
 
 ```
 # For header files
@@ -101,7 +99,7 @@ target_link_libraries(your_target PRIVATE
     path/to/qplotmarker/lib/libqplotmarker.so
 ```
 
-## Method 3: Using FetchContent (For direct GitHub integration)
+### Method 3: Using FetchContent (For direct GitHub integration)
 
 ```
 include(FetchContent)
@@ -115,13 +113,13 @@ target_link_libraries(your_target PRIVATE qplotmarker)
 ```
 
 <!--Support-->
-## Support
+# Support
 If you have any difficulties or questions about using the package, create a
 [discussion](https://github.com/Mark194/qplotmarker/issues/new/choose) in this repository or write to email
 
 
 <!--dependencies-->
-## Dependencies
+# Dependencies
 
 - **Qt Core**: Version **5.15.2+** or **6.4.2+**
 - **Required Modules**:
@@ -139,7 +137,7 @@ Found compatibility issues? Please report in [Issues](https://github.com/Mark194
 
 
 <!--examples-->
-## Examples
+# Examples
 
 Ready-to-use code examples are available in the [examples](https://github.com/Mark194/qplotmarker/tree/main/examples) folder. These demonstrate:
 - Basic usage of plotting functionality
@@ -147,7 +145,7 @@ Ready-to-use code examples are available in the [examples](https://github.com/Ma
 - Integration with Qt widgets
 
 <!--special thanks-->
-## Special Thanks
+# Special Thanks
 
 We would like to express our special gratitude to **[ShonZelno](https://github.com/ShonZelno)** for their valuable contributions to this project, including:
 - Active participation in development and testing
