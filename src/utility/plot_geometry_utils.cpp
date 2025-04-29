@@ -136,8 +136,6 @@ std::optional<QPointF> PlotGeometryUtils::findClosestPoint(
 
     auto targetValue = marker->chart()->mapToValue( position );
 
-    bool isFind = false;
-
     for ( const auto & point : nearestPoints )
     {
         qreal dist = PlotGeometryUtils::distance( point, targetValue );
@@ -147,8 +145,6 @@ std::optional<QPointF> PlotGeometryUtils::findClosestPoint(
             minDistSq = dist;
 
             closestPoint = point;
-
-            isFind = true;
         }
     }
 
