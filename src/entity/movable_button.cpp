@@ -109,7 +109,7 @@ void MovableButton::move(const QPointF & position, bool isFindLeft)
 
 void MovableButton::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {
-    emit m_plotMarker->clicked( event->button() );
+    emit m_plotMarker->pressed( event->button() );
 
     if ( ( event->modifiers() & Qt::ControlModifier ) != 0 )
     {
@@ -139,6 +139,10 @@ void MovableButton::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
 
 void MovableButton::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 {
+    emit m_plotMarker->released( event->button() );
+
+    emit m_plotMarker->clicked( event->button() );
+
     if ( ( event->modifiers() & Qt::ControlModifier ) != 0 )
 
         return;

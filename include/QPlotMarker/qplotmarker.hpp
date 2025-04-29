@@ -123,6 +123,9 @@ Q_SIGNALS:
     void movementStyleChanged(MovementStyle style);
     void positionChanged(const QPointF & position);
 
+    void pressed(Qt::MouseButton button);
+    void released(Qt::MouseButton button);
+
     void clicked(Qt::MouseButton button);
     void doubleClicked(Qt::MouseButton button);
 
