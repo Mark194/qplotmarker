@@ -54,7 +54,7 @@ void QPlotMarkerDistance::setCoordPen(const QPen & pen)
 
 qreal QPlotMarkerDistance::markersDistance(QPlotMarker * one, QPlotMarker * other)
 {
-    return other->markerValue() - one->markerValue();
+    return std::abs( other->markerValue() - one->markerValue() );
 }
 
 void QPlotMarkerDistance::update()
