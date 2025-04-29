@@ -60,5 +60,7 @@ int main(
 
     chartView->scene()->addItem( distance );
 
+    distance->update();
+
     return a.exec();
 }

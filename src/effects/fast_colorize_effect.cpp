@@ -38,9 +38,13 @@ void FastColorizeEffect::draw(QPainter * painter)
 
         QPainter pixmapPainter(&m_cachedPixmap);
 
+        pixmapPainter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+
+
         pixmapPainter.setCompositionMode(QPainter::CompositionMode_Source);
 
         pixmapPainter.drawPixmap(0, 0, source);
+
 
         pixmapPainter.setCompositionMode(QPainter::CompositionMode_SourceIn);
 
@@ -48,6 +52,8 @@ void FastColorizeEffect::draw(QPainter * painter)
 
         pixmapPainter.end();
     }
+
+    painter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
     painter->drawPixmap(0, 0, m_cachedPixmap);
 }
