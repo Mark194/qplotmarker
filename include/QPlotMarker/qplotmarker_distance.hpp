@@ -31,6 +31,9 @@ public:
     void setCoordFont(const QFont & font);
     void setCoordPen(const QPen & pen);
 
+
+    void setAlignment(Qt::AlignmentFlag alignment);
+
     static qreal markersDistance(QPlotMarker * one, QPlotMarker * other);
 
 

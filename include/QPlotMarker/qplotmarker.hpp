@@ -113,6 +113,8 @@ public:
     void setMarkerIcon(const QString & fileName, MarkerButtonIcon typeIcon);
 
 
+    QRectF controlRect() const;
+
     // QGraphicsItem interface
     QRectF boundingRect() const;
 

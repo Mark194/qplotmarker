@@ -20,6 +20,7 @@ public:
 
     void paint();
 
+    void setAlignment(Qt::AlignmentFlag alignment);
 
     QPlotMarkerDistance * const q_ptr;
 
@@ -29,6 +30,10 @@ public:
     QGraphicsLineItem * m_line      = nullptr;
     GraphicsCoordItem * m_coordInfo = nullptr;
 
+    Qt::AlignmentFlag m_alignment;
+
 private:
     Q_DISABLE_COPY(QPlotMarkerDistancePrivate)
+
+    qreal controlDifference();
 };

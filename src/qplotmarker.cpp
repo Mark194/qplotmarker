@@ -434,6 +434,13 @@ void QPlotMarker::setMarkerIcon(const QString & fileName, MarkerButtonIcon typeI
     update();
 }
 
+QRectF QPlotMarker::controlRect() const
+{
+    Q_D(const QPlotMarker);
+
+    return d->m_controlItem->boundingRect();
+}
+
 void QPlotMarker::update()
 {
     Q_D(QPlotMarker);

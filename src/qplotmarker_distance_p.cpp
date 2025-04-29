@@ -15,7 +15,8 @@
 QPlotMarkerDistancePrivate::QPlotMarkerDistancePrivate(QPlotMarkerDistance * q)
     : q_ptr(q),
       m_line( new QGraphicsLineItem( q_ptr ) ),
-      m_coordInfo( new GraphicsCoordItem( q_ptr ) )
+      m_coordInfo( new GraphicsCoordItem( q_ptr ) ),
+      m_alignment(Qt::AlignBottom)
 {
 
 }
@@ -66,6 +67,10 @@ void QPlotMarkerDistancePrivate::init(QPlotMarker * one, QPlotMarker * other)
 
     m_coordInfo->setItemColor( one->color() );
 
+    m_oneMarker->setZValue( 1.0 );
+
+    m_otherMarker->setZValue( 1.0 );
+
 
     QObject::connect( m_oneMarker, &QPlotMarker::positionChanged,
                       q_ptr,       &QPlotMarkerDistance::update   );
@@ -84,21 +89,63 @@ void QPlotMarkerDistancePrivate::paint()
     auto plotArea = m_oneMarker->chart()->plotArea();
 
 
-    if ( m_oneMarker->orientation() == Qt::Vertical )
+    auto diff = controlDifference();
 
-        m_line->setLine( pointOne.x(), plotArea.y(), pointOther.x(), plotArea.topRight().y() );
+
+    auto orientation = m_oneMarker->orientation();
+
+    if ( orientation == Qt::Vertical )
+
+        m_line->setLine( pointOne.x(),   plotArea.y() - diff,
+                         pointOther.x(), plotArea.topRight().y() - diff );
 
     else
 
-        m_line->setLine( plotArea.topRight().x(), pointOne.y(),
-                         plotArea.topRight().x(), pointOther.y() );
+        m_line->setLine( plotArea.topRight().x() + diff, pointOne.y(),
+                         plotArea.topRight().x() + diff, pointOther.y() );
 
 
     m_coordInfo->setCoord( q_ptr->markersDistance( m_oneMarker, m_otherMarker ) );
 
     QPointF centerPoint = (m_line->line().p1() + m_line->line().p2()) / 2.0;
 
+    QPointF coordPoint =  centerPoint - QPointF(m_coordInfo->boundingRect().width() / 2,
+                                                m_coordInfo->boundingRect().height() / 2 );
 
-    m_coordInfo->setPos( centerPoint - QPointF(m_coordInfo->boundingRect().width() / 2,
-                                               m_coordInfo->boundingRect().height() / 2 ));
+    if ( orientation == Qt::Horizontal )
+
+        coordPoint.setX( coordPoint.x() - diff / 2 );
+
+    m_coordInfo->setPos( coordPoint );
+}
+
+void QPlotMarkerDistancePrivate::setAlignment(Qt::AlignmentFlag alignment)
+{
+    m_alignment = alignment;
+
+    paint();
+}
+
+qreal QPlotMarkerDistancePrivate::controlDifference()
+{
+    auto orientation = m_oneMarker->orientation();
+
+    auto controlRect = m_oneMarker->controlRect();
+
+    switch( m_alignment )
+    {
+        case Qt::AlignTop:
+
+            return orientation == Qt::Vertical? controlRect.height() : controlRect.width();
+
+        case Qt::AlignCenter:
+
+            return orientation == Qt::Vertical? controlRect.height() / 2 : controlRect.width() / 2;
+
+        case Qt::AlignBottom:
+
+            return 0;
+
+        default: return 0;
+    }
 }
