@@ -1,6 +1,7 @@
 #include "qplotmarker_distance_p.hpp"
 
 
+#include <QGraphicsScene>
 #include <QPointF>
 
 
@@ -89,9 +90,7 @@ void QPlotMarkerDistancePrivate::paint()
 
     auto plotArea = m_oneMarker->chart()->plotArea();
 
-
     auto diff = controlDifference();
-
 
     auto orientation = m_oneMarker->orientation();
 
@@ -108,16 +107,18 @@ void QPlotMarkerDistancePrivate::paint()
 
     m_coordInfo->setCoord( q_ptr->markersDistance( m_oneMarker, m_otherMarker ) );
 
+    changeVisibleCoordItem();
+
     QPointF centerPoint = (m_line->line().p1() + m_line->line().p2()) / 2.0;
 
-    QPointF coordPoint =  centerPoint - QPointF(m_coordInfo->boundingRect().width() / 2,
-                                                m_coordInfo->boundingRect().height() / 2 );
+    QPointF coordPoint =  centerPoint - QPointF(m_coordInfo->boundingRect().width() / 2.0,
+                                                m_coordInfo->boundingRect().height() / 2.0 );
 
     if ( orientation == Qt::Horizontal )
 
-        coordPoint.setX( coordPoint.x() - diff / 2 );
+        coordPoint.setX( coordPoint.x() - diff / 2 - m_coordInfo->pen().widthF() );
 
-    m_coordInfo->setPos( coordPoint );
+    normalizeCoordItem( coordPoint, m_oneMarker->chart()->rect() );
 }
 
 void QPlotMarkerDistancePrivate::setAlignment(Qt::AlignmentFlag alignment)
@@ -154,4 +155,40 @@ qreal QPlotMarkerDistancePrivate::controlDifference()
 
         default: return 0;
     }
+}
+
+void QPlotMarkerDistancePrivate::changeVisibleCoordItem()
+{
+    auto orientation = m_oneMarker->orientation();
+
+    auto controlRect = m_oneMarker->isSelected()? m_otherMarker->controlRect() : m_oneMarker->controlRect();
+
+    if ( orientation == Qt::Vertical )
+    {
+        m_coordInfo->setVisible( m_line->line().length() > m_coordInfo->boundingRect().width() + controlRect.width() );
+    }
+    else
+    {
+        m_coordInfo->setVisible( m_line->line().length() > m_coordInfo->boundingRect().height() + controlRect.height() );
+    }
+}
+
+void QPlotMarkerDistancePrivate::normalizeCoordItem(
+    const QPointF & coordPoint,
+    const QRectF & sceneRect)
+{
+    QRectF textRect = m_coordInfo->boundingRect();
+
+
+    auto chart = m_oneMarker->chart()->margins();
+
+    qreal boundedX = qBound(sceneRect.left(),
+                            coordPoint.x(),
+                            sceneRect.right() - textRect.width() - m_coordInfo->pen().widthF() );
+
+    qreal boundedY = qBound(sceneRect.top(),
+                            coordPoint.y(),
+                            sceneRect.bottom() - textRect.height() - m_coordInfo->pen().widthF() );
+
+    m_coordInfo->setPos(QPointF(boundedX, boundedY));
 }

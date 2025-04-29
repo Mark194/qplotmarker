@@ -246,6 +246,8 @@ void QPlotMarkerPrivate::moveMarkerToPosition(const QPointF & position)
         m_coordInfo->setPos( startX.x() - m_coordInfo->boundingRect().width(),
                              position.y() - m_coordInfo->boundingRect().height() / 2 );
     }
+
+    emit q_ptr->positionChanged( position );
 }
 
 void QPlotMarkerPrivate::updateOnMoveByPoints(const QPointF & targetPoint)

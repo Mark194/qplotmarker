@@ -38,4 +38,8 @@ private:
     Q_DISABLE_COPY(QPlotMarkerDistancePrivate)
 
     qreal controlDifference();
+
+    void changeVisibleCoordItem();
+
+    void normalizeCoordItem(const QPointF & coordPoint, const QRectF & plotAreaRect);
 };

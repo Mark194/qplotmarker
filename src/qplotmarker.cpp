@@ -136,8 +136,6 @@ void QPlotMarker::move(const QPointF & position)
     Q_D(QPlotMarker);
 
     d->moveMarkerToPosition( position );
-
-    emit positionChanged( position );
 }
 
 void QPlotMarker::move(qreal percent)
