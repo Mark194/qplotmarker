@@ -22,7 +22,7 @@ int main(
     // // Настраиваем график
     chart->addSeries(series);
     chart->createDefaultAxes();
-    chart->setTitle("Пример использования QPlotMarkerDistance");
+    chart->legend()->setVisible( false );
 
     // qDebug() << "X)";
 
@@ -32,6 +32,7 @@ int main(
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->resize(800, 600);
+    chartView->setWindowTitle("Пример использования QPlotMarkerDistance");
     chartView->show();
 
     QPlotMarker *one = new QPlotMarker(chart, Qt::red, Qt::Vertical);
