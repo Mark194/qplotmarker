@@ -141,8 +141,6 @@ void MovableButton::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 {
     emit m_plotMarker->released( event->button() );
 
-    emit m_plotMarker->clicked( event->button() );
-
     if ( ( event->modifiers() & Qt::ControlModifier ) != 0 )
 
         return;

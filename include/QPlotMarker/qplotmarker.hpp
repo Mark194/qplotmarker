@@ -126,7 +126,6 @@ Q_SIGNALS:
     void pressed(Qt::MouseButton button);
     void released(Qt::MouseButton button);
 
-    void clicked(Qt::MouseButton button);
     void doubleClicked(Qt::MouseButton button);
 
 public slots:
