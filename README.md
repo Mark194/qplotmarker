@@ -148,8 +148,8 @@ Ready-to-use code examples are available in the [examples](https://github.com/Ma
 ## Visual Examples
 | Миниатюра | Описание |
 |-----------|----------|
-| [![Пример 1](screenshots/base_example.png)](screenshots/base_example.png) | Базовый пример |
-| [![Пример 2](screenshots/qplotmarker_distance.png)](screenshots/qplotmarker_distance.png) | Расстояние между маркерами |
+| <details><summary><img src="screenshots/base_example.png" width="150"></summary>![Полный размер](screenshots/base_example.png)</details> | **Base Example**<br> |
+| <details><summary><img src="screenshots/qplotmarker_distance.png" width="150"></summary>![Полный размер](screenshots/qplotmarker_distance.png)</details> | **PlotMarker Distance**<br>Coord difference between markers |
 
 
 <!--special thanks-->
