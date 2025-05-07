@@ -20,23 +20,23 @@ int main(int argc, char *argv[])
     // // Настраиваем график
     chart->addSeries(series);
     chart->createDefaultAxes();
-    chart->setTitle("Пример использования QPlotMarker");
-
+    chart->legend()->setVisible(false);
     // qDebug() << "X)";
 
 
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->resize(800, 600);
+    chartView->setWindowTitle("Пример использования QPlotMarker");
     chartView->show();
 
     // // Создаем маркер
-    QPlotMarker * oneMarker = new QPlotMarker(chart, Qt::red, Qt::Vertical);
+    QPlotMarker * oneMarker = new QPlotMarker(chart, Qt::red, Qt::Horizontal);
 
     oneMarker->setLabelFormat("%.2f"); // Формат отображаемых координат
 
 
-    QPlotMarker *otherMarker = new QPlotMarker(chart, Qt::red, Qt::Horizontal);
+    QPlotMarker *otherMarker = new QPlotMarker(chart, Qt::red, Qt::Vertical);
 
     otherMarker->setLabelFormat("%.2f"); // Формат отображаемых координат
 

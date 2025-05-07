@@ -144,6 +144,12 @@ Ready-to-use code examples are available in the [examples](https://github.com/Ma
 - Advanced marker customization
 - Integration with Qt widgets
 
+
+## Visual Examples
+![Base example](screenshots/base_example.png)
+
+
+
 <!--special thanks-->
 # Special Thanks
 
