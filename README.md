@@ -146,11 +146,9 @@ Ready-to-use code examples are available in the [examples](https://github.com/Ma
 
 
 ## Visual Examples
-<details>
-<summary><img src="screenshots/base_example.png" width="200"></summary>
-  
-![Полное изображение](screenshots/base_example.png)
-</details>
+| Миниатюра | Описание |
+|-----------|----------|
+| [![Пример 1](screenshots/base_example.png)](screenshots/base_example.png) | Базовый пример |
 
 
 <!--special thanks-->
