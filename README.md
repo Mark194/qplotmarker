@@ -149,6 +149,7 @@ Ready-to-use code examples are available in the [examples](https://github.com/Ma
 | Миниатюра | Описание |
 |-----------|----------|
 | [![Пример 1](screenshots/base_example.png)](screenshots/base_example.png) | Базовый пример |
+| [![Пример 2](screenshots/qplotmarker_distance.png)](screenshots/qplotmarker_distance.png) | Расстояние между маркерами |
 
 
 <!--special thanks-->
