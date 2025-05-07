@@ -17,40 +17,24 @@ QPair<QPointF, QPointF> PlotGeometryUtils::findTwoNearestPoints(
     QXYSeries * lineSeries
 )
 {
-    qreal minDistanceOne = std::numeric_limits<qreal>::max();
+    const auto & points = lineSeries->points();
 
-    qreal minDistanceTwo = std::numeric_limits<qreal>::max();
+    if ( points.isEmpty() ) return {};
+
+    const auto& first = points.first();
+    const auto& last = points.last();
+
+    if ( targetPoint.x() < first.x() ) return { first, first };
+    if ( targetPoint.x() > last.x()  ) return { last,  last  };
 
 
-    QPointF closestPointOne, closestPointTwo;
+    for (qsizetype i = 1; i < points.size(); ++i)
 
-    for ( const QPointF & point : lineSeries->points() )
-    {
-        qreal dist = distance( point, targetPoint );
+        if (targetPoint.x() <= points[i].x())
 
-        if ( dist < minDistanceOne )
-        {
-            minDistanceTwo = minDistanceOne;
+            return {points[i-1], points[i]};
 
-            closestPointTwo = closestPointOne;
 
-            minDistanceOne = dist;
-
-            closestPointOne = point;
-        }
-
-        else if ( dist < minDistanceTwo )
-        {
-            minDistanceTwo = dist;
-
-            closestPointTwo = point;
-        }
-    }
-
-    if ( minDistanceOne != std::numeric_limits<qreal>::max() and
-         minDistanceTwo != std::numeric_limits<qreal>::max()     )
-
-        return qMakePair( closestPointOne, closestPointTwo );
 
     return {};
 }
