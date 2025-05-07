@@ -146,7 +146,7 @@ Ready-to-use code examples are available in the [examples](https://github.com/Ma
 
 
 ## Visual Examples
-| Миниатюра | Описание |
+| Miniature | Description |
 |-----------|----------|
 | <details><summary><img src="screenshots/base_example.png" width="300"></summary>![Full size](screenshots/base_example.png)</details> | **Base Example**<br> |
 | <details><summary><img src="screenshots/qplotmarker_distance.png" width="300"></summary>![Full size](screenshots/qplotmarker_distance.png)</details> | **PlotMarker Distance**<br>Coord difference between markers |
