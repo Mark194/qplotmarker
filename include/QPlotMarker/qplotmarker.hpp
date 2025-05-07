@@ -50,6 +50,19 @@ public:
     };
     Q_ENUM(MarkerButtonIcon)
 
+    enum MarkerOrientation
+    {
+        Horizontal          = Qt::Horizontal,
+        Vertical            = Qt::Vertical,
+        HorizontalInverted,
+        VerticalInverted
+    };
+    Q_ENUM(MarkerOrientation)
+
+    explicit QPlotMarker(QChart * parent,
+                         const QColor & color = "black",
+                         QPlotMarker::MarkerOrientation orientation = QPlotMarker::Horizontal);
+
     explicit QPlotMarker(QChart * parent,
                          const QColor & color = "black",
                          Qt::Orientation orientation = Qt::Horizontal);
@@ -65,7 +78,8 @@ public:
 
 
     Qt::Orientation orientation() const;
-
+    QPlotMarker::MarkerOrientation markerOrientation() const;
+    bool isInverted() const;
 
     void setSelected(bool isSelect);
 

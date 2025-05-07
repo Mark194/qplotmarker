@@ -16,7 +16,7 @@
 #include <utility/plot_geometry_utils.hpp>
 
 
-QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, Qt::Orientation orientation)
+QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, QPlotMarker::MarkerOrientation orientation)
     : QGraphicsWidget(),
       d_ptr( new QPlotMarkerPrivate( this ) )
 {
@@ -25,6 +25,13 @@ QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, Qt::Orientation 
     Q_D(QPlotMarker);
 
     d->init( parent, color, orientation );
+}
+
+QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, Qt::Orientation orientation)
+
+    : QPlotMarker(parent, color, static_cast<QPlotMarker::MarkerOrientation>(orientation))
+{
+
 }
 
 QPlotMarker::~QPlotMarker()
@@ -78,7 +85,21 @@ Qt::Orientation QPlotMarker::orientation() const
 {
     Q_D(const QPlotMarker);
 
+    return d->orientation();
+}
+
+QPlotMarker::MarkerOrientation QPlotMarker::markerOrientation() const
+{
+    Q_D(const QPlotMarker);
+
     return d->m_orientation;
+}
+
+bool QPlotMarker::isInverted() const
+{
+    Q_D(const QPlotMarker);
+
+    return d->isInverted();
 }
 
 QChart * QPlotMarker::chart() const
@@ -107,11 +128,6 @@ void QPlotMarker::setSelected(bool isSelect)
 
         d->m_controlItem->setButtonControl( d->m_buttonControl );
     }
-
-
-    if ( d->m_orientation == Qt::Horizontal )
-
-        d->m_controlItem->setRotation( 90 );
 
 
     QGraphicsItem::setSelected( isSelect );
@@ -150,7 +166,7 @@ void QPlotMarker::move(qreal percent)
 
     auto position = d->m_markerPosition;
 
-    if ( d->m_orientation == Qt::Vertical )
+    if ( d->orientation() == Qt::Vertical )
     {
         auto step = plotArea.width() * percent;
 
@@ -171,7 +187,7 @@ void QPlotMarker::moveBegin()
 {
     Q_D(QPlotMarker);
 
-    if ( d->m_orientation == Qt::Vertical )
+    if ( d->orientation() == Qt::Vertical )
 
         move( { d->m_parentChart->plotArea().x(),
                 d->m_parentChart->plotArea().y() } );
@@ -186,7 +202,7 @@ void QPlotMarker::moveEnd()
 {
     Q_D(QPlotMarker);
 
-    if ( d->m_orientation == Qt::Vertical )
+    if ( d->orientation() == Qt::Vertical )
 
         move( { d->m_parentChart->plotArea().topRight().x(),
                 d->m_parentChart->plotArea().y() } );

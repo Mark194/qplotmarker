@@ -17,7 +17,7 @@ QPlotMarkerPrivate::QPlotMarkerPrivate(QPlotMarker * q)
       m_parentChart(nullptr),
       m_markerColor(Qt::black),
       m_movement(QPlotMarker::MOVEMENT_DEFAULT),
-      m_orientation(Qt::Horizontal),
+      m_orientation(QPlotMarker::Horizontal),
       m_controlItem(nullptr),
       m_line(nullptr),
       m_coordInfo(nullptr),
@@ -36,7 +36,11 @@ QPlotMarkerPrivate::~QPlotMarkerPrivate()
 
 }
 
-void QPlotMarkerPrivate::init(QChart * parent, const QColor & color, Qt::Orientation orientation)
+void QPlotMarkerPrivate::init(
+    QChart * parent,
+    const QColor & color,
+    QPlotMarker::MarkerOrientation orientation
+)
 {
     q_ptr->setFlag( QGraphicsItem::ItemIsSelectable );
 
@@ -80,7 +84,7 @@ bool QPlotMarkerPrivate::isPositionAcceptable(const QPointF & position) const
 {
     QRectF plotArea = m_parentChart->plotArea();
 
-    if ( m_orientation == Qt::Vertical )
+    if ( q_ptr->orientation() == Qt::Vertical )
 
         return position.x() >= plotArea.left() and position.x() <= plotArea.right();
 
@@ -201,53 +205,122 @@ void QPlotMarkerPrivate::moveMarkerToPosition(const QPointF & position)
 
     m_markerPosition = position;
 
-
     QRectF plotArea = m_parentChart->plotArea();
+    auto controlRect = m_controlItem->mapToScene(m_controlItem->boundingRect()).boundingRect();
 
-    auto controlRect = m_controlItem->mapToScene( m_controlItem->boundingRect() ).boundingRect();
+    bool isVertical = this->isVertical();
+    bool isInverted = this->isInverted();
 
-    if ( m_orientation == Qt::Vertical )
-    {
-        m_line->setLine( position.x(), plotArea.top(), position.x(), plotArea.bottom() );
-
-
-        qreal halfPixmapWidth = controlRect.width() / 2.0;
-
-        auto pixmapHeight = controlRect.height();
-
-
-        m_controlItem->setPos( position.x() - halfPixmapWidth, plotArea.top() - pixmapHeight );
-
-
-        m_coordInfo->setCoord( m_parentChart->mapToValue( position ).x() );
-
-        m_coordInfo->setPos( position.x() - m_coordInfo->boundingRect().width() / 2,
-                               plotArea.bottom()                                     );
-
-
-        loadIntersectionPoints( position );
-    }
+    if ( isVertical )
+        setupVerticalMarker(position, plotArea, controlRect,   isInverted);
     else
-    {
-        m_line->setLine( plotArea.left(), position.y(), plotArea.right(), position.y() );
-
-        qreal halfPixmapWidth = controlRect.width() / 2.0;
-
-        m_controlItem->setPos( plotArea.right() + controlRect.width(),
-                               position.y() - halfPixmapWidth           );
+        setupHorizontalMarker(position, plotArea, controlRect, isInverted);
 
 
-        m_coordInfo->setCoord( m_parentChart->mapToValue( position ).y() );
+    emit q_ptr->positionChanged(position);
 
-        auto valueAxis = (QValueAxis *) m_parentChart->axes( Qt::Horizontal ).first();
+    // QRectF plotArea = m_parentChart->plotArea();
 
-        auto startX = m_parentChart->mapToPosition( { valueAxis->min(), 0 } );
+    // auto controlRect = m_controlItem->mapToScene( m_controlItem->boundingRect() ).boundingRect();
 
-        m_coordInfo->setPos( startX.x() - m_coordInfo->boundingRect().width(),
-                             position.y() - m_coordInfo->boundingRect().height() / 2 );
-    }
+    // if ( orientation() == Qt::Vertical )
+    // {
+    //     m_line->setLine( position.x(), plotArea.top(), position.x(), plotArea.bottom() );
+
+
+    //     qreal halfPixmapWidth = controlRect.width() / 2.0;
+
+    //     auto pixmapHeight = controlRect.height();
+
+
+    //     m_controlItem->setPos( position.x() - halfPixmapWidth, plotArea.top() - pixmapHeight );
+
+
+    //     m_coordInfo->setCoord( m_parentChart->mapToValue( position ).x() );
+
+    //     m_coordInfo->setPos( position.x() - m_coordInfo->boundingRect().width() / 2,
+    //                            plotArea.bottom()                                     );
+
+
+    //     loadIntersectionPoints( position );
+    // }
+    // else
+    // {
+    //     m_line->setLine( plotArea.left(), position.y(), plotArea.right(), position.y() );
+
+    //     qreal halfPixmapWidth = controlRect.width() / 2.0;
+
+    //     m_controlItem->setPos( plotArea.right() + controlRect.width(),
+    //                            position.y() - halfPixmapWidth           );
+
+
+    //     m_coordInfo->setCoord( m_parentChart->mapToValue( position ).y() );
+
+    //     auto valueAxis = (QValueAxis *) m_parentChart->axes( Qt::Horizontal ).first();
+
+    //     auto startX = m_parentChart->mapToPosition( { valueAxis->min(), 0 } );
+
+    //     m_coordInfo->setPos( startX.x() - m_coordInfo->boundingRect().width(),
+    //                          position.y() - m_coordInfo->boundingRect().height() / 2 );
+    // }
+
 
     emit q_ptr->positionChanged( position );
+}
+
+void QPlotMarkerPrivate::setupVerticalMarker(const QPointF& position,
+                                             const QRectF& plotArea,
+                                             const QRectF& controlRect,
+                                             bool inverted)
+{
+
+    if ( inverted ) m_controlItem->setRotation( 180 );
+
+    m_line->setLine(position.x(), plotArea.top(), position.x(), plotArea.bottom());
+
+    // Control item positioning
+    qreal halfPixmapWidth = controlRect.width() / 2.0;
+    qreal pixmapHeight = controlRect.height();
+    qreal controlX = inverted? position.x() + halfPixmapWidth : position.x() - halfPixmapWidth;
+    qreal controlY = inverted? plotArea.bottom() + pixmapHeight : plotArea.top() - pixmapHeight;
+    m_controlItem->setPos(controlX, controlY);
+
+    // Coordinate info positioning
+    m_coordInfo->setCoord(m_parentChart->mapToValue(position).x());
+    qreal coordX = position.x() - m_coordInfo->boundingRect().width() / 2;
+    qreal coordY = inverted ? plotArea.top() - m_coordInfo->boundingRect().height()
+                            : plotArea.bottom();
+    m_coordInfo->setPos(coordX, coordY);
+
+
+
+    loadIntersectionPoints(position);
+}
+
+void QPlotMarkerPrivate::setupHorizontalMarker(const QPointF& position,
+                                               const QRectF& plotArea,
+                                               const QRectF& controlRect,
+                                               bool inverted)
+{
+    m_controlItem->setRotation( inverted? 270 : 90 );
+
+    m_line->setLine(plotArea.left(), position.y(), plotArea.right(), position.y());
+
+
+    qreal halfPixmapHeight = controlRect.height() / 2.0;
+    qreal controlX = inverted ? plotArea.left() - controlRect.width()
+                              : plotArea.right() + controlRect.width();
+    qreal controlY = inverted? position.y() + halfPixmapHeight : position.y() - halfPixmapHeight;
+    m_controlItem->setPos(controlX, controlY);
+
+
+    m_coordInfo->setCoord(m_parentChart->mapToValue(position).y());
+    auto valueAxis = static_cast<QValueAxis*>(m_parentChart->axes(Qt::Horizontal).first());
+    auto startX = m_parentChart->mapToPosition({valueAxis->min(), 0});
+
+    qreal coordX = inverted? plotArea.right() : startX.x() - m_coordInfo->boundingRect().width();
+    qreal coordY = position.y() - m_coordInfo->boundingRect().height() / 2;
+    m_coordInfo->setPos(coordX, coordY);
 }
 
 void QPlotMarkerPrivate::updateOnMoveByPoints(const QPointF & targetPoint)
@@ -300,4 +373,39 @@ void QPlotMarkerPrivate::clearInterSectionPoints()
     }
 
     m_intersectionItems.clear();
+}
+
+QPlotMarker::MarkerOrientation QPlotMarkerPrivate::orientation(Qt::Orientation orientation)
+{
+    return orientation == Qt::Vertical? QPlotMarker::Vertical : QPlotMarker::Horizontal;
+}
+
+Qt::Orientation QPlotMarkerPrivate::orientation() const
+{
+    switch( m_orientation )
+    {
+        case QPlotMarker::Horizontal:
+        case QPlotMarker::HorizontalInverted:
+
+            return Qt::Horizontal;
+
+        case QPlotMarker::Vertical:
+        case QPlotMarker::VerticalInverted:
+
+            return Qt::Vertical;
+
+        default: throw std::logic_error( "Unknown orintation" );
+    }
+}
+
+bool QPlotMarkerPrivate::isInverted() const
+{
+    return m_orientation == QPlotMarker::HorizontalInverted or
+           m_orientation == QPlotMarker::VerticalInverted;
+}
+
+bool QPlotMarkerPrivate::isVertical() const
+{
+    return m_orientation == QPlotMarker::Vertical or
+           m_orientation == QPlotMarker::VerticalInverted;
 }

@@ -29,7 +29,7 @@ public:
 
     ~QPlotMarkerPrivate();
 
-    void init(QChart * parent, const QColor & color, Qt::Orientation orientation);
+    void init(QChart * parent, const QColor & color, QPlotMarker::MarkerOrientation orientation);
 
     bool isPositionAcceptable(const QPointF& position) const;
     void loadIntersectionPoints(const QPointF& position);
@@ -37,12 +37,18 @@ public:
     void updateOnMoveByPoints(const QPointF & targetPoint);
     void clearInterSectionPoints();
 
+    QPlotMarker::MarkerOrientation orientation(Qt::Orientation orientation);
+    Qt::Orientation orientation() const;
+
+    bool isInverted() const;
+    bool isVertical() const;
+
     QPlotMarker * const q_ptr;
 
     QChart * m_parentChart = nullptr;
     QColor m_markerColor;
     QPlotMarker::MovementStyle m_movement = QPlotMarker::MOVEMENT_DEFAULT;
-    Qt::Orientation m_orientation = Qt::Horizontal;
+    QPlotMarker::MarkerOrientation m_orientation = QPlotMarker::Horizontal;
 
     MovableButton           * m_controlItem = nullptr;
     QGraphicsLineItem       * m_line        = nullptr;
@@ -68,4 +74,7 @@ public:
 
 private:
     Q_DISABLE_COPY(QPlotMarkerPrivate)
+
+    void setupVerticalMarker(const QPointF & position, const QRectF & plotArea, const QRectF & controlRect, bool inverted);
+    void setupHorizontalMarker(const QPointF & position, const QRectF & plotArea, const QRectF & controlRect, bool inverted);
 };
