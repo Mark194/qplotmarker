@@ -2,7 +2,7 @@
 # qplotmarker
 
 <p align="center">
-  <img src="https://github.com/Mark194/qplotmarker/blob/main/screenshots/logo.png" alt="Баннер проекта" width="729" height="300"/>
+  <img src="https://github.com/Mark194/qplotmarker/blob/main/screenshots/logo.png" alt="Баннер проекта"/>
 </p>
 
 **QPlotMarker** – an interactive marker for **QChart** (Qt). Supports color and orientation (vertical/horizontal) changes, snaps to data points, and displays intersection coordinates.
