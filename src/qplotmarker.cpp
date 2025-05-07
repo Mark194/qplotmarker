@@ -461,10 +461,12 @@ void QPlotMarker::update()
 
 QVariant QPlotMarker::itemChange(GraphicsItemChange change, const QVariant & value)
 {
-    if ( change == QGraphicsItem::ItemVisibleHasChanged and scene() )
+    auto result = QGraphicsWidget::itemChange( change, value );
+
+    if ( change == QGraphicsItem::ItemSceneHasChanged and scene() )
 
         moveBegin();
 
 
-    return QGraphicsWidget::itemChange( change, value );
+    return result;
 }

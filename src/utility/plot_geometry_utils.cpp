@@ -35,7 +35,6 @@ QPair<QPointF, QPointF> PlotGeometryUtils::findTwoNearestPoints(
             return {points[i-1], points[i]};
 
 
-
     return {};
 }
 
