@@ -41,16 +41,12 @@ int main(
 
     chartView->scene()->addItem( one );
 
-    one->moveBegin();
-
 
     QPlotMarker *other = new QPlotMarker(chart, Qt::red, Qt::Vertical);
 
     other->setLabelFormat( markerFormat );
 
     chartView->scene()->addItem( other );
-
-    other->moveEnd();
 
 
     QPlotMarkerDistance * distance = new QPlotMarkerDistance();

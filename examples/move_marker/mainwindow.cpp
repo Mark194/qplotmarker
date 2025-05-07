@@ -119,6 +119,4 @@ void MainWindow::createMarker(QChart * chart)
     m_marker->setLabelFormat( "%.2f" );
 
     chart->scene()->addItem( m_marker );
-
-    m_marker->moveBegin();
 }

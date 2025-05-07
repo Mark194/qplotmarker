@@ -458,3 +458,13 @@ void QPlotMarker::update()
 
         d->updateOnMoveByPoints( targetPoint );
 }
+
+QVariant QPlotMarker::itemChange(GraphicsItemChange change, const QVariant & value)
+{
+    if ( change == QGraphicsItem::ItemVisibleHasChanged and scene() )
+
+        moveBegin();
+
+
+    return QGraphicsWidget::itemChange( change, value );
+}

@@ -31,15 +31,20 @@ int main(int argc, char *argv[])
     chartView->show();
 
     // // Создаем маркер
-    QPlotMarker *marker = new QPlotMarker(chart, Qt::red, Qt::Vertical);
+    QPlotMarker * oneMarker = new QPlotMarker(chart, Qt::red, Qt::Vertical);
 
-    marker->setLabelFormat("%.2f"); // Формат отображаемых координат
-
-
-    chartView->scene()->addItem( marker );
+    oneMarker->setLabelFormat("%.2f"); // Формат отображаемых координат
 
 
-    marker->moveBegin();
+    QPlotMarker *otherMarker = new QPlotMarker(chart, Qt::red, Qt::Horizontal);
+
+    otherMarker->setLabelFormat("%.2f"); // Формат отображаемых координат
+
+
+    chartView->scene()->addItem( oneMarker );
+
+    chartView->scene()->addItem( otherMarker );
+
 
     return a.exec();
 }

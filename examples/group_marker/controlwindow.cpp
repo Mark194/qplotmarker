@@ -80,8 +80,6 @@ QPlotMarker * ControlWindow::createMarker(QChart * chart)
 
     chart->scene()->addItem( marker );
 
-    marker->moveBegin();
-
     return marker;
 }
 

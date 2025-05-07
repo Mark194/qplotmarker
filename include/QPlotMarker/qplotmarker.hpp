@@ -140,6 +140,12 @@ protected:
 
     QScopedPointer<QPlotMarkerPrivate> d_ptr;
 
+    // QGraphicsItem interface
+
+    QVariant itemChange(GraphicsItemChange change, const QVariant & value);
+
 private:
     Q_DISABLE_COPY(QPlotMarker)
+
+
 };

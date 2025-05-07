@@ -48,9 +48,9 @@ QPair<QPointF, QPointF> PlotGeometryUtils::findTwoNearestPoints(
     }
 
     if ( minDistanceOne != std::numeric_limits<qreal>::max() and
-        minDistanceTwo != std::numeric_limits<qreal>::max()     )
+         minDistanceTwo != std::numeric_limits<qreal>::max()     )
 
-    return qMakePair( closestPointOne, closestPointTwo );
+        return qMakePair( closestPointOne, closestPointTwo );
 
     return {};
 }
