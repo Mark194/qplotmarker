@@ -25,7 +25,16 @@ QPlotMarkerPrivate::QPlotMarkerPrivate(QPlotMarker * q)
       m_buttonControl(":/marker_eye")
 {}
 
-QPlotMarkerPrivate::~QPlotMarkerPrivate() = default;
+QPlotMarkerPrivate::~QPlotMarkerPrivate()
+{
+    for (auto& item : m_intersectionItems)
+    {
+        delete item.coord;
+        delete item.point;
+    }
+
+    m_intersectionItems.clear();
+}
 
 void QPlotMarkerPrivate::init(
     QChart * parent,
