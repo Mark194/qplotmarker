@@ -194,6 +194,8 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
 
         textItem->setCoord( point.y() );
 
+        textItem->setLabelFormat( m_labelFormat );
+
         textItem->setVisible( m_isVisibleCoords );
 
         textItem->setPos( viewPoint );
