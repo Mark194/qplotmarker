@@ -115,6 +115,29 @@ template <> struct hash<QPointF>
 #endif
 
 
+QPointF QPlotMarkerPrivate::adjustTextItemPosition(
+    const QPointF& viewPoint,
+    const GraphicsCoordItem* textItem,
+    const QRectF& plotArea)
+{
+    const QRectF itemRect = textItem->boundingRect();
+    QPointF adjustedPos = viewPoint;
+
+    if (adjustedPos.x() + itemRect.width() > plotArea.right())
+        adjustedPos.rx() -= (adjustedPos.x() + itemRect.width() - plotArea.right());
+    else if (adjustedPos.x() < plotArea.left())
+        adjustedPos.rx() += (plotArea.left() - adjustedPos.x());
+
+
+    if (adjustedPos.y() + itemRect.height() > plotArea.bottom())
+        adjustedPos.ry() -= (adjustedPos.y() + itemRect.height() - plotArea.bottom());
+    else if (adjustedPos.y() < plotArea.top())
+        adjustedPos.ry() += (plotArea.top() - adjustedPos.y());
+
+    return adjustedPos;
+}
+
+
 void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
 {
     if ( not m_intersectionItems.empty() )
@@ -170,6 +193,8 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
         }
     }
 
+    const QRectF plotArea = m_parentChart->plotArea();
+
     for ( auto & point : points )
     {
         auto viewPoint( m_parentChart->mapToPosition( point ) );
@@ -198,7 +223,7 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
 
         textItem->setVisible( m_isVisibleCoords );
 
-        textItem->setPos( viewPoint );
+        textItem->setPos( adjustTextItemPosition(viewPoint, textItem, plotArea) );
 
         QObject::connect( textItem, &GraphicsCoordItem::onActivated, q_ptr, &QPlotMarker::activate );
 

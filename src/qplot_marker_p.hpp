@@ -32,6 +32,9 @@ public:
     void init(QChart * parent, const QColor & color, QPlotMarker::MarkerOrientation orientation);
 
     bool isPositionAcceptable(const QPointF& position) const;
+
+    static QPointF adjustTextItemPosition(const QPointF &viewPoint, const GraphicsCoordItem *textItem, const QRectF &plotArea);
+
     void loadIntersectionPoints(const QPointF& position);
     void moveMarkerToPosition(const QPointF & position);
     void updateOnMoveByPoints(const QPointF & targetPoint);
