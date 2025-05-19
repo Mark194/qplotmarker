@@ -2,6 +2,7 @@
 
 
 #include "QPlotMarker/qplotmarker.hpp"
+#include "QPlotMarker/QPlotMarkerDistance"
 
 
 QPlotMarkerGroup::QPlotMarkerGroup(QObject * parent)
@@ -25,6 +26,23 @@ void QPlotMarkerGroup::addMarker(QPlotMarker * marker)
 void QPlotMarkerGroup::removeMarker(QPlotMarker * marker)
 {
     m_markers.removeOne( marker );
+}
+
+void QPlotMarkerGroup::addDistance(QGraphicsItem * item)
+{
+    if ( auto distance = dynamic_cast<QPlotMarkerDistance *>( item ) )
+
+        addDistance(distance);
+}
+
+void QPlotMarkerGroup::addDistance(QPlotMarkerDistance *distance)
+{
+    m_distances.append(distance);
+}
+
+void QPlotMarkerGroup::removeDistance(QPlotMarkerDistance *distance)
+{
+    m_distances.removeOne( distance );
 }
 
 void QPlotMarkerGroup::clear()
@@ -66,6 +84,9 @@ void QPlotMarkerGroup::move(const QPointF & point)
 
         marker->blockSignals( false );
     }
+
+    for (const auto distance : m_distances )
+        distance->update();
 }
 
 QList<QPlotMarker *> QPlotMarkerGroup::markers() const

@@ -9,6 +9,7 @@
 
 
 class QPlotMarker;
+class QPlotMarkerDistance;
 
 
 class QPLOTMARKER_EXPORT QPlotMarkerGroup : public QObject
@@ -18,10 +19,13 @@ public:
     explicit QPlotMarkerGroup(QObject *parent = nullptr);
 
     void addMarker(QGraphicsItem * marker);
-
     void addMarker(QPlotMarker * marker);
-
     void removeMarker(QPlotMarker * marker);
+
+
+    void addDistance(QGraphicsItem * distance);
+    void addDistance(QPlotMarkerDistance * distance);
+    void removeDistance(QPlotMarkerDistance * distance);
 
     void clear();
 
@@ -39,4 +43,6 @@ private:
     bool m_isSyncMovement;
 
     QList<QPlotMarker *> m_markers;
+
+    QList<QPlotMarkerDistance *> m_distances;
 };
