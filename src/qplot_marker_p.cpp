@@ -14,13 +14,7 @@
 
 QPlotMarkerPrivate::QPlotMarkerPrivate(QPlotMarker * q)
     : q_ptr( q ),
-      m_parentChart(nullptr),
       m_markerColor(Qt::black),
-      m_movement(QPlotMarker::MOVEMENT_DEFAULT),
-      m_orientation(QPlotMarker::Horizontal),
-      m_controlItem(nullptr),
-      m_line(nullptr),
-      m_coordInfo(nullptr),
       m_intersectionPointSize(3),
       m_intersectionLineSize(2),
       m_isVisibleCoords(false),
@@ -31,10 +25,7 @@ QPlotMarkerPrivate::QPlotMarkerPrivate(QPlotMarker * q)
       m_buttonControl(":/marker_eye")
 {}
 
-QPlotMarkerPrivate::~QPlotMarkerPrivate()
-{
-
-}
+QPlotMarkerPrivate::~QPlotMarkerPrivate() = default;
 
 void QPlotMarkerPrivate::init(
     QChart * parent,
@@ -82,15 +73,13 @@ void QPlotMarkerPrivate::init(
 
 bool QPlotMarkerPrivate::isPositionAcceptable(const QPointF & position) const
 {
-    QRectF plotArea = m_parentChart->plotArea();
+    const QRectF plotArea = m_parentChart->plotArea();
 
     if ( q_ptr->orientation() == Qt::Vertical )
 
         return position.x() >= plotArea.left() and position.x() <= plotArea.right();
 
-    else
-
-        return position.y() >= plotArea.top() and position.y() <= plotArea.bottom();
+    return position.y() >= plotArea.top() and position.y() <= plotArea.bottom();
 }
 
 
@@ -119,7 +108,7 @@ template <> struct hash<QPointF>
 
 void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
 {
-    if ( m_intersectionItems.size() > 0 )
+    if ( not m_intersectionItems.empty() )
 
         clearInterSectionPoints();
 
@@ -158,6 +147,18 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
 
             points.insert( { intersectPoint.x(),
                            QString::number( intersectPoint.y(), 'f', 3 ).toDouble() } );
+        else
+        {
+            if (qFuzzyCompare( twoPoint.first.x(), twoPoint.second.x() ) )
+            {
+                if (twoPoint.first.y() < twoPoint.second.y() )
+                    points.insert(twoPoint.first);
+
+                else
+                    points.insert(twoPoint.second);
+
+            }
+        }
     }
 
     for ( auto & point : points )
@@ -216,56 +217,7 @@ void QPlotMarkerPrivate::moveMarkerToPosition(const QPointF & position)
     else
         setupHorizontalMarker(position, plotArea, controlRect, isInverted);
 
-
     emit q_ptr->positionChanged(position);
-
-    // QRectF plotArea = m_parentChart->plotArea();
-
-    // auto controlRect = m_controlItem->mapToScene( m_controlItem->boundingRect() ).boundingRect();
-
-    // if ( orientation() == Qt::Vertical )
-    // {
-    //     m_line->setLine( position.x(), plotArea.top(), position.x(), plotArea.bottom() );
-
-
-    //     qreal halfPixmapWidth = controlRect.width() / 2.0;
-
-    //     auto pixmapHeight = controlRect.height();
-
-
-    //     m_controlItem->setPos( position.x() - halfPixmapWidth, plotArea.top() - pixmapHeight );
-
-
-    //     m_coordInfo->setCoord( m_parentChart->mapToValue( position ).x() );
-
-    //     m_coordInfo->setPos( position.x() - m_coordInfo->boundingRect().width() / 2,
-    //                            plotArea.bottom()                                     );
-
-
-    //     loadIntersectionPoints( position );
-    // }
-    // else
-    // {
-    //     m_line->setLine( plotArea.left(), position.y(), plotArea.right(), position.y() );
-
-    //     qreal halfPixmapWidth = controlRect.width() / 2.0;
-
-    //     m_controlItem->setPos( plotArea.right() + controlRect.width(),
-    //                            position.y() - halfPixmapWidth           );
-
-
-    //     m_coordInfo->setCoord( m_parentChart->mapToValue( position ).y() );
-
-    //     auto valueAxis = (QValueAxis *) m_parentChart->axes( Qt::Horizontal ).first();
-
-    //     auto startX = m_parentChart->mapToPosition( { valueAxis->min(), 0 } );
-
-    //     m_coordInfo->setPos( startX.x() - m_coordInfo->boundingRect().width(),
-    //                          position.y() - m_coordInfo->boundingRect().height() / 2 );
-    // }
-
-
-    emit q_ptr->positionChanged( position );
 }
 
 void QPlotMarkerPrivate::setupVerticalMarker(const QPointF& position,
