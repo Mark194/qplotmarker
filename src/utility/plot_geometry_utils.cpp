@@ -1,15 +1,14 @@
 #include "plot_geometry_utils.hpp"
 #include "QPlotMarker/qplotmarker.hpp"
 
-PlotGeometryUtils::PlotGeometryUtils() {}
+PlotGeometryUtils::PlotGeometryUtils() = default;
 
 qreal PlotGeometryUtils::distance(
     const QPointF & pointOne,
     const QPointF & pointTwo
 )
 {
-    return std::sqrt( std::pow( pointTwo.x() - pointOne.x(), 2 ) +
-                      std::pow( pointTwo.y() - pointTwo.y(), 2 )   );
+    return abs(pointOne.x() - pointTwo.x());
 }
 
 QPair<QPointF, QPointF> PlotGeometryUtils::findTwoNearestPoints(

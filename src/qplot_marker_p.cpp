@@ -137,7 +137,7 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF & position)
     {
         if ( not series->isVisible() ) continue;
 
-        auto lineSeries = dynamic_cast<QXYSeries *>( series );
+        const auto lineSeries = dynamic_cast<QXYSeries *>( series );
 
         if ( not lineSeries ) continue;
 
