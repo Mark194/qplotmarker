@@ -22,13 +22,13 @@ MovableButton::MovableButton(QPlotMarker * parent)
       m_buttonControl( new QGraphicsSvgItem( this ) ),
       m_size( 25.0 )
 {
-    setFlag( QGraphicsItem::ItemIsFocusable );
+    setFlag( ItemIsFocusable );
 
-    setFlag( QGraphicsItem::ItemIsMovable );
+    setFlag( ItemIsMovable );
 
-    setFlag( QGraphicsItem::ItemIsSelectable );
+    setFlag( ItemIsSelectable );
 
-    setFlag( QGraphicsItem::ItemSendsGeometryChanges );
+    setFlag( ItemSendsGeometryChanges );
 }
 
 void MovableButton::setButtonIcon(const QString & fileName)

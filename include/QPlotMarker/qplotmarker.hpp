@@ -67,7 +67,7 @@ public:
                          const QColor & color = "black",
                          Qt::Orientation orientation = Qt::Horizontal);
 
-    virtual ~QPlotMarker();
+    ~QPlotMarker() override;
 
 
     QColor color() const;
@@ -130,7 +130,7 @@ public:
     QRectF controlRect() const;
 
     // QGraphicsItem interface
-    QRectF boundingRect() const;
+    QRectF boundingRect() const override;
 
 Q_SIGNALS:
     void colorChanged(const QColor & color);
@@ -156,7 +156,7 @@ protected:
 
     // QGraphicsItem interface
 
-    QVariant itemChange(GraphicsItemChange change, const QVariant & value);
+    QVariant itemChange(GraphicsItemChange change, const QVariant & value) override;
 
 private:
     Q_DISABLE_COPY(QPlotMarker)

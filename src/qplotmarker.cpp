@@ -29,15 +29,12 @@ QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, QPlotMarker::Mar
 
 QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, Qt::Orientation orientation)
 
-    : QPlotMarker(parent, color, static_cast<QPlotMarker::MarkerOrientation>(orientation))
+    : QPlotMarker(parent, color, static_cast<MarkerOrientation>(orientation))
 {
 
 }
 
-QPlotMarker::~QPlotMarker()
-{
-
-}
+QPlotMarker::~QPlotMarker() = default;
 
 void QPlotMarker::setColor(const QColor & color)
 {
@@ -416,13 +413,13 @@ QString QPlotMarker::markerIcon(MarkerButtonIcon typeIcon) const
 
     switch ( typeIcon )
     {
-        case QPlotMarker::MARKER_BUTTON_ICON: return d->m_buttonIcon;
+        case MARKER_BUTTON_ICON: return d->m_buttonIcon;
 
-        case QPlotMarker::MARKER_BUTTON_CONTROL: return d->m_buttonControl;
+        case MARKER_BUTTON_CONTROL: return d->m_buttonControl;
 
-        case QPlotMarker::MARKER_BUTTON_SELECTED_ICON: return d->m_buttonSelectedIcon;
+        case MARKER_BUTTON_SELECTED_ICON: return d->m_buttonSelectedIcon;
 
-        case QPlotMarker::MARKER_BUTTON_SELECTED_CONTROL: return d->m_buttonsSelectedControl;
+        case MARKER_BUTTON_SELECTED_CONTROL: return d->m_buttonsSelectedControl;
 
         default: return {};
     }
@@ -434,13 +431,13 @@ void QPlotMarker::setMarkerIcon(const QString & fileName, MarkerButtonIcon typeI
 
     switch ( typeIcon )
     {
-        case QPlotMarker::MARKER_BUTTON_ICON:               d->m_buttonIcon = fileName;
+        case MARKER_BUTTON_ICON:               d->m_buttonIcon = fileName;  break;
 
-        case QPlotMarker::MARKER_BUTTON_CONTROL:            d->m_buttonControl = fileName;
+        case MARKER_BUTTON_CONTROL:            d->m_buttonControl = fileName; break;
 
-        case QPlotMarker::MARKER_BUTTON_SELECTED_ICON:      d->m_buttonSelectedIcon = fileName;
+        case MARKER_BUTTON_SELECTED_ICON:      d->m_buttonSelectedIcon = fileName; break;
 
-        case QPlotMarker::MARKER_BUTTON_SELECTED_CONTROL:   d->m_buttonsSelectedControl = fileName;
+        case MARKER_BUTTON_SELECTED_CONTROL:   d->m_buttonsSelectedControl = fileName; break;
 
         default: return;
     }
