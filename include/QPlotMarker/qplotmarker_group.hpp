@@ -22,11 +22,6 @@ public:
     void addMarker(QPlotMarker * marker);
     void removeMarker(QPlotMarker * marker);
 
-
-    void addDistance(QGraphicsItem * distance);
-    void addDistance(QPlotMarkerDistance * distance);
-    void removeDistance(QPlotMarkerDistance * distance);
-
     void clear();
 
     void setSyncMovement(bool isSync);
@@ -35,6 +30,10 @@ public:
     QList<QPlotMarker *> markers() const;
 
 public slots:
+
+    void addDistance(QGraphicsItem * distance);
+    void addDistance(QPlotMarkerDistance * distance);
+    void removeDistance(QPlotMarkerDistance * distance);
 
     void move(const QPointF & point);
 
