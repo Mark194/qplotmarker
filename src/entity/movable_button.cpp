@@ -78,6 +78,11 @@ void MovableButton::setColor(const QColor & color)
     m_buttonIcon->setGraphicsEffect( effect );
 }
 
+QPointF MovableButton::value() const
+{
+    return m_value;
+}
+
 QRectF MovableButton::boundingRect() const
 {
     QRectF bgRect = m_buttonControl->boundingRect();
@@ -103,6 +108,8 @@ void MovableButton::move(const QPointF & position, bool isFindLeft)
     auto closestPoint = PlotGeometryUtils::findClosestPoint( m_plotMarker, position, isFindLeft );
 
     if ( not closestPoint ) return;
+
+    m_value = closestPoint.value();
 
     m_plotMarker->move( m_plotMarker->chart()->mapToPosition( closestPoint.value() ) );
 }

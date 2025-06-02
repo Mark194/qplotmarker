@@ -23,6 +23,8 @@ public:
 
     void setColor(const QColor & color);
 
+    QPointF value() const;
+
     // QGraphicsItem interface
 
     QRectF boundingRect() const override;
@@ -53,4 +55,5 @@ private:
 
     qreal m_size;
 
+    QPointF m_value;
 };

@@ -469,7 +469,7 @@ void QPlotMarker::update()
 
     else
 
-        d->updateOnMoveByPoints( targetPoint );
+        move( d->m_parentChart->mapToPosition( d->m_controlItem->value() ) );
 }
 
 QVariant QPlotMarker::itemChange(GraphicsItemChange change, const QVariant & value)

@@ -71,7 +71,7 @@ void QPlotMarkerPrivate::init(
 
     Q_ASSERT_X( not m_parentChart->axes().isEmpty(),
                 "QPlotMarkerPrivate::init()",
-                "The axles are missing!"            );
+                "The axes are missing!"             );
 
     for ( auto axis : m_parentChart->axes() )
 
