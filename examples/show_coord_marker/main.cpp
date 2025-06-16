@@ -13,25 +13,24 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QChart *chart = new QChart();
+    auto *chart = new QChart();
 
+    auto * series = new QLineSeries();
 
-
-    QLineSeries *series = new QLineSeries();
-
-    *series << QPointF(1, 1) << QPointF(2, 3) << QPointF(3, 2) << QPointF(4, 4) << QPointF(5, 3);
+    *series << QPointF(1, 1) << QPointF(2, 3) << QPointF(3, 2) << QPointF(4, 4)
+            << QPointF(5, 3);
 
     chart->addSeries(series);
     chart->createDefaultAxes();
     chart->legend()->setVisible( false );
 
-    QChartView *chartView = new QChartView(chart);
+    auto * chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->resize(800, 600);
     chartView->show();
-    chartView->setWindowTitle( "Пример отображения координаты точки пересечения (нажмите V)" );
+    chartView->setWindowTitle( "Example of displaying the intersection point coordinate (press V)" );
 
-    QPlotMarker *marker = new QPlotMarker(chart, Qt::red, Qt::Vertical);
+    auto * marker = new QPlotMarker(chart, Qt::red, Qt::Vertical);
 
     marker->setLabelFormat("%.2f");
 
@@ -40,7 +39,7 @@ int main(int argc, char *argv[])
     marker->move(0.5);
 
 
-    ChartEventFilter * filter = new ChartEventFilter;
+    auto * filter = new ChartEventFilter;
 
     filter->setViewer( chartView, marker );
 
