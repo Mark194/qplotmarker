@@ -20,16 +20,16 @@ MainWindow::~MainWindow() = default;
 
 void MainWindow::loadData(QChart * chart)
 {
-    const int points = 10;
+    constexpr int points = 10;
 
 
     auto * series = new QLineSeries;
 
     for ( int i = 0; i <= points; ++i )
     {
-        const double phase = 0.0;
-        const double frequency = 1.0;
-        const double amplitude = 1.0;
+        constexpr double phase = 0.0;
+        constexpr double frequency = 1.0;
+        constexpr double amplitude = 1.0;
         const double x = 2 * M_PI * i / points;
 
         const double y = amplitude * std::sin(frequency * x + phase);
@@ -65,9 +65,9 @@ void MainWindow::createForm()
     const auto controls = createControls();
 
 
-    centralLayout->addLayout( controls, 1 );
-
     centralLayout->addWidget( view, 7 );
+
+    centralLayout->addLayout( controls, 1 );
 }
 
 QChartView * MainWindow::createView()

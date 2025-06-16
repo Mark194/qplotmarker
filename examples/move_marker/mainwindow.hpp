@@ -6,15 +6,15 @@
 #include <QPlotMarker>
 
 
-class MainWindow : public QMainWindow
+class MainWindow final : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow() override;
 
-    void loadData(QChart * chart);
+    static void loadData(QChart * chart);
 
 private:
 
