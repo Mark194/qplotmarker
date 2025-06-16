@@ -1,5 +1,5 @@
 
-# qplotmarker
+# QPlotMarker
 
 <p align="center">
   <img src="https://github.com/Mark194/qplotmarker/blob/main/screenshots/logo.png" alt="Баннер проекта"/>
