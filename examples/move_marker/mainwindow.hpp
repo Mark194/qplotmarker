@@ -22,7 +22,7 @@ private:
 
     void createForm();
 
-    QChartView * createView();
+    static QChartView * createView();
 
     QLayout * createControls();
 

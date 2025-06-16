@@ -9,33 +9,30 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    setWindowTitle( "Перемещение маркера по точкам" );
+    setWindowTitle( "Moving the marker by points" );
 
     resize( 800, 600 );
 
     createForm();
 }
 
-MainWindow::~MainWindow() {}
+MainWindow::~MainWindow() = default;
 
 void MainWindow::loadData(QChart * chart)
 {
-    double amplitude = 1.0;
-
-    double frequency = 1.0;
-
-    double phase = 0.0;
-
-    int points = 10;
+    const int points = 10;
 
 
-    QLineSeries * series = new QLineSeries;
+    auto * series = new QLineSeries;
 
     for ( int i = 0; i <= points; ++i )
     {
-        double x = 2 * M_PI * i / points;
+        const double phase = 0.0;
+        const double frequency = 1.0;
+        const double amplitude = 1.0;
+        const double x = 2 * M_PI * i / points;
 
-        double y = amplitude * std::sin(frequency * x + phase);
+        const double y = amplitude * std::sin(frequency * x + phase);
 
         series->append(x, y);
     }
@@ -45,17 +42,17 @@ void MainWindow::loadData(QChart * chart)
 
 void MainWindow::createForm()
 {
-    QWidget * centralWidget = new QWidget;
+    auto * centralWidget = new QWidget;
 
     setCentralWidget( centralWidget );
 
 
-    QVBoxLayout * centralLayout = new QVBoxLayout;
+    auto * centralLayout = new QVBoxLayout;
 
     centralWidget->setLayout( centralLayout );
 
 
-    auto view = createView();
+    const auto view = createView();
 
 
     loadData( view->chart() );
@@ -65,7 +62,7 @@ void MainWindow::createForm()
     createMarker( view->chart() );
 
 
-    auto controls = createControls();
+    const auto controls = createControls();
 
 
     centralLayout->addLayout( controls, 1 );
@@ -75,12 +72,12 @@ void MainWindow::createForm()
 
 QChartView * MainWindow::createView()
 {
-    QChart *chart = new QChart();
+    const auto chart = new QChart();
 
     chart->legend()->setVisible( false );
 
 
-    QChartView * view = new QChartView( chart );
+    const auto view = new QChartView( chart );
 
     view->setRenderHint(QPainter::Antialiasing);
 
@@ -89,15 +86,15 @@ QChartView * MainWindow::createView()
 
 QLayout * MainWindow::createControls()
 {
-    QHBoxLayout * controlLayout = new QHBoxLayout;
+    auto * controlLayout = new QHBoxLayout;
 
 
-    QPushButton * moveNextButton = new QPushButton( "Вперёд" );
+    auto * moveNextButton = new QPushButton( "Next" );
 
     connect( moveNextButton, &QPushButton::clicked, m_marker, &QPlotMarker::moveToNextPoint );
 
 
-    QPushButton * movePrevButton = new QPushButton( "Назад"  );
+    auto * movePrevButton = new QPushButton( "Back"  );
 
     connect( movePrevButton, &QPushButton::clicked, m_marker, &QPlotMarker::moveToPreviousPoint );
 
