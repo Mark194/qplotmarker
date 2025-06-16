@@ -146,10 +146,11 @@ Ready-to-use code examples are available in the [examples](https://github.com/Ma
 
 
 ## Visual Examples
-| Miniature | Description |
-|-----------|----------|
-| <details><summary><img src="screenshots/base_example.png" width="300"></summary>![Full size](screenshots/base_example.png)</details> | **Base Example**<br> |
-| <details><summary><img src="screenshots/qplotmarker_distance.png" width="300"></summary>![Full size](screenshots/qplotmarker_distance.png)</details> | **PlotMarker Distance**<br>Coord difference between markers |
+| Miniature                                                                                                                                            | Description                                                                  |
+|------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| <details><summary><img src="screenshots/base_example.png" width="300"></summary>![Full size](screenshots/base_example.png)</details>                 | **Base Example**<br>                                                         |
+| <details><summary><img src="screenshots/qplotmarker_distance.png" width="300"></summary>![Full size](screenshots/qplotmarker_distance.png)</details> | **PlotMarker Distance**<br>Coord difference between markers                  |
+| <details><summary><img src="screenshots/show_coord_marker.png" width="300"></summary>![Full size](screenshots/qplotmarker_distance.png)</details>    | **Show Coord Marker**<br>Displays the coordinates of the intersection points |
 
 
 <!--special thanks-->
