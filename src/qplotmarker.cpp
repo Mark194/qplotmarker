@@ -68,7 +68,7 @@ void QPlotMarker::setMovementStyle(MovementStyle style)
 
     d->m_movement = style;
 
-    move( QGraphicsItem::pos() );
+    move( pos() );
 }
 
 QPlotMarker::MovementStyle QPlotMarker::movementStyle() const
@@ -468,8 +468,10 @@ void QPlotMarker::update()
         move( targetPoint );
 
     else
+    {
 
-        move( d->m_parentChart->mapToPosition( d->m_markerValue ) );
+        move( {x, y} );
+    }
 }
 
 QVariant QPlotMarker::itemChange(GraphicsItemChange change, const QVariant & value)
