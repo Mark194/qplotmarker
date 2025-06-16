@@ -8,41 +8,41 @@ ControlWindow::ControlWindow(QWidget *parent)
     : QMainWindow(parent),
       m_groupMarker( new QPlotMarkerGroup )
 {
-    setWindowTitle( "Группировка маркеров" );
+    setWindowTitle( "Grouping markers" );
 
     resize( 800, 600 );
 
     createForm();
 }
 
-ControlWindow::~ControlWindow() {}
+ControlWindow::~ControlWindow() = default;
 
 
 void ControlWindow::createForm()
 {
-    QWidget * centralWidget = new QWidget;
+    auto * centralWidget = new QWidget;
 
     setCentralWidget( centralWidget );
 
 
-    QVBoxLayout * centralLayout = new QVBoxLayout;
+    auto * centralLayout = new QVBoxLayout;
 
     centralWidget->setLayout( centralLayout );
 
 
-    auto layoutControls = createControls();
+    const auto layoutControls = createControls();
 
     centralLayout->addLayout( layoutControls );
 
 
-    auto viewsLayout = createViews();
+    const auto viewsLayout = createViews();
 
     centralLayout->addLayout( viewsLayout );
 }
 
-void ControlWindow::loadData(QChart * chart, double ampl, double freq, double phase, int count)
+void ControlWindow::loadData(QChart * chart, const double ampl, const double freq, const double phase, const int count)
 {
-    QLineSeries * series = new QLineSeries;
+    auto * series = new QLineSeries;
 
     for ( int i = 0; i <= count; ++i )
     {
@@ -58,12 +58,12 @@ void ControlWindow::loadData(QChart * chart, double ampl, double freq, double ph
 
 QChartView * ControlWindow::createView()
 {
-    QChart *chart = new QChart();
+    auto *chart = new QChart();
 
     chart->legend()->setVisible( false );
 
 
-    QChartView * view = new QChartView( chart );
+    auto * view = new QChartView( chart );
 
     view->setRenderHint(QPainter::Antialiasing);
 
@@ -72,7 +72,7 @@ QChartView * ControlWindow::createView()
 
 QPlotMarker * ControlWindow::createMarker(QChart * chart)
 {
-    QPlotMarker * marker = new QPlotMarker( chart, Qt::red, Qt::Vertical );
+    auto * marker = new QPlotMarker( chart, Qt::red, Qt::Vertical );
 
     marker->setMovementStyle( QPlotMarker::MOVEMENT_BY_POINTS );
 
@@ -85,12 +85,12 @@ QPlotMarker * ControlWindow::createMarker(QChart * chart)
 
 QLayout * ControlWindow::createViews()
 {
-    QHBoxLayout * layout = new QHBoxLayout;
+    auto * layout = new QHBoxLayout;
 
 
-    auto viewOne   = createView();
+    const auto viewOne   = createView();
 
-    auto viewOther = createView();
+    const auto viewOther = createView();
 
     layout->addWidget( viewOne );
 
@@ -120,10 +120,10 @@ QLayout * ControlWindow::createViews()
 
 QLayout * ControlWindow::createControls()
 {
-    QHBoxLayout * controlLayout = new QHBoxLayout;
+    auto * controlLayout = new QHBoxLayout;
 
 
-    QCheckBox * syncEditor = new QCheckBox( "Синхронизировать" );
+    auto * syncEditor = new QCheckBox( "Synchronize" );
 
     connect(syncEditor, &QCheckBox::clicked, m_groupMarker, &QPlotMarkerGroup::setSyncMovement );
 

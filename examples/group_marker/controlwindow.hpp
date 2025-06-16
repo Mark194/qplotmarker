@@ -28,17 +28,17 @@ private:
 
     void createForm();
 
-    QChartView * createView();
+    static QChartView * createView();
 
     QLayout * createViews();
 
     QLayout * createControls();
 
-    void loadData(QChart * chart,
-                  double ampl = 1.0,
-                  double freq = 1.0,
-                  double phase = 0.0,
-                  int count = 100);
+    static void loadData(QChart * chart,
+                         double ampl = 1.0,
+                         double freq = 1.0,
+                         double phase = 0.0,
+                         int count = 100);
 
-    QPlotMarker * createMarker(QChart * chart);
+    static QPlotMarker * createMarker(QChart * chart);
 };
