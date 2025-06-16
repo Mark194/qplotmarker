@@ -86,6 +86,7 @@ void QPlotMarkerGroup::move(const QPointF & point)
     }
 
     for (const auto distance : m_distances )
+
         distance->update();
 }
 

@@ -1,8 +1,9 @@
 #include "chart_event_filter.hpp"
 
 ChartEventFilter::ChartEventFilter(QObject *parent)
-    : QObject{parent}, m_isShowCoord(false)
-{}
+    : QObject{parent}, m_isShowCoord(false), m_marker(nullptr), m_chartView(nullptr)
+{
+}
 
 void ChartEventFilter::setViewer(QChartView * chartView, QPlotMarker * marker)
 {
@@ -15,9 +16,7 @@ bool ChartEventFilter::eventFilter(QObject * watched, QEvent * event)
 {
     if ( event->type() == QEvent::KeyPress )
     {
-        auto keyEvent = static_cast<QKeyEvent *>( event );
-
-        if ( keyEvent->key() == Qt::Key_V and m_marker )
+        if (const auto keyEvent = dynamic_cast<QKeyEvent *>( event ); keyEvent->key() == Qt::Key_V and m_marker )
         {
             m_isShowCoord = not m_isShowCoord;
 
