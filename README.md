@@ -150,7 +150,8 @@ Ready-to-use code examples are available in the [examples](https://github.com/Ma
 |------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
 | <details><summary><img src="screenshots/base_example.png" width="300"></summary>![Full size](screenshots/base_example.png)</details>                 | **Base Example**<br>                                                         |
 | <details><summary><img src="screenshots/qplotmarker_distance.png" width="300"></summary>![Full size](screenshots/qplotmarker_distance.png)</details> | **PlotMarker Distance**<br>Coord difference between markers                  |
-| <details><summary><img src="screenshots/show_coord_marker.png" width="300"></summary>![Full size](screenshots/qplotmarker_distance.png)</details>    | **Show Coord Marker**<br>Displays the coordinates of the intersection points |
+| <details><summary><img src="screenshots/show_coord_marker.png" width="300"></summary>![Full size](screenshots/show_coord_marker.png)</details>    | **Show Coord Marker**<br>Displays the coordinates of the intersection points |
+| <details><summary><img src="screenshots/grouping_markers.png" width="300"></summary>![Full size](screenshots/grouping_markers.png)</details>     | **Grouping Markers**<br>Grouping markers for synchronous movement            |
 
 
 <!--special thanks-->
