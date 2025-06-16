@@ -64,6 +64,8 @@ public:
 
     QPointF     m_markerPosition;
 
+    QPointF     m_markerValue;
+
     QList<QAbstractSeries *> m_ignoreSeries;
 
     bool m_isVisibleCoords;

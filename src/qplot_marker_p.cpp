@@ -242,6 +242,8 @@ void QPlotMarkerPrivate::moveMarkerToPosition(const QPointF & position)
 
     m_markerPosition = position;
 
+    m_markerValue = m_parentChart->mapToValue(position);
+
     QRectF plotArea = m_parentChart->plotArea();
     auto controlRect = m_controlItem->mapToScene(m_controlItem->boundingRect()).boundingRect();
 

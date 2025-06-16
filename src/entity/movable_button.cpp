@@ -75,11 +75,6 @@ void MovableButton::setColor(const QColor & color)
     m_buttonIcon->setGraphicsEffect( effect );
 }
 
-QPointF MovableButton::value() const
-{
-    return m_value;
-}
-
 QRectF MovableButton::boundingRect() const
 {
     QRectF bgRect = m_buttonControl->boundingRect();
