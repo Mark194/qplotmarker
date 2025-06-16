@@ -101,8 +101,6 @@ void MovableButton::move(const QPointF & position, bool isFindLeft)
 
     if ( not closestPoint ) return;
 
-    m_value = closestPoint.value();
-
     m_plotMarker->move( m_plotMarker->chart()->mapToPosition( closestPoint.value() ) );
 }
 
