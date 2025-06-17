@@ -1,10 +1,10 @@
-#include <QtWidgets/QApplication>
 #include <QtCharts/QChartView>
 #include <QtCharts/QLineSeries>
-
+#include <QtWidgets/QApplication>
 
 #include <QPlotMarker/QPlotMarker>
 
+#include "chart_view_panner.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -14,8 +14,8 @@ int main(int argc, char *argv[])
 
     auto *series = new QLineSeries();
 
-    *series << QPointF(1, 1) << QPointF(2, 3) << QPointF(3, 2) << QPointF(4, 4)
-            << QPointF(5, 3) << QPointF(6, 2);
+    *series << QPointF(1, 1) << QPointF(2, 3) << QPointF(3, 2) << QPointF(4, 4) << QPointF(5, 3)
+            << QPointF(6, 2);
 
     chart->addSeries(series);
     chart->createDefaultAxes();
@@ -28,10 +28,12 @@ int main(int argc, char *argv[])
     chartView->setWindowTitle("Test using marker");
     chartView->show();
 
-    auto * oneMarker = new QPlotMarker(chart, Qt::red, Qt::Vertical);
+    new ChartViewPanner(chartView);
+
+    auto *oneMarker = new QPlotMarker(chart, Qt::red, Qt::Vertical);
     oneMarker->setLabelFormat("%.2f");
 
-    chartView->scene()->addItem( oneMarker );
+    chartView->scene()->addItem(oneMarker);
 
     oneMarker->moveEnd();
 
