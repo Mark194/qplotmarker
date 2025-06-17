@@ -170,7 +170,7 @@ void QPlotMarker::moveBegin()
     Q_D(QPlotMarker);
 
     auto plotArea = d->m_parentChart->plotArea();
- if (d->orientation() == Qt::Vertical)
+    if (d->orientation() == Qt::Vertical)
 
         move({plotArea.x(), plotArea.y()});
 
@@ -184,7 +184,7 @@ void QPlotMarker::moveEnd()
     Q_D(QPlotMarker);
 
     auto plotArea = d->m_parentChart->plotArea();
- if (d->orientation() == Qt::Vertical)
+    if (d->orientation() == Qt::Vertical)
 
         move({plotArea.topRight().x(), plotArea.y()});
 
