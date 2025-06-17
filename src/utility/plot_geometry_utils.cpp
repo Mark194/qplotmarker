@@ -8,7 +8,7 @@ qreal PlotGeometryUtils::distance(
     const QPointF & pointTwo
 )
 {
-    return abs(pointOne.x() - pointTwo.x());
+    return qAbs(pointOne.x() - pointTwo.x());
 }
 
 QPair<QPointF, QPointF> PlotGeometryUtils::findTwoNearestPoints(

@@ -1,6 +1,5 @@
 #include "../include/QPlotMarker/qplotmarker.hpp"
 
-
 #include "qplot_marker_p.hpp"
 
 #include <entity/graphics_coord_item.hpp>
@@ -15,44 +14,38 @@
 
 #include <utility/plot_geometry_utils.hpp>
 
-
-QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, QPlotMarker::MarkerOrientation orientation)
-    : QGraphicsWidget(),
-      d_ptr( new QPlotMarkerPrivate( this ) )
+QPlotMarker::QPlotMarker(QChart *parent, const QColor &color, MarkerOrientation orientation)
+    : d_ptr(new QPlotMarkerPrivate(this))
 {
     Q_INIT_RESOURCE(marker_icons);
 
     Q_D(QPlotMarker);
 
-    d->init( parent, color, orientation );
+    d->init(parent, color, orientation);
 }
 
-QPlotMarker::QPlotMarker(QChart * parent, const QColor & color, Qt::Orientation orientation)
-
+QPlotMarker::QPlotMarker(QChart *parent, const QColor &color, Qt::Orientation orientation)
     : QPlotMarker(parent, color, static_cast<MarkerOrientation>(orientation))
 {
-
 }
 
 QPlotMarker::~QPlotMarker() = default;
 
-void QPlotMarker::setColor(const QColor & color)
+void QPlotMarker::setColor(const QColor &color)
 {
     Q_D(QPlotMarker);
 
     d->m_markerColor = color;
 
-
     auto pen = d->m_line->pen();
 
-    pen.setColor( color );
+    pen.setColor(color);
 
-    d->m_line->setPen( pen );
+    d->m_line->setPen(pen);
 
+    d->m_controlItem->setColor(color);
 
-    d->m_controlItem->setColor( color );
-
-    emit colorChanged( color );
+    emit colorChanged(color);
 }
 
 QColor QPlotMarker::color() const
@@ -68,7 +61,7 @@ void QPlotMarker::setMovementStyle(MovementStyle style)
 
     d->m_movement = style;
 
-    move( pos() );
+    move(pos());
 }
 
 QPlotMarker::MovementStyle QPlotMarker::movementStyle() const
@@ -99,7 +92,7 @@ bool QPlotMarker::isInverted() const
     return d->isInverted();
 }
 
-QChart * QPlotMarker::chart() const
+QChart *QPlotMarker::chart() const
 {
     Q_D(const QPlotMarker);
 
@@ -110,24 +103,23 @@ void QPlotMarker::setSelected(bool isSelect)
 {
     Q_D(QPlotMarker);
 
-    if ( d->m_isSelectedLock ) return;
+    if (d->m_isSelectedLock)
+        return;
 
-
-    if ( isSelect )
+    if (isSelect)
     {
-        d->m_controlItem->setButtonIcon( d->m_buttonSelectedIcon );
+        d->m_controlItem->setButtonIcon(d->m_buttonSelectedIcon);
 
-        d->m_controlItem->setButtonControl( d->m_buttonsSelectedControl );
+        d->m_controlItem->setButtonControl(d->m_buttonsSelectedControl);
     }
     else
     {
-        d->m_controlItem->setButtonIcon( d->m_buttonIcon );
+        d->m_controlItem->setButtonIcon(d->m_buttonIcon);
 
-        d->m_controlItem->setButtonControl( d->m_buttonControl );
+        d->m_controlItem->setButtonControl(d->m_buttonControl);
     }
 
-
-    QGraphicsItem::setSelected( isSelect );
+    QGraphicsItem::setSelected(isSelect);
 }
 
 bool QPlotMarker::isIgnoreSelected() const
@@ -144,92 +136,83 @@ void QPlotMarker::setIsIgnoreSelected(bool isIgnore)
     d->m_isSelectedLock = isIgnore;
 }
 
-void QPlotMarker::move(const QPointF & position)
+void QPlotMarker::move(const QPointF &position)
 {
     Q_D(QPlotMarker);
 
-    d->moveMarkerToPosition( position );
+    d->moveMarkerToPosition(position);
 }
 
 void QPlotMarker::move(qreal percent)
 {
     Q_D(QPlotMarker);
 
-    Q_ASSERT_X(percent <= 1.0 and percent >= -1.0,
-               "move(qreal percent)",
-               "Incorrect percentage value [-1.0:1.0]!");
+    Q_ASSERT_X(percent <= 1.0 and percent >= -1.0, "move(qreal percent)", "Incorrect percentage value [-1.0:1.0]!");
 
     auto plotArea = d->m_parentChart->plotArea();
 
     auto position = d->m_markerPosition;
 
-    if ( d->orientation() == Qt::Vertical )
+    if (d->orientation() == Qt::Vertical)
     {
         auto step = plotArea.width() * percent;
 
-        position.setX( position.x() + step );
+        position.setX(position.x() + step);
     }
     else
     {
         auto step = plotArea.height() * percent;
 
-        position.setY( position.y() + step );
+        position.setY(position.y() + step);
     }
 
-    move( position );
+    move(position);
 }
-
 
 void QPlotMarker::moveBegin()
 {
     Q_D(QPlotMarker);
 
-    if ( d->orientation() == Qt::Vertical )
+    if (d->orientation() == Qt::Vertical)
 
-        move( { d->m_parentChart->plotArea().x(),
-                d->m_parentChart->plotArea().y() } );
+        move({d->m_parentChart->plotArea().x(), d->m_parentChart->plotArea().y()});
 
     else
 
-        move( { d->m_parentChart->plotArea().right(),
-                d->m_parentChart->plotArea().topRight().y() } );
+        move({d->m_parentChart->plotArea().right(), d->m_parentChart->plotArea().topRight().y()});
 }
 
 void QPlotMarker::moveEnd()
 {
     Q_D(QPlotMarker);
 
-    if ( d->orientation() == Qt::Vertical )
+    if (d->orientation() == Qt::Vertical)
 
-        move( { d->m_parentChart->plotArea().topRight().x(),
-                d->m_parentChart->plotArea().y() } );
+        move({d->m_parentChart->plotArea().topRight().x(), d->m_parentChart->plotArea().y()});
 
     else
 
-        move( { d->m_parentChart->plotArea().right(),
-                d->m_parentChart->plotArea().bottomRight().y() } );
+        move({d->m_parentChart->plotArea().right(), d->m_parentChart->plotArea().bottomRight().y()});
 }
 
 void QPlotMarker::moveToNextPoint()
 {
     Q_D(QPlotMarker);
 
-    Q_ASSERT_X(d->m_movement == QPlotMarker::MOVEMENT_BY_POINTS,
-               "moveToNextPoint()",
+    Q_ASSERT_X(d->m_movement == QPlotMarker::MOVEMENT_BY_POINTS, "moveToNextPoint()",
                "The mode of moving by points is not set!");
 
-    d->m_controlItem->move( d->m_markerPosition, false );
+    d->m_controlItem->move(d->m_markerPosition, false);
 }
 
 void QPlotMarker::moveToPreviousPoint()
 {
     Q_D(QPlotMarker);
 
-    Q_ASSERT_X(d->m_movement == QPlotMarker::MOVEMENT_BY_POINTS,
-               "moveToPreviousPoint()",
+    Q_ASSERT_X(d->m_movement == QPlotMarker::MOVEMENT_BY_POINTS, "moveToPreviousPoint()",
                "The mode of moving by points is not set!");
 
-    d->m_controlItem->move( d->m_markerPosition, true );
+    d->m_controlItem->move(d->m_markerPosition, true);
 }
 
 QPointF QPlotMarker::pos() const
@@ -257,13 +240,9 @@ QRectF QPlotMarker::boundingRect() const
 {
     Q_D(const QPlotMarker);
 
-    return
-    {
-        d->m_parentChart->plotArea().left(),
-        x(),
-        d->m_line->boundingRect().width() + d->m_controlItem->boundingRect().width(),
-        d->m_controlItem->boundingRect().height()
-    };
+    return {d->m_parentChart->plotArea().left(), x(),
+            d->m_line->boundingRect().width() + d->m_controlItem->boundingRect().width(),
+            d->m_controlItem->boundingRect().height()};
 }
 
 void QPlotMarker::showCoordinates(bool isVisible)
@@ -272,36 +251,35 @@ void QPlotMarker::showCoordinates(bool isVisible)
 
     d->m_isVisibleCoords = isVisible;
 
-    for ( auto & item : d->m_intersectionItems )
+    for (auto &item : d->m_intersectionItems)
 
-        item.coord->setVisible( isVisible );
+        item.coord->setVisible(isVisible);
 }
 
 void QPlotMarker::activate(bool isActivated)
 {
     Q_D(QPlotMarker);
 
-    auto activeItem = dynamic_cast<QGraphicsTextItem *>( sender() );
+    auto activeItem = dynamic_cast<QGraphicsTextItem *>(sender());
 
-    for ( auto item : d->m_intersectionItems )
+    for (auto item : d->m_intersectionItems)
     {
-        if ( not item.coord or item.coord == activeItem )
+        if (not item.coord or item.coord == activeItem)
 
             continue;
 
-        if ( isActivated )
+        if (isActivated)
         {
             auto effect = new QGraphicsOpacityEffect();
 
-            effect->setOpacity( 0.2 );
+            effect->setOpacity(0.2);
 
-            item.coord->setGraphicsEffect( effect );
+            item.coord->setGraphicsEffect(effect);
         }
         else
         {
-            item.coord->setGraphicsEffect( nullptr );
+            item.coord->setGraphicsEffect(nullptr);
         }
-
     }
 }
 
@@ -318,9 +296,9 @@ void QPlotMarker::setIntersectionLineSize(quint8 size)
 
     auto pen = d->m_line->pen();
 
-    pen.setWidth( size );
+    pen.setWidth(size);
 
-    d->m_line->setPen( pen );
+    d->m_line->setPen(pen);
 }
 
 quint8 QPlotMarker::intersectionLineSize() const
@@ -330,34 +308,35 @@ quint8 QPlotMarker::intersectionLineSize() const
     return d->m_line->pen().width();
 }
 
-void QPlotMarker::setLabelFormat(const QString & format)
+void QPlotMarker::setLabelFormat(const QString &format)
 {
     Q_D(QPlotMarker);
 
-    d->m_coordInfo->setLabelFormat( format );
+    d->m_coordInfo->setLabelFormat(format);
 
-    for ( auto & item : d->m_intersectionItems )
+    for (auto &item : d->m_intersectionItems)
 
-        item.coord->setLabelFormat( format );
+        item.coord->setLabelFormat(format);
 }
 
-void QPlotMarker::addIgnoreSeries(QAbstractSeries * series)
+void QPlotMarker::addIgnoreSeries(QAbstractSeries *series)
 {
     Q_D(QPlotMarker);
 
-    if ( d->m_ignoreSeries.contains( series ) ) return;
+    if (d->m_ignoreSeries.contains(series))
+        return;
 
-    d->m_ignoreSeries.append( series );
+    d->m_ignoreSeries.append(series);
 }
 
-void QPlotMarker::removeIgnoreSeries(QAbstractSeries * series)
+void QPlotMarker::removeIgnoreSeries(QAbstractSeries *series)
 {
     Q_D(QPlotMarker);
 
-    d->m_ignoreSeries.removeOne( series );
+    d->m_ignoreSeries.removeOne(series);
 }
 
-void QPlotMarker::setIgnoreSeries(const QList<QAbstractSeries *> & series)
+void QPlotMarker::setIgnoreSeries(const QList<QAbstractSeries *> &series)
 {
     Q_D(QPlotMarker);
 
@@ -382,64 +361,78 @@ void QPlotMarker::setControlIconSize(qreal size)
 {
     Q_D(QPlotMarker);
 
-    d->m_controlItem->setSize( size );
+    d->m_controlItem->setSize(size);
 }
 
-void QPlotMarker::setCoordFont(const QFont & font)
+void QPlotMarker::setCoordFont(const QFont &font)
 {
     Q_D(QPlotMarker);
 
-    d->m_coordInfo->setFont( font );
+    d->m_coordInfo->setFont(font);
 
-    for ( auto item : d->m_intersectionItems )
+    for (auto item : d->m_intersectionItems)
 
-        item.coord->setFont( font );
+        item.coord->setFont(font);
 }
 
-void QPlotMarker::setCoordPen(const QPen & pen)
+void QPlotMarker::setCoordPen(const QPen &pen)
 {
     Q_D(QPlotMarker);
 
-    d->m_coordInfo->setPen( pen );
+    d->m_coordInfo->setPen(pen);
 
-    for ( auto item : d->m_intersectionItems )
+    for (auto item : d->m_intersectionItems)
 
-        item.coord->setPen( pen );
+        item.coord->setPen(pen);
 }
 
 QString QPlotMarker::markerIcon(MarkerButtonIcon typeIcon) const
 {
     Q_D(const QPlotMarker);
 
-    switch ( typeIcon )
+    switch (typeIcon)
     {
-        case MARKER_BUTTON_ICON: return d->m_buttonIcon;
+    case MARKER_BUTTON_ICON:
+        return d->m_buttonIcon;
 
-        case MARKER_BUTTON_CONTROL: return d->m_buttonControl;
+    case MARKER_BUTTON_CONTROL:
+        return d->m_buttonControl;
 
-        case MARKER_BUTTON_SELECTED_ICON: return d->m_buttonSelectedIcon;
+    case MARKER_BUTTON_SELECTED_ICON:
+        return d->m_buttonSelectedIcon;
 
-        case MARKER_BUTTON_SELECTED_CONTROL: return d->m_buttonsSelectedControl;
+    case MARKER_BUTTON_SELECTED_CONTROL:
+        return d->m_buttonsSelectedControl;
 
-        default: return {};
+    default:
+        return {};
     }
 }
 
-void QPlotMarker::setMarkerIcon(const QString & fileName, MarkerButtonIcon typeIcon)
+void QPlotMarker::setMarkerIcon(const QString &fileName, MarkerButtonIcon typeIcon)
 {
     Q_D(QPlotMarker);
 
-    switch ( typeIcon )
+    switch (typeIcon)
     {
-        case MARKER_BUTTON_ICON:               d->m_buttonIcon = fileName;  break;
+    case MARKER_BUTTON_ICON:
+        d->m_buttonIcon = fileName;
+        break;
 
-        case MARKER_BUTTON_CONTROL:            d->m_buttonControl = fileName; break;
+    case MARKER_BUTTON_CONTROL:
+        d->m_buttonControl = fileName;
+        break;
 
-        case MARKER_BUTTON_SELECTED_ICON:      d->m_buttonSelectedIcon = fileName; break;
+    case MARKER_BUTTON_SELECTED_ICON:
+        d->m_buttonSelectedIcon = fileName;
+        break;
 
-        case MARKER_BUTTON_SELECTED_CONTROL:   d->m_buttonsSelectedControl = fileName; break;
+    case MARKER_BUTTON_SELECTED_CONTROL:
+        d->m_buttonsSelectedControl = fileName;
+        break;
 
-        default: return;
+    default:
+        return;
     }
 
     update();
@@ -458,29 +451,27 @@ void QPlotMarker::update()
 
     auto plotArea = d->m_parentChart->plotArea();
 
-    qreal x = qBound( plotArea.left(), d->m_markerPosition.x(), plotArea.right()  );
-    qreal y = qBound( plotArea.top(),  d->m_markerPosition.y(), plotArea.bottom() );
+    qreal x = qBound(plotArea.left(), d->m_markerPosition.x(), plotArea.right());
+    qreal y = qBound(plotArea.top(), d->m_markerPosition.y(), plotArea.bottom());
 
-    QPointF targetPoint( x, y );
+    const QPointF targetPoint(x, y);
 
-    if ( d->m_movement == QPlotMarker::MOVEMENT_DEFAULT )
+    if (d->m_movement == QPlotMarker::MOVEMENT_DEFAULT)
 
-        move( targetPoint );
+        move(targetPoint);
 
     else
 
-        d->updateOnMoveByPoints( d->m_parentChart->mapToPosition( d->m_markerValue ) );
-    
+        d->updateOnMoveByPoints(targetPoint);
 }
 
-QVariant QPlotMarker::itemChange(GraphicsItemChange change, const QVariant & value)
+QVariant QPlotMarker::itemChange(GraphicsItemChange change, const QVariant &value)
 {
-    auto result = QGraphicsWidget::itemChange( change, value );
+    auto result = QGraphicsWidget::itemChange(change, value);
 
-    if ( change == QGraphicsItem::ItemSceneHasChanged and scene() )
+    if (change == QGraphicsItem::ItemSceneHasChanged and scene())
 
         moveBegin();
-
 
     return result;
 }

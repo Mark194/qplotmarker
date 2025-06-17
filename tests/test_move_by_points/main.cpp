@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     auto *series = new QLineSeries();
 
     *series << QPointF(1, 1) << QPointF(2, 3) << QPointF(3, 2) << QPointF(4, 4)
-            << QPointF(5, 3) << QPointF(6, 4);
+            << QPointF(5, 3) << QPointF(6, 2);
 
     chart->addSeries(series);
     chart->createDefaultAxes();

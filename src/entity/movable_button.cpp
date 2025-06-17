@@ -1,9 +1,7 @@
 #include "movable_button.hpp"
 
-
 #include <QGraphicsSceneMouseEvent>
 #include <QSvgRenderer>
-
 
 #include <QPlotMarker/qplotmarker.hpp>
 
@@ -11,35 +9,34 @@
 
 #include <utility/plot_geometry_utils.hpp>
 
-
-MovableButton::MovableButton(QPlotMarker * parent)
-    : QGraphicsItem( parent ),
-      m_plotMarker(parent),
-      m_buttonIcon( new QGraphicsSvgItem( this ) ),
-      m_buttonControl( new QGraphicsSvgItem( this ) ),
-      m_size( 25.0 )
+MovableButton::MovableButton(QPlotMarker *parent)
+    : QGraphicsItem(parent)
+    , m_plotMarker(parent)
+    , m_buttonIcon(new QGraphicsSvgItem(this))
+    , m_buttonControl(new QGraphicsSvgItem(this))
+    , m_size(25.0)
 {
-    setFlag( ItemIsFocusable );
+    setFlag(ItemIsFocusable);
 
-    setFlag( ItemIsMovable );
+    setFlag(ItemIsMovable);
 
-    setFlag( ItemIsSelectable );
+    setFlag(ItemIsSelectable);
 
-    setFlag( ItemSendsGeometryChanges );
+    setFlag(ItemSendsGeometryChanges);
 }
 
-void MovableButton::setButtonIcon(const QString & fileName)
+void MovableButton::setButtonIcon(const QString &fileName)
 {
-    m_buttonIcon->setSharedRenderer( new QSvgRenderer( fileName ) );
+    m_buttonIcon->setSharedRenderer(new QSvgRenderer(fileName));
 
-    setSize( m_size );
+    setSize(m_size);
 }
 
-void MovableButton::setButtonControl(const QString & fileName)
+void MovableButton::setButtonControl(const QString &fileName)
 {
-    m_buttonControl->setSharedRenderer( new QSvgRenderer( fileName ) );
+    m_buttonControl->setSharedRenderer(new QSvgRenderer(fileName));
 
-    setSize( m_size );
+    setSize(m_size);
 }
 
 qreal MovableButton::size() const
@@ -51,103 +48,100 @@ void MovableButton::setSize(qreal size)
 {
     m_size = size;
 
-
     auto originalSize = m_buttonIcon->renderer()->defaultSize();
 
     auto scaleFactor = size / originalSize.width();
 
-    m_buttonIcon->setScale( scaleFactor );
-
+    m_buttonIcon->setScale(scaleFactor);
 
     originalSize = m_buttonControl->renderer()->defaultSize();
 
     scaleFactor = size / originalSize.width();
 
-    m_buttonControl->setScale( scaleFactor );
+    m_buttonControl->setScale(scaleFactor);
 }
 
-void MovableButton::setColor(const QColor & color)
+void MovableButton::setColor(const QColor &color)
 {
-    auto effect = new FastColorizeEffect( m_buttonIcon );
+    auto effect = new FastColorizeEffect(m_buttonIcon);
 
-    effect->setColor( color );
+    effect->setColor(color);
 
-    m_buttonIcon->setGraphicsEffect( effect );
+    m_buttonIcon->setGraphicsEffect(effect);
 }
 
 QRectF MovableButton::boundingRect() const
 {
     QRectF bgRect = m_buttonControl->boundingRect();
 
-    bgRect.setWidth( m_size );
+    bgRect.setWidth(m_size);
 
-    bgRect.setHeight( m_size );
+    bgRect.setHeight(m_size);
 
     return bgRect;
 }
 
-void MovableButton::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
+void MovableButton::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    Q_UNUSED( painter )
+    Q_UNUSED(painter)
 
     Q_UNUSED(option)
 
     Q_UNUSED(widget)
 }
 
-void MovableButton::move(const QPointF & position, bool isFindLeft)
+void MovableButton::move(const QPointF &position, bool isFindLeft)
 {
-    auto closestPoint = PlotGeometryUtils::findClosestPoint( m_plotMarker, position, isFindLeft );
+    auto closestPoint = PlotGeometryUtils::findClosestPoint(m_plotMarker, position, isFindLeft);
 
-    if ( not closestPoint ) return;
+    if (not closestPoint)
+        return;
 
-    m_plotMarker->move( m_plotMarker->chart()->mapToPosition( closestPoint.value() ) );
+    m_plotMarker->move(m_plotMarker->chart()->mapToPosition(closestPoint.value()));
 }
 
-void MovableButton::mousePressEvent(QGraphicsSceneMouseEvent * event)
+void MovableButton::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit m_plotMarker->pressed( event->button() );
+    emit m_plotMarker->pressed(event->button());
 
-    if ( ( event->modifiers() & Qt::ControlModifier ) != 0 )
-    {
-        m_plotMarker->setSelected( not m_plotMarker->isSelected() );
+    if (event->modifiers() & Qt::ControlModifier) {
+        m_plotMarker->setSelected(not m_plotMarker->isSelected());
 
         return;
     }
 
-    m_plotMarker->setSelected( true );
+    m_plotMarker->setSelected(true);
 
-    m_plotMarker->move( event->scenePos() );
+    m_plotMarker->move(event->scenePos());
 }
 
-void MovableButton::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
+void MovableButton::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if ( m_plotMarker->movementStyle() != QPlotMarker::MOVEMENT_BY_POINTS )
-    {
-        m_plotMarker->move( event->scenePos() );
+    if (m_plotMarker->movementStyle() != QPlotMarker::MOVEMENT_BY_POINTS) {
+        m_plotMarker->move(event->scenePos());
 
         return;
     }
 
-    bool isFindLeft = event->scenePos().x() < event->lastScenePos().x();
+    const bool isFindLeft = event->scenePos().x() < event->lastScenePos().x();
 
-    move( event->scenePos(), isFindLeft );
+    move(event->scenePos(), isFindLeft);
 }
 
-void MovableButton::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
+void MovableButton::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit m_plotMarker->released( event->button() );
+    emit m_plotMarker->released(event->button());
 
-    if ( ( event->modifiers() & Qt::ControlModifier ) != 0 )
+    if (event->modifiers() & Qt::ControlModifier)
 
         return;
 
     Q_UNUSED(event)
 
-    m_plotMarker->setSelected( false );
+    m_plotMarker->setSelected(false);
 }
 
-void MovableButton::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
+void MovableButton::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit m_plotMarker->doubleClicked( event->button() );
+    emit m_plotMarker->doubleClicked(event->button());
 }

@@ -106,7 +106,7 @@ namespace std
 {
 template <> struct hash<QPointF>
 {
-    size_t operator()(const QPointF &key, size_t seed) const
+    size_t operator()(const QPointF &key, const size_t seed) const noexcept
     {
         return qHashMulti( seed, key.x(), key.y() );
     }
@@ -305,7 +305,7 @@ void QPlotMarkerPrivate::setupHorizontalMarker(const QPointF& position,
 
 
     m_coordInfo->setCoord(m_parentChart->mapToValue(position).y());
-    auto valueAxis = static_cast<QValueAxis*>(m_parentChart->axes(Qt::Horizontal).first());
+    auto valueAxis = dynamic_cast<QValueAxis*>(m_parentChart->axes(Qt::Horizontal).first());
     auto startX = m_parentChart->mapToPosition({valueAxis->min(), 0});
 
     qreal coordX = inverted? plotArea.right() : startX.x() - m_coordInfo->boundingRect().width();
