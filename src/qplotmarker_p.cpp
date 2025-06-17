@@ -1,4 +1,4 @@
-#include "qplot_marker_p.hpp"
+#include "qplotmarker_p.hpp"
 
 #include <QGraphicsScene>
 #include <QValueAxis>

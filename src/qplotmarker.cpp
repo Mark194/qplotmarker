@@ -1,6 +1,6 @@
 #include "../include/QPlotMarker/qplotmarker.hpp"
 
-#include "qplot_marker_p.hpp"
+#include "qplotmarker_p.hpp"
 
 #include <entity/graphics_coord_item.hpp>
 #include <entity/movable_button.hpp>
@@ -169,26 +169,28 @@ void QPlotMarker::moveBegin()
 {
     Q_D(QPlotMarker);
 
-    if (d->orientation() == Qt::Vertical)
+    auto plotArea = d->m_parentChart->plotArea();
+ if (d->orientation() == Qt::Vertical)
 
-        move({d->m_parentChart->plotArea().x(), d->m_parentChart->plotArea().y()});
+        move({plotArea.x(), plotArea.y()});
 
     else
 
-        move({d->m_parentChart->plotArea().right(), d->m_parentChart->plotArea().topRight().y()});
+        move({plotArea.right(), plotArea.topRight().y()});
 }
 
 void QPlotMarker::moveEnd()
 {
     Q_D(QPlotMarker);
 
-    if (d->orientation() == Qt::Vertical)
+    auto plotArea = d->m_parentChart->plotArea();
+ if (d->orientation() == Qt::Vertical)
 
-        move({d->m_parentChart->plotArea().topRight().x(), d->m_parentChart->plotArea().y()});
+        move({plotArea.topRight().x(), plotArea.y()});
 
     else
 
-        move({d->m_parentChart->plotArea().right(), d->m_parentChart->plotArea().bottomRight().y()});
+        move({plotArea.right(), plotArea.bottomRight().y()});
 }
 
 void QPlotMarker::moveToNextPoint()

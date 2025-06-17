@@ -54,7 +54,7 @@ void QPlotMarkerGroup::setSyncMovement(bool isSync)
 
     m_isSyncMovement = isSync;
 
-    for (auto marker : m_markers)
+    for (const auto marker : m_markers)
 
         if (m_isSyncMovement)
 
