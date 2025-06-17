@@ -63,7 +63,7 @@ void MovableButton::setSize(qreal size)
 
 void MovableButton::setColor(const QColor &color)
 {
-    auto effect = new FastColorizeEffect(m_buttonIcon);
+    const auto effect = new FastColorizeEffect(m_buttonIcon);
 
     effect->setColor(color);
 
@@ -92,7 +92,8 @@ void MovableButton::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 void MovableButton::move(const QPointF &position, bool isFindLeft)
 {
-    auto closestPoint = PlotGeometryUtils::findClosestPoint(m_plotMarker, position, isFindLeft);
+    const auto closestPoint
+        = PlotGeometryUtils::findClosestPoint(m_plotMarker, position, isFindLeft);
 
     if (not closestPoint)
         return;

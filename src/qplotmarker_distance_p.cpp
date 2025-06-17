@@ -10,8 +10,12 @@
 #include "entity/graphics_coord_item.hpp"
 
 QPlotMarkerDistancePrivate::QPlotMarkerDistancePrivate(QPlotMarkerDistance *q)
-    : q_ptr(q), m_line(new QGraphicsLineItem(q_ptr)), m_coordInfo(new GraphicsCoordItem(q_ptr)),
-      m_alignment(Qt::AlignBottom), m_precentAlignment(0.0) {}
+    : q_ptr(q)
+    , m_line(new QGraphicsLineItem(q_ptr))
+    , m_coordInfo(new GraphicsCoordItem(q_ptr))
+    , m_alignment(Qt::AlignBottom)
+    , m_precentAlignment(0.0)
+{}
 
 QPlotMarkerDistancePrivate::~QPlotMarkerDistancePrivate() = default;
 
@@ -35,7 +39,7 @@ void QPlotMarkerDistancePrivate::init(QPlotMarker *one, QPlotMarker *other)
 
     m_line->setPen(QPen(one->color(), 2, Qt::DotLine, Qt::RoundCap));
 
-    if ( m_oneMarker->color() != m_otherMarker->color() ) {
+    if (m_oneMarker->color() != m_otherMarker->color()) {
         auto *effect = new GlowEffect();
 
         effect->setSource(m_line);
@@ -57,17 +61,10 @@ void QPlotMarkerDistancePrivate::init(QPlotMarker *one, QPlotMarker *other)
 
     m_otherMarker->setZValue(1.0);
 
-    QObject::connect(
-        m_oneMarker,
-        &QPlotMarker::positionChanged,
-        q_ptr,
-        &QPlotMarkerDistance::update);
+    QObject::connect(m_oneMarker, &QPlotMarker::positionChanged, q_ptr, &QPlotMarkerDistance::update);
 
     QObject::connect(
-        m_otherMarker,
-        &QPlotMarker::positionChanged,
-        q_ptr,
-        &QPlotMarkerDistance::update);
+        m_otherMarker, &QPlotMarker::positionChanged, q_ptr, &QPlotMarkerDistance::update);
 }
 
 void QPlotMarkerDistancePrivate::paint()
@@ -82,13 +79,10 @@ void QPlotMarkerDistancePrivate::paint()
 
     const auto orientation = m_oneMarker->orientation();
 
-    if ( orientation == Qt::Vertical )
+    if (orientation == Qt::Vertical)
 
         m_line->setLine(
-            pointOne.x(),
-            plotArea.y() - diff,
-            pointOther.x(),
-            plotArea.topRight().y() - diff);
+            pointOne.x(), plotArea.y() - diff, pointOther.x(), plotArea.topRight().y() - diff);
 
     else
 
@@ -104,11 +98,12 @@ void QPlotMarkerDistancePrivate::paint()
 
     QPointF centerPoint = (m_line->line().p1() + m_line->line().p2()) / 2.0;
 
-    QPointF coordPoint = centerPoint - QPointF(
+    QPointF coordPoint = centerPoint
+                         - QPointF(
                              m_coordInfo->boundingRect().width() / 2.0,
                              m_coordInfo->boundingRect().height() / 2.0);
 
-    if ( orientation == Qt::Horizontal )
+    if (orientation == Qt::Horizontal)
 
         coordPoint.setX(coordPoint.x() - diff / 2 - m_coordInfo->pen().widthF());
 
@@ -128,7 +123,7 @@ qreal QPlotMarkerDistancePrivate::controlDifference()
 
     auto controlRect = m_oneMarker->controlRect();
 
-    switch ( m_alignment ) {
+    switch (m_alignment) {
     case Qt::AlignTop:
 
         return orientation == Qt::Vertical ? controlRect.height() : controlRect.width();
@@ -143,9 +138,8 @@ qreal QPlotMarkerDistancePrivate::controlDifference()
 
     case Qt::AlignJustify:
 
-        return orientation == Qt::Vertical
-                   ? controlRect.height() * m_precentAlignment
-                   : controlRect.width() * m_precentAlignment;
+        return orientation == Qt::Vertical ? controlRect.height() * m_precentAlignment
+                                           : controlRect.width() * m_precentAlignment;
 
     default:
         return 0;
@@ -156,11 +150,10 @@ void QPlotMarkerDistancePrivate::changeVisibleCoordItem()
 {
     auto orientation = m_oneMarker->orientation();
 
-    auto controlRect = m_oneMarker->isSelected()
-                           ? m_otherMarker->controlRect()
-                           : m_oneMarker->controlRect();
+    auto controlRect = m_oneMarker->isSelected() ? m_otherMarker->controlRect()
+                                                 : m_oneMarker->controlRect();
 
-    if ( orientation == Qt::Vertical ) {
+    if (orientation == Qt::Vertical) {
         m_coordInfo->setVisible(
             m_line->line().length() > m_coordInfo->boundingRect().width() + controlRect.width());
     } else {
@@ -169,8 +162,8 @@ void QPlotMarkerDistancePrivate::changeVisibleCoordItem()
     }
 }
 
-void QPlotMarkerDistancePrivate::normalizeCoordItem
-(const QPointF &coordPoint, const QRectF &sceneRect)
+void QPlotMarkerDistancePrivate::normalizeCoordItem(
+    const QPointF &coordPoint, const QRectF &sceneRect)
 {
     QRectF textRect = m_coordInfo->boundingRect();
 

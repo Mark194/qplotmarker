@@ -26,8 +26,7 @@ QPlotMarker::QPlotMarker(QChart *parent, const QColor &color, MarkerOrientation 
 
 QPlotMarker::QPlotMarker(QChart *parent, const QColor &color, Qt::Orientation orientation)
     : QPlotMarker(parent, color, static_cast<MarkerOrientation>(orientation))
-{
-}
+{}
 
 QPlotMarker::~QPlotMarker() = default;
 
@@ -106,14 +105,11 @@ void QPlotMarker::setSelected(bool isSelect)
     if (d->m_isSelectedLock)
         return;
 
-    if (isSelect)
-    {
+    if (isSelect) {
         d->m_controlItem->setButtonIcon(d->m_buttonSelectedIcon);
 
         d->m_controlItem->setButtonControl(d->m_buttonsSelectedControl);
-    }
-    else
-    {
+    } else {
         d->m_controlItem->setButtonIcon(d->m_buttonIcon);
 
         d->m_controlItem->setButtonControl(d->m_buttonControl);
@@ -147,20 +143,20 @@ void QPlotMarker::move(qreal percent)
 {
     Q_D(QPlotMarker);
 
-    Q_ASSERT_X(percent <= 1.0 and percent >= -1.0, "move(qreal percent)", "Incorrect percentage value [-1.0:1.0]!");
+    Q_ASSERT_X(
+        percent <= 1.0 and percent >= -1.0,
+        "move(qreal percent)",
+        "Incorrect percentage value [-1.0:1.0]!");
 
     auto plotArea = d->m_parentChart->plotArea();
 
     auto position = d->m_markerPosition;
 
-    if (d->orientation() == Qt::Vertical)
-    {
+    if (d->orientation() == Qt::Vertical) {
         auto step = plotArea.width() * percent;
 
         position.setX(position.x() + step);
-    }
-    else
-    {
+    } else {
         auto step = plotArea.height() * percent;
 
         position.setY(position.y() + step);
@@ -199,8 +195,10 @@ void QPlotMarker::moveToNextPoint()
 {
     Q_D(QPlotMarker);
 
-    Q_ASSERT_X(d->m_movement == QPlotMarker::MOVEMENT_BY_POINTS, "moveToNextPoint()",
-               "The mode of moving by points is not set!");
+    Q_ASSERT_X(
+        d->m_movement == QPlotMarker::MOVEMENT_BY_POINTS,
+        "moveToNextPoint()",
+        "The mode of moving by points is not set!");
 
     d->m_controlItem->move(d->m_markerPosition, false);
 }
@@ -209,8 +207,10 @@ void QPlotMarker::moveToPreviousPoint()
 {
     Q_D(QPlotMarker);
 
-    Q_ASSERT_X(d->m_movement == QPlotMarker::MOVEMENT_BY_POINTS, "moveToPreviousPoint()",
-               "The mode of moving by points is not set!");
+    Q_ASSERT_X(
+        d->m_movement == QPlotMarker::MOVEMENT_BY_POINTS,
+        "moveToPreviousPoint()",
+        "The mode of moving by points is not set!");
 
     d->m_controlItem->move(d->m_markerPosition, true);
 }
@@ -240,9 +240,11 @@ QRectF QPlotMarker::boundingRect() const
 {
     Q_D(const QPlotMarker);
 
-    return {d->m_parentChart->plotArea().left(), x(),
-            d->m_line->boundingRect().width() + d->m_controlItem->boundingRect().width(),
-            d->m_controlItem->boundingRect().height()};
+    return {
+        d->m_parentChart->plotArea().left(),
+        x(),
+        d->m_line->boundingRect().width() + d->m_controlItem->boundingRect().width(),
+        d->m_controlItem->boundingRect().height()};
 }
 
 void QPlotMarker::showCoordinates(bool isVisible)
@@ -262,22 +264,18 @@ void QPlotMarker::activate(bool isActivated)
 
     auto activeItem = dynamic_cast<QGraphicsTextItem *>(sender());
 
-    for (auto item : d->m_intersectionItems)
-    {
+    for (auto item : d->m_intersectionItems) {
         if (not item.coord or item.coord == activeItem)
 
             continue;
 
-        if (isActivated)
-        {
+        if (isActivated) {
             auto effect = new QGraphicsOpacityEffect();
 
             effect->setOpacity(0.2);
 
             item.coord->setGraphicsEffect(effect);
-        }
-        else
-        {
+        } else {
             item.coord->setGraphicsEffect(nullptr);
         }
     }
@@ -390,8 +388,7 @@ QString QPlotMarker::markerIcon(MarkerButtonIcon typeIcon) const
 {
     Q_D(const QPlotMarker);
 
-    switch (typeIcon)
-    {
+    switch (typeIcon) {
     case MARKER_BUTTON_ICON:
         return d->m_buttonIcon;
 
@@ -413,8 +410,7 @@ void QPlotMarker::setMarkerIcon(const QString &fileName, MarkerButtonIcon typeIc
 {
     Q_D(QPlotMarker);
 
-    switch (typeIcon)
-    {
+    switch (typeIcon) {
     case MARKER_BUTTON_ICON:
         d->m_buttonIcon = fileName;
         break;
