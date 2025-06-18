@@ -101,10 +101,25 @@ std::optional<QPointF> PlotGeometryUtils::findClosestPoint(
         if (not point)
             point = isFindLeft ? series->points().first() : series->points().last();
 
+        auto plotArea = marker->chart()->plotArea();
+        const auto pixelPoint = marker->chart()->mapToPosition(point.value(), series);
+        const auto plotRect = plotArea.toRect();
+        // Проверяем попадание в диапазон по X и Y
+        const bool xInRange = pixelPoint.x() >= plotRect.left()
+                              and pixelPoint.x() <= plotRect.right();
+        const bool yInRange = pixelPoint.y() >= plotRect.top()
+                              and pixelPoint.y() <= plotRect.bottom();
+
+        if (!xInRange || !yInRange) {
+            continue; // Пропускаем точки вне диапазона plotArea
+        }
+
         nearestPoints.append(point.value());
     }
 
     QPointF closestPoint;
+
+    bool isFound = false;
 
     qreal minDistSq = std::numeric_limits<qreal>::max();
 
@@ -115,8 +130,13 @@ std::optional<QPointF> PlotGeometryUtils::findClosestPoint(
             minDistSq = dist;
 
             closestPoint = point;
+
+            isFound = true;
         }
     }
 
-    return {closestPoint};
+    if (isFound)
+        return {closestPoint};
+
+    return {};
 }

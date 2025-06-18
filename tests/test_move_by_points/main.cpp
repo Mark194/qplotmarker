@@ -28,9 +28,10 @@ int main(int argc, char *argv[])
     chartView->setWindowTitle("Test using marker");
     chartView->show();
 
-    new ChartViewPanner(chartView);
+    auto panner = new ChartViewPanner(chartView);
 
     auto *oneMarker = new QPlotMarker(chart, Qt::red, Qt::Vertical);
+
     oneMarker->setLabelFormat("%.2f");
 
     chartView->scene()->addItem(oneMarker);

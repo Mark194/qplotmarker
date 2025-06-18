@@ -126,6 +126,9 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF &position)
 
         clearInterSectionPoints();
 
+    if (not isPositionAcceptable(position))
+        return;
+
     QSet<QPointF> points;
 
     auto markerLineOld = m_line->line();
@@ -280,41 +283,65 @@ void QPlotMarkerPrivate::setupHorizontalMarker(
     m_coordInfo->setPos(coordX, coordY);
 }
 
+bool isPointIntSeries(QChart *chart, const QPointF &point)
+{
+    for (QAbstractSeries *series : chart->series()) {
+        if (auto *xySeries = qobject_cast<QXYSeries *>(series)) {
+            const auto &points = xySeries->points();
+            if (std::find(points.begin(), points.end(), point) != points.end()) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 void QPlotMarkerPrivate::updateOnMoveByPoints(const QPointF &targetPoint)
 {
-    auto leftClosestPoint = PlotGeometryUtils::findClosestPoint(q_ptr, targetPoint, true);
+    QPointF valueTargetPoint = m_parentChart->mapToValue(targetPoint);
 
-    auto rightClosestPoint = PlotGeometryUtils::findClosestPoint(q_ptr, targetPoint, false);
-
-    if (not leftClosestPoint and not rightClosestPoint) {
-        moveMarkerToPosition(q_ptr->chart()->mapToPosition(targetPoint));
-
+    if (isPositionAcceptable(targetPoint) and isPointIntSeries(m_parentChart, valueTargetPoint)) {
+        moveMarkerToPosition(targetPoint);
         return;
     }
 
-    if (not leftClosestPoint) {
-        moveMarkerToPosition(q_ptr->chart()->mapToPosition(rightClosestPoint.value()));
+    double minDistance = std::numeric_limits<double>::max();
+    bool found = false;
 
+    QPointF nearestPoint = targetPoint;
+
+    // Проверяем все серии на графике
+    for (QAbstractSeries *series : m_parentChart->series()) {
+        if (auto *xySeries = qobject_cast<QXYSeries *>(series)) {
+            for (const QPointF &point : xySeries->points()) {
+                auto pixelPoint = m_parentChart->mapToPosition(point, xySeries);
+
+                if (const double distance = PlotGeometryUtils::distance(point, valueTargetPoint);
+                    isPositionAcceptable(pixelPoint) and distance < minDistance) {
+                    minDistance = distance;
+                    nearestPoint = m_parentChart->mapToPosition(point, xySeries);
+                    found = true;
+                }
+            }
+        }
+    }
+
+    // 3. Если не нашли подходящих точек - возвращаем исходную
+    if (found) {
+        moveMarkerToPosition(nearestPoint);
         return;
     }
 
-    if (not rightClosestPoint) {
-        moveMarkerToPosition(q_ptr->chart()->mapToPosition(leftClosestPoint.value()));
+    auto plotArea = m_parentChart->plotArea();
 
-        return;
-    }
+    const double centerY = plotArea.center().y();
 
-    auto leftDist = PlotGeometryUtils::distance(targetPoint, leftClosestPoint.value());
+    bool moveToLeft = targetPoint.x() < plotArea.center().x();
 
-    auto rightDist = PlotGeometryUtils::distance(targetPoint, rightClosestPoint.value());
-
-    if (leftDist < rightDist)
-
-        moveMarkerToPosition(q_ptr->chart()->mapToPosition(leftClosestPoint.value()));
-
+    if (moveToLeft)
+        moveMarkerToPosition(m_parentChart->mapToPosition(QPointF(plotArea.left(), centerY)));
     else
-
-        moveMarkerToPosition(q_ptr->chart()->mapToPosition(rightClosestPoint.value()));
+        moveMarkerToPosition(m_parentChart->mapToPosition(QPointF(plotArea.right(), centerY)));
 }
 
 void QPlotMarkerPrivate::clearInterSectionPoints()

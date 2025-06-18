@@ -3,11 +3,13 @@
 
 class ChartViewPanner : public QObject
 {
+    Q_OBJECT
 public:
     explicit ChartViewPanner(QChartView *chartView, QObject *parent = nullptr)
         : QObject(parent)
         , m_chartView(chartView)
         , m_isPanning(false)
+        , m_wasPanned(false)
     {
         if (!m_chartView) {
             qWarning() << "ChartViewPanner: chartView is null";
@@ -19,6 +21,14 @@ public:
     }
 
     ~ChartViewPanner() override = default;
+
+signals:
+    // Сигнал при перемещении графика
+    void chartPanned(const QPointF &delta);
+    // Сигнал при начале перемещения
+    void panningStarted();
+    // Сигнал при завершении перемещения
+    void panningFinished(bool wasActuallyPanned);
 
 protected:
     bool eventFilter(QObject *object, QEvent *event) override
@@ -42,10 +52,12 @@ protected:
 private:
     bool handleMousePress(QMouseEvent *event)
     {
-        if (event->button() == Qt::LeftButton) {
+        if (event->button() == Qt::RightButton) { // Изменили на правую кнопку
             m_isPanning = true;
+            m_wasPanned = false;
             m_lastMousePos = event->pos();
             m_chartView->setCursor(Qt::ClosedHandCursor);
+            emit panningStarted();
             return true;
         }
         return false;
@@ -55,18 +67,23 @@ private:
     {
         if (m_isPanning) {
             QPoint delta = event->pos() - m_lastMousePos;
-            m_chartView->chart()->scroll(-delta.x(), delta.y());
-            m_lastMousePos = event->pos();
-            return true;
+            if (!delta.isNull()) {
+                m_chartView->chart()->scroll(-delta.x(), delta.y());
+                m_lastMousePos = event->pos();
+                m_wasPanned = true;
+                emit chartPanned(QPointF(delta));
+                return true;
+            }
         }
         return false;
     }
 
     bool handleMouseRelease(QMouseEvent *event)
     {
-        if (event->button() == Qt::LeftButton && m_isPanning) {
+        if (event->button() == Qt::RightButton && m_isPanning) {
             m_isPanning = false;
             m_chartView->setCursor(Qt::ArrowCursor);
+            emit panningFinished(m_wasPanned);
             return true;
         }
         return false;
@@ -74,5 +91,6 @@ private:
 
     QChartView *m_chartView;
     bool m_isPanning;
+    bool m_wasPanned;
     QPoint m_lastMousePos;
 };
