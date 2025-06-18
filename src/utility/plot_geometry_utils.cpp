@@ -5,7 +5,10 @@ PlotGeometryUtils::PlotGeometryUtils() = default;
 
 qreal PlotGeometryUtils::distance(const QPointF &pointOne, const QPointF &pointTwo)
 {
-    return qAbs(pointOne.x() - pointTwo.x());
+    if (pointOne.x() != pointTwo.x())
+        return qAbs(pointOne.x() - pointTwo.x());
+
+    return std::hypot(pointOne.x() - pointTwo.x(), pointOne.y() - pointTwo.y());
 }
 
 QPair<QPointF, QPointF> PlotGeometryUtils::findTwoNearestPoints(
