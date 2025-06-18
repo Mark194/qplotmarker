@@ -104,10 +104,8 @@ std::optional<QPointF> PlotGeometryUtils::findClosestPoint(
         if (not point)
             point = isFindLeft ? series->points().first() : series->points().last();
 
-        auto plotArea = marker->chart()->plotArea();
-
         if (const auto pixelPoint = marker->chart()->mapToPosition(point.value(), series);
-            not plotArea.contains(pixelPoint))
+            not isPositionAcceptable(marker, pixelPoint))
             continue;
 
         nearestPoints.append(point.value());
