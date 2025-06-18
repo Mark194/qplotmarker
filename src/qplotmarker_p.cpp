@@ -292,7 +292,7 @@ void QPlotMarkerPrivate::updateOnMoveByPoints(const QPointF &targetPoint)
     if (const QPointF valueTargetPoint = m_parentChart->mapToValue(targetPoint);
         PlotGeometryUtils::isPositionAcceptable(q_ptr, targetPoint)
         and isPointIntSeries(m_parentChart, valueTargetPoint)) {
-        moveMarkerToPosition(targetPoint);
+        moveMarkerToPosition(m_parentChart->mapToPosition(m_markerValue));
         return;
     }
 
