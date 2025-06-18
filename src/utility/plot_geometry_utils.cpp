@@ -195,6 +195,9 @@ bool PlotGeometryUtils::isPointIntoSeries(QChart *chart, const QPointF &point)
 
         auto points = xySeries->points();
 
+        if (points.isEmpty())
+            continue;
+
         auto min = points.first();
 
         auto max = points.last();
