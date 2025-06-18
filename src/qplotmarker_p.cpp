@@ -115,7 +115,9 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF &position)
 
         clearInterSectionPoints();
 
-    if (not PlotGeometryUtils::isPositionAcceptable(q_ptr, position))
+    if (not PlotGeometryUtils::isPositionAcceptable(q_ptr, position)
+        or not PlotGeometryUtils::isPointIntoSeries(
+            m_parentChart, m_parentChart->mapToValue(position)))
         return;
 
     QSet<QPointF> points;

@@ -192,3 +192,23 @@ bool PlotGeometryUtils::isPositionAcceptable(QPlotMarker *marker, const QPointF 
 
     return position.y() >= plotArea.top() and position.y() <= plotArea.bottom();
 }
+bool PlotGeometryUtils::isPointIntoSeries(QChart *chart, const QPointF &point)
+{
+    for (const auto series : chart->series()) {
+        const auto xySeries = qobject_cast<QXYSeries *>(series);
+
+        if (not xySeries)
+            continue;
+
+        auto points = xySeries->points();
+
+        auto min = points.first();
+
+        auto max = points.last();
+
+        if (min.x() <= point.x() and point.x() <= max.x())
+            return true;
+    }
+
+    return false;
+}

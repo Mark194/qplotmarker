@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 
     oneMarker->moveEnd();
 
-    oneMarker->setMovementStyle(QPlotMarker::MOVEMENT_BY_POINTS);
+    // oneMarker->setMovementStyle(QPlotMarker::MOVEMENT_BY_POINTS);
 
     oneMarker->update();
 
