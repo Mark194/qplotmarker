@@ -116,8 +116,7 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF &position)
         clearInterSectionPoints();
 
     if (not PlotGeometryUtils::isPositionAcceptable(q_ptr, position)
-        or not PlotGeometryUtils::isPointIntoSeries(
-            m_parentChart, m_parentChart->mapToValue(position)))
+        or not PlotGeometryUtils::isPointIntoSeries(q_ptr, m_parentChart->mapToValue(position)))
         return;
 
     QSet<QPointF> points;
@@ -131,7 +130,7 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF &position)
     auto serieses = PlotGeometryUtils::subtractLists<QAbstractSeries *>(
         m_parentChart->series(), m_ignoreSeries);
 
-    for (auto series : serieses) {
+    for (const auto series : serieses) {
         if (not series->isVisible())
             continue;
 
@@ -274,12 +273,12 @@ void QPlotMarkerPrivate::setupHorizontalMarker(
     m_coordInfo->setPos(coordX, coordY);
 }
 
-bool isPointIntSeries(QChart *chart, const QPointF &point)
+bool isPointIntSeries(const QList<QAbstractSeries *> &series, const QPointF &point)
 {
-    for (QAbstractSeries *series : chart->series()) {
-        if (auto *xySeries = qobject_cast<QXYSeries *>(series)) {
-            const auto &points = xySeries->points();
-            if (std::find(points.begin(), points.end(), point) != points.end()) {
+    for (const auto item : series) {
+        if (const auto *xySeries = qobject_cast<QXYSeries *>(item)) {
+            if (const auto &points = xySeries->points();
+                std::find(points.begin(), points.end(), point) != points.end()) {
                 return true;
             }
         }
@@ -289,9 +288,12 @@ bool isPointIntSeries(QChart *chart, const QPointF &point)
 
 void QPlotMarkerPrivate::updateOnMoveByPoints(const QPointF &targetPoint)
 {
+    const auto successSeries = PlotGeometryUtils::subtractLists<QAbstractSeries *>(
+        m_parentChart->series(), m_ignoreSeries);
+
     if (const QPointF valueTargetPoint = m_parentChart->mapToValue(targetPoint);
         PlotGeometryUtils::isPositionAcceptable(q_ptr, targetPoint)
-        and isPointIntSeries(m_parentChart, valueTargetPoint)) {
+        and isPointIntSeries(successSeries, valueTargetPoint)) {
         moveMarkerToPosition(m_parentChart->mapToPosition(m_markerValue));
         return;
     }
