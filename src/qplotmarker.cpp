@@ -60,7 +60,7 @@ void QPlotMarker::setMovementStyle(MovementStyle style)
 
     d->m_movement = style;
 
-    move(pos());
+    update();
 }
 
 QPlotMarker::MovementStyle QPlotMarker::movementStyle() const

@@ -296,7 +296,10 @@ void QPlotMarkerPrivate::updateOnMoveByPoints(const QPointF &targetPoint)
         return;
     }
 
-    moveMarkerToPosition(PlotGeometryUtils::findNearestVisiblePoint(q_ptr, targetPoint));
+    auto series = PlotGeometryUtils::subtractLists<QAbstractSeries *>(
+        m_parentChart->series(), m_ignoreSeries);
+
+    moveMarkerToPosition(PlotGeometryUtils::findNearestVisiblePoint(q_ptr, series, targetPoint));
 }
 
 void QPlotMarkerPrivate::clearInterSectionPoints()

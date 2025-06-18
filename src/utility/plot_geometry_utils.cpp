@@ -105,17 +105,10 @@ std::optional<QPointF> PlotGeometryUtils::findClosestPoint(
             point = isFindLeft ? series->points().first() : series->points().last();
 
         auto plotArea = marker->chart()->plotArea();
-        const auto pixelPoint = marker->chart()->mapToPosition(point.value(), series);
-        const auto plotRect = plotArea.toRect();
-        // Проверяем попадание в диапазон по X и Y
-        const bool xInRange = pixelPoint.x() >= plotRect.left()
-                              and pixelPoint.x() <= plotRect.right();
-        const bool yInRange = pixelPoint.y() >= plotRect.top()
-                              and pixelPoint.y() <= plotRect.bottom();
 
-        if (!xInRange || !yInRange) {
-            continue; // Пропускаем точки вне диапазона plotArea
-        }
+        if (const auto pixelPoint = marker->chart()->mapToPosition(point.value(), series);
+            not plotArea.contains(pixelPoint))
+            continue;
 
         nearestPoints.append(point.value());
     }
@@ -143,7 +136,8 @@ std::optional<QPointF> PlotGeometryUtils::findClosestPoint(
 
     return {};
 }
-QPointF PlotGeometryUtils::findNearestVisiblePoint(QPlotMarker *marker, const QPointF &position)
+QPointF PlotGeometryUtils::findNearestVisiblePoint(
+    QPlotMarker *marker, const QList<QAbstractSeries *> &series, const QPointF &position)
 {
     const auto chart = marker->chart();
 
@@ -154,9 +148,8 @@ QPointF PlotGeometryUtils::findNearestVisiblePoint(QPlotMarker *marker, const QP
 
     QPointF nearestPoint = position;
 
-    // Проверяем все серии на графике
-    for (QAbstractSeries *series : chart->series()) {
-        if (auto *xySeries = qobject_cast<QXYSeries *>(series)) {
+    for (auto current : series) {
+        if (auto *xySeries = qobject_cast<QXYSeries *>(current)) {
             for (const QPointF &point : xySeries->points()) {
                 auto pixelPoint = chart->mapToPosition(point, xySeries);
 

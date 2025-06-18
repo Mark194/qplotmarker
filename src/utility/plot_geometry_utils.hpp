@@ -31,7 +31,8 @@ public:
     static std::optional<QPointF> findClosestPoint(
         QPlotMarker *marker, const QPointF &position, bool isLeft);
 
-    static QPointF findNearestVisiblePoint(QPlotMarker *marker, const QPointF &position);
+    static QPointF findNearestVisiblePoint(
+        QPlotMarker *marker, const QList<QAbstractSeries *> &series, const QPointF &position);
 
     static bool isPositionAcceptable(QPlotMarker *marker, const QPointF &position);
 
