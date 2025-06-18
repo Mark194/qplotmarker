@@ -183,13 +183,11 @@ bool PlotGeometryUtils::isPositionAcceptable(QPlotMarker *marker, const QPointF 
 
     return position.y() >= plotArea.top() and position.y() <= plotArea.bottom();
 }
-bool PlotGeometryUtils::isPointIntoSeries(QPlotMarker *marker, const QPointF &point)
+bool PlotGeometryUtils::isPointIntoSeries(
+    const QList<QAbstractSeries *> &series, const QPointF &point)
 {
-    auto successSeries
-        = subtractLists<QAbstractSeries *>(marker->chart()->series(), marker->ignoreSeries());
-
-    for (const auto series : successSeries) {
-        const auto xySeries = qobject_cast<QXYSeries *>(series);
+    for (const auto current : series) {
+        const auto xySeries = qobject_cast<QXYSeries *>(current);
 
         if (not xySeries)
             continue;

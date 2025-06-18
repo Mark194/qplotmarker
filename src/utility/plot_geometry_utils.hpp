@@ -36,7 +36,7 @@ public:
 
     static bool isPositionAcceptable(QPlotMarker *marker, const QPointF &position);
 
-    static bool isPointIntoSeries(QPlotMarker *marker, const QPointF &point);
+    static bool isPointIntoSeries(const QList<QAbstractSeries *> &series, const QPointF &point);
 
     template<typename T>
     static QList<T> subtractLists(const QList<T> &list1, const QList<T> &list2)

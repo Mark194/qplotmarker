@@ -115,8 +115,12 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF &position)
 
         clearInterSectionPoints();
 
+    const auto successSeries = PlotGeometryUtils::subtractLists<QAbstractSeries *>(
+        m_parentChart->series(), m_ignoreSeries);
+
     if (not PlotGeometryUtils::isPositionAcceptable(q_ptr, position)
-        or not PlotGeometryUtils::isPointIntoSeries(q_ptr, m_parentChart->mapToValue(position)))
+        or not PlotGeometryUtils::isPointIntoSeries(
+            successSeries, m_parentChart->mapToValue(position)))
         return;
 
     QSet<QPointF> points;
@@ -293,7 +297,7 @@ void QPlotMarkerPrivate::updateOnMoveByPoints(const QPointF &targetPoint)
 
     if (const QPointF valueTargetPoint = m_parentChart->mapToValue(targetPoint);
         PlotGeometryUtils::isPositionAcceptable(q_ptr, targetPoint)
-        and isPointIntSeries(successSeries, valueTargetPoint)) {
+        and PlotGeometryUtils::isPointIntoSeries(successSeries, valueTargetPoint)) {
         moveMarkerToPosition(m_parentChart->mapToPosition(m_markerValue));
         return;
     }
