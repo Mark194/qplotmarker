@@ -22,8 +22,6 @@ public:
 
     void init(QChart *parent, const QColor &color, QPlotMarker::MarkerOrientation orientation);
 
-    bool isPositionAcceptable(const QPointF &position) const;
-
     static QPointF adjustTextItemPosition(
         const QPointF &viewPoint, const GraphicsCoordItem *textItem, const QRectF &plotArea);
 

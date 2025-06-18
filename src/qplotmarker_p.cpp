@@ -67,17 +67,6 @@ void QPlotMarkerPrivate::init(
             QObject::connect(valueAxis, &QValueAxis::rangeChanged, q_ptr, &QPlotMarker::update);
 }
 
-bool QPlotMarkerPrivate::isPositionAcceptable(const QPointF &position) const
-{
-    const QRectF plotArea = m_parentChart->plotArea();
-
-    if (q_ptr->orientation() == Qt::Vertical)
-
-        return position.x() >= plotArea.left() and position.x() <= plotArea.right();
-
-    return position.y() >= plotArea.top() and position.y() <= plotArea.bottom();
-}
-
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 
 inline uint qHash(const QPointF &point, uint seed = 0) noexcept
@@ -126,7 +115,7 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF &position)
 
         clearInterSectionPoints();
 
-    if (not isPositionAcceptable(position))
+    if (not PlotGeometryUtils::isPositionAcceptable(q_ptr, position))
         return;
 
     QSet<QPointF> points;
@@ -215,7 +204,7 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF &position)
 
 void QPlotMarkerPrivate::moveMarkerToPosition(const QPointF &position)
 {
-    if (not isPositionAcceptable(position))
+    if (not PlotGeometryUtils::isPositionAcceptable(q_ptr, position))
         return;
 
     m_markerPosition = position;
@@ -298,50 +287,14 @@ bool isPointIntSeries(QChart *chart, const QPointF &point)
 
 void QPlotMarkerPrivate::updateOnMoveByPoints(const QPointF &targetPoint)
 {
-    QPointF valueTargetPoint = m_parentChart->mapToValue(targetPoint);
-
-    if (isPositionAcceptable(targetPoint) and isPointIntSeries(m_parentChart, valueTargetPoint)) {
+    if (const QPointF valueTargetPoint = m_parentChart->mapToValue(targetPoint);
+        PlotGeometryUtils::isPositionAcceptable(q_ptr, targetPoint)
+        and isPointIntSeries(m_parentChart, valueTargetPoint)) {
         moveMarkerToPosition(targetPoint);
         return;
     }
 
-    double minDistance = std::numeric_limits<double>::max();
-    bool found = false;
-
-    QPointF nearestPoint = targetPoint;
-
-    // Проверяем все серии на графике
-    for (QAbstractSeries *series : m_parentChart->series()) {
-        if (auto *xySeries = qobject_cast<QXYSeries *>(series)) {
-            for (const QPointF &point : xySeries->points()) {
-                auto pixelPoint = m_parentChart->mapToPosition(point, xySeries);
-
-                if (const double distance = PlotGeometryUtils::distance(point, valueTargetPoint);
-                    isPositionAcceptable(pixelPoint) and distance < minDistance) {
-                    minDistance = distance;
-                    nearestPoint = m_parentChart->mapToPosition(point, xySeries);
-                    found = true;
-                }
-            }
-        }
-    }
-
-    // 3. Если не нашли подходящих точек - возвращаем исходную
-    if (found) {
-        moveMarkerToPosition(nearestPoint);
-        return;
-    }
-
-    auto plotArea = m_parentChart->plotArea();
-
-    const double centerY = plotArea.center().y();
-
-    bool moveToLeft = targetPoint.x() < plotArea.center().x();
-
-    if (moveToLeft)
-        moveMarkerToPosition(m_parentChart->mapToPosition(QPointF(plotArea.left(), centerY)));
-    else
-        moveMarkerToPosition(m_parentChart->mapToPosition(QPointF(plotArea.right(), centerY)));
+    moveMarkerToPosition(PlotGeometryUtils::findNearestVisiblePoint(q_ptr, targetPoint));
 }
 
 void QPlotMarkerPrivate::clearInterSectionPoints()

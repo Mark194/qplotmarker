@@ -140,3 +140,52 @@ std::optional<QPointF> PlotGeometryUtils::findClosestPoint(
 
     return {};
 }
+QPointF PlotGeometryUtils::findNearestVisiblePoint(QPlotMarker *marker, const QPointF &position)
+{
+    const auto chart = marker->chart();
+
+    const QPointF valueTargetPoint = chart->mapToValue(position);
+
+    double minDistance = std::numeric_limits<double>::max();
+    bool found = false;
+
+    QPointF nearestPoint = position;
+
+    // Проверяем все серии на графике
+    for (QAbstractSeries *series : chart->series()) {
+        if (auto *xySeries = qobject_cast<QXYSeries *>(series)) {
+            for (const QPointF &point : xySeries->points()) {
+                auto pixelPoint = chart->mapToPosition(point, xySeries);
+
+                if (const double distance = PlotGeometryUtils::distance(point, valueTargetPoint);
+                    isPositionAcceptable(marker, pixelPoint) and distance < minDistance) {
+                    minDistance = distance;
+                    nearestPoint = chart->mapToPosition(point, xySeries);
+                    found = true;
+                }
+            }
+        }
+    }
+
+    if (found)
+        return nearestPoint;
+
+    auto plotArea = chart->plotArea();
+
+    const double centerY = plotArea.center().y();
+
+    if (position.x() < plotArea.center().x())
+        return {plotArea.left(), centerY};
+
+    return {plotArea.right(), centerY};
+}
+bool PlotGeometryUtils::isPositionAcceptable(QPlotMarker *marker, const QPointF &position)
+{
+    const QRectF plotArea = marker->chart()->plotArea();
+
+    if (marker->orientation() == Qt::Vertical)
+
+        return position.x() >= plotArea.left() and position.x() <= plotArea.right();
+
+    return position.y() >= plotArea.top() and position.y() <= plotArea.bottom();
+}
