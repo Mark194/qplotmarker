@@ -119,7 +119,7 @@ void QPlotMarkerPrivate::loadIntersectionPoints(const QPointF &position)
         m_parentChart->series(), m_ignoreSeries);
 
     if (not PlotGeometryUtils::isPositionAcceptable(q_ptr, position)
-        or not PlotGeometryUtils::isPointIntoSeries(
+        or not PlotGeometryUtils::isPointInSeriesRange(
             successSeries, m_parentChart->mapToValue(position)))
         return;
 
@@ -283,20 +283,20 @@ void QPlotMarkerPrivate::setupHorizontalMarker(
 
 void QPlotMarkerPrivate::updateOnMoveByPoints(const QPointF &targetPoint)
 {
+    const QPointF valueTargetPoint = m_parentChart->mapToValue(targetPoint);
+
     const auto successSeries = PlotGeometryUtils::subtractLists<QAbstractSeries *>(
         m_parentChart->series(), m_ignoreSeries);
 
-    if (const QPointF valueTargetPoint = m_parentChart->mapToValue(targetPoint);
-        PlotGeometryUtils::isPositionAcceptable(q_ptr, targetPoint)
-        and PlotGeometryUtils::isPointIntoSeries(successSeries, valueTargetPoint)) {
-        moveMarkerToPosition(targetPoint);
+    if (PlotGeometryUtils::isPositionAcceptable(q_ptr, targetPoint)
+        and PlotGeometryUtils::hasPoint(successSeries, valueTargetPoint)
+        and PlotGeometryUtils::isPointInSeriesRange(successSeries, valueTargetPoint)) {
+        moveMarkerToPosition(m_parentChart->mapToValue(m_markerValue));
         return;
     }
 
-    auto series = PlotGeometryUtils::subtractLists<QAbstractSeries *>(
-        m_parentChart->series(), m_ignoreSeries);
-
-    moveMarkerToPosition(PlotGeometryUtils::findNearestVisiblePoint(q_ptr, series, targetPoint));
+    moveMarkerToPosition(
+        PlotGeometryUtils::findNearestVisiblePoint(q_ptr, successSeries, targetPoint));
 }
 
 void QPlotMarkerPrivate::clearInterSectionPoints()

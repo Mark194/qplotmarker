@@ -183,7 +183,7 @@ bool PlotGeometryUtils::isPositionAcceptable(QPlotMarker *marker, const QPointF 
 
     return position.y() >= plotArea.top() and position.y() <= plotArea.bottom();
 }
-bool PlotGeometryUtils::isPointIntoSeries(
+bool PlotGeometryUtils::isPointInSeriesRange(
     const QList<QAbstractSeries *> &series, const QPointF &point)
 {
     for (const auto current : series) {
@@ -205,5 +205,20 @@ bool PlotGeometryUtils::isPointIntoSeries(
             return true;
     }
 
+    return false;
+}
+bool PlotGeometryUtils::hasPoint(const QList<QAbstractSeries *> &series, const QPointF &point)
+{
+    for (const QAbstractSeries *abstractSeries : series) {
+        if (const auto *xySeries = qobject_cast<const QXYSeries *>(abstractSeries)) {
+            const auto points = xySeries->points();
+            auto it = std::find_if(points.begin(), points.end(), [&point](const QPointF &p) {
+                return qFuzzyCompare(p.x(), point.x()) and qFuzzyCompare(p.y(), point.y());
+            });
+            if (it != points.end()) {
+                return true;
+            }
+        }
+    }
     return false;
 }
