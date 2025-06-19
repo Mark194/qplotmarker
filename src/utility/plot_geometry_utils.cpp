@@ -1,4 +1,5 @@
 #include "plot_geometry_utils.hpp"
+
 #include "QPlotMarker/qplotmarker.hpp"
 
 PlotGeometryUtils::PlotGeometryUtils() = default;
@@ -134,6 +135,7 @@ std::optional<QPointF> PlotGeometryUtils::findClosestPoint(
 
     return {};
 }
+
 QPointF PlotGeometryUtils::findNearestVisiblePoint(
     QPlotMarker *marker, const QList<QAbstractSeries *> &series, const QPointF &position)
 {
@@ -146,17 +148,21 @@ QPointF PlotGeometryUtils::findNearestVisiblePoint(
 
     QPointF nearestPoint = position;
 
-    for (auto current : series) {
-        if (auto *xySeries = qobject_cast<QXYSeries *>(current)) {
-            for (const QPointF &point : xySeries->points()) {
-                auto pixelPoint = chart->mapToPosition(point, xySeries);
+    for (const auto current : series) {
+        const auto xySeries = qobject_cast<QXYSeries *>(current);
 
-                if (const double distance = PlotGeometryUtils::distance(point, valueTargetPoint);
-                    isPositionAcceptable(marker, pixelPoint) and distance < minDistance) {
-                    minDistance = distance;
-                    nearestPoint = chart->mapToPosition(point, xySeries);
-                    found = true;
-                }
+        if (not xySeries)
+            continue;
+
+        for (const QPointF &point : xySeries->points()) {
+            const auto distance = PlotGeometryUtils::distance(point, valueTargetPoint);
+
+            auto pixelPoint = chart->mapToPosition(point, xySeries);
+
+            if (isPositionAcceptable(marker, pixelPoint) and distance < minDistance) {
+                minDistance = distance;
+                nearestPoint = chart->mapToPosition(point, xySeries);
+                found = true;
             }
         }
     }
@@ -164,7 +170,7 @@ QPointF PlotGeometryUtils::findNearestVisiblePoint(
     if (found)
         return nearestPoint;
 
-    auto plotArea = chart->plotArea();
+    const auto plotArea = chart->plotArea();
 
     const double centerY = plotArea.center().y();
 
@@ -173,6 +179,7 @@ QPointF PlotGeometryUtils::findNearestVisiblePoint(
 
     return {plotArea.right(), centerY};
 }
+
 bool PlotGeometryUtils::isPositionAcceptable(QPlotMarker *marker, const QPointF &position)
 {
     const QRectF plotArea = marker->chart()->plotArea();
@@ -183,6 +190,7 @@ bool PlotGeometryUtils::isPositionAcceptable(QPlotMarker *marker, const QPointF 
 
     return position.y() >= plotArea.top() and position.y() <= plotArea.bottom();
 }
+
 bool PlotGeometryUtils::isPointInSeriesRange(
     const QList<QAbstractSeries *> &series, const QPointF &point)
 {
@@ -207,6 +215,7 @@ bool PlotGeometryUtils::isPointInSeriesRange(
 
     return false;
 }
+
 bool PlotGeometryUtils::hasPoint(const QList<QAbstractSeries *> &series, const QPointF &point)
 {
     for (const QAbstractSeries *abstractSeries : series) {

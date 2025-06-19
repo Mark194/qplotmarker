@@ -64,7 +64,12 @@ void QPlotMarkerPrivate::init(
 
         if (auto valueAxis = dynamic_cast<QValueAxis *>(axis))
 
-            QObject::connect(valueAxis, &QValueAxis::rangeChanged, q_ptr, &QPlotMarker::update);
+            QObject::connect(
+                valueAxis,
+                &QValueAxis::rangeChanged,
+                q_ptr,
+                &QPlotMarker::update,
+                Qt::QueuedConnection);
 }
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -97,14 +102,14 @@ QPointF QPlotMarkerPrivate::adjustTextItemPosition(
     QPointF adjustedPos = viewPoint;
 
     if (adjustedPos.x() + itemRect.width() > plotArea.right())
-        adjustedPos.rx() -= (adjustedPos.x() + itemRect.width() - plotArea.right());
+        adjustedPos.rx() -= adjustedPos.x() + itemRect.width() - plotArea.right();
     else if (adjustedPos.x() < plotArea.left())
-        adjustedPos.rx() += (plotArea.left() - adjustedPos.x());
+        adjustedPos.rx() += plotArea.left() - adjustedPos.x();
 
     if (adjustedPos.y() + itemRect.height() > plotArea.bottom())
-        adjustedPos.ry() -= (adjustedPos.y() + itemRect.height() - plotArea.bottom());
+        adjustedPos.ry() -= adjustedPos.y() + itemRect.height() - plotArea.bottom();
     else if (adjustedPos.y() < plotArea.top())
-        adjustedPos.ry() += (plotArea.top() - adjustedPos.y());
+        adjustedPos.ry() += plotArea.top() - adjustedPos.y();
 
     return adjustedPos;
 }
@@ -291,7 +296,7 @@ void QPlotMarkerPrivate::updateOnMoveByPoints(const QPointF &targetPoint)
     if (PlotGeometryUtils::isPositionAcceptable(q_ptr, targetPoint)
         and PlotGeometryUtils::hasPoint(successSeries, valueTargetPoint)
         and PlotGeometryUtils::isPointInSeriesRange(successSeries, valueTargetPoint)) {
-        moveMarkerToPosition(m_parentChart->mapToValue(m_markerValue));
+        moveMarkerToPosition(m_parentChart->mapToPosition(valueTargetPoint));
         return;
     }
 
@@ -331,7 +336,7 @@ Qt::Orientation QPlotMarkerPrivate::orientation() const
         return Qt::Vertical;
 
     default:
-        throw std::logic_error("Unknown orintation");
+        throw std::logic_error("Unknown orientation");
     }
 }
 
