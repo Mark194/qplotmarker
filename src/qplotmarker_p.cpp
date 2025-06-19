@@ -16,10 +16,10 @@ QPlotMarkerPrivate::QPlotMarkerPrivate(QPlotMarker *q)
     , m_intersectionLineSize(2)
     , m_isVisibleCoords(false)
     , m_isSelectedLock(false)
-    , m_buttonSelectedIcon(":/marker_selected_icon")
-    , m_buttonsSelectedControl(":/marker_selected_eye")
     , m_buttonIcon(":/marker_icon")
     , m_buttonControl(":/marker_eye")
+    , m_buttonSelectedIcon(":/marker_selected_icon")
+    , m_buttonsSelectedControl(":/marker_selected_eye")
 {}
 
 QPlotMarkerPrivate::~QPlotMarkerPrivate()
@@ -269,25 +269,16 @@ void QPlotMarkerPrivate::setupHorizontalMarker(
     m_controlItem->setPos(controlX, controlY);
 
     m_coordInfo->setCoord(m_parentChart->mapToValue(position).y());
-    auto valueAxis = dynamic_cast<QValueAxis *>(m_parentChart->axes(Qt::Horizontal).first());
-    auto startX = m_parentChart->mapToPosition({valueAxis->min(), 0});
+
+    auto axes = m_parentChart->axes(Qt::Horizontal);
+
+    const auto valueAxis = dynamic_cast<QValueAxis *>(axes.first());
+
+    const auto startX = m_parentChart->mapToPosition({valueAxis->min(), 0});
 
     qreal coordX = inverted ? plotArea.right() : startX.x() - m_coordInfo->boundingRect().width();
     qreal coordY = position.y() - m_coordInfo->boundingRect().height() / 2;
     m_coordInfo->setPos(coordX, coordY);
-}
-
-bool isPointIntSeries(const QList<QAbstractSeries *> &series, const QPointF &point)
-{
-    for (const auto item : series) {
-        if (const auto *xySeries = qobject_cast<QXYSeries *>(item)) {
-            if (const auto &points = xySeries->points();
-                std::find(points.begin(), points.end(), point) != points.end()) {
-                return true;
-            }
-        }
-    }
-    return false;
 }
 
 void QPlotMarkerPrivate::updateOnMoveByPoints(const QPointF &targetPoint)
@@ -298,7 +289,7 @@ void QPlotMarkerPrivate::updateOnMoveByPoints(const QPointF &targetPoint)
     if (const QPointF valueTargetPoint = m_parentChart->mapToValue(targetPoint);
         PlotGeometryUtils::isPositionAcceptable(q_ptr, targetPoint)
         and PlotGeometryUtils::isPointIntoSeries(successSeries, valueTargetPoint)) {
-        moveMarkerToPosition(m_parentChart->mapToPosition(m_markerValue));
+        moveMarkerToPosition(targetPoint);
         return;
     }
 
