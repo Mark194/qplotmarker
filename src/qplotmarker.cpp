@@ -454,7 +454,7 @@ void QPlotMarker::update()
 
     const QPointF targetPoint(x, y);
 
-    if (d->m_movement == QPlotMarker::MOVEMENT_DEFAULT)
+    if (d->m_movement == MOVEMENT_DEFAULT)
 
         move(targetPoint);
 
@@ -467,7 +467,7 @@ QVariant QPlotMarker::itemChange(GraphicsItemChange change, const QVariant &valu
 {
     auto result = QGraphicsWidget::itemChange(change, value);
 
-    if (change == QGraphicsItem::ItemSceneHasChanged and scene())
+    if (change == ItemSceneHasChanged and scene())
 
         moveBegin();
 
