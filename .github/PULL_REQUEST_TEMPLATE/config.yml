@@ -1,0 +1,17 @@
+# .github/PULL_REQUEST_TEMPLATE/config.yml
+template:
+  - name: "Feature Request"
+    about: "Submit a new feature or enhancement"
+    body: "feature.md"
+    default: true
+
+  - name: "Bug Fix"
+    about: "Report and fix a bug"
+    body: "bugfix.md"
+
+  - name: "Documentation"
+    about: "Update project docs"
+    body: "docs.md"
+  - name: "Security Fix"
+    body: "security.md"
+    hidden: true
