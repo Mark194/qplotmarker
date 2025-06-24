@@ -1,0 +1,29 @@
+/*!
+    \example inverted_markers
+    \title Inverted Markers
+    \ingroup qplotmarker_examples
+
+    \brief The example demonstrates the creation of inverted markers.
+
+    \image {inverted_markers.png} {Invert horizontal and vertical marker}
+
+    \section1 Creating QPlotMarker
+
+    To create markers we will need to create a QChartView and place data on it
+
+    \snippet inverted_markers/main.cpp 1
+
+    Create two inverted markers, horizontally inverted and vertically inverted.
+
+    \snippet inverted_markers/main.cpp 2
+
+    Adding markers to the scene
+
+    \snippet inverted_markers/main.cpp 3
+
+    Move the markers to the middle of the chart area
+
+    \snippet inverted_markers/main.cpp 4
+
+    Ready, to use!
+*/

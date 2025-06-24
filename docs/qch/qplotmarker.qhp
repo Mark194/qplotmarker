@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+    <namespace>org.qcustomplot.qplotmarker</namespace>
+    <virtualFolder>doc</virtualFolder>
+    <customFilter name="QPlotMarker">
+        <filterAttribute>qplotmarker</filterAttribute>
+    </customFilter>
+    <filterSection>
+        <filterAttribute>qplotmarker</filterAttribute>
+
+        <!-- Оглавление (TOC) -->
+        <toc>
+            <section title="QPlotMarker Documentation" ref="qplotmarker.html">
+                <section title="Overview" ref="overview.html"/>
+                <section title="API Reference">
+                    <section title="QPlotMarker Class" ref="qplotmarker.html"/>
+                    <section title="QPlotMarkerGroup" ref="qplotmarkergroup.html"/>
+                    <section title="QPlotMarkerDistance" ref="qplotmarkerdistance.html"/>
+                    <section title="Class Members" ref="qplotmarker-members.html"/>
+                </section>
+                <section title="Advanced Usage" ref="advanced-usage.html"/>
+                <section title="Tutorial" ref="tutorial-getting-started.html"/>
+                <section title="Examples">
+                    <section title="Base Example" ref="qplotmarker-base-example-example.html"/>
+                    <section title="Group Marker" ref="qplotmarker-group-marker-example.html"/>
+                    <section title="Inverted Markers" ref="qplotmarker-inverted-markers-example.html"/>
+                    <section title="Move Marker" ref="qplotmarker-move-marker-example.html"/>
+                    <section title="PlotMarker Distance" ref="qplotmarker-plotmarker-distance-example.html"/>
+                    <section title="Show Coord Marker" ref="qplotmarker-show-coord-marker-example.html"/>
+                </section>
+            </section>
+        </toc>
+
+        <!-- Ключевые слова (поиск в Qt Assistant) -->
+        <keywords>
+            <keyword name="QPlotMarker" ref="qplotmarker.html"/>
+            <keyword name="QPlotMarkerGroup" ref="qplotmarkergroup.html"/>
+            <keyword name="QPlotMarkerDistance" ref="qplotmarkerdistance.html"/>
+            <keyword name="Class Members" ref="qplotmarker-members.html"/>
+            <keyword name="Examples" ref="examples-manifest.xml"/>
+        </keywords>
+
+        <!-- Включаемые файлы -->
+        <files>
+            <!-- Основные HTML-документы -->
+            <file>advanced-usage.html</file>
+            <file>markers.html</file>
+            <file>overview.html</file>
+            <file>qplotmarker.html</file>
+            <file>qplotmarker-members.html</file>
+            <file>qplotmarkerdistance-members.html</file>
+            <file>qplotmarkerdistance.html</file>
+            <file>qplotmarkergroup-members.html</file>
+            <file>qplotmarkergroup.html</file>
+            <file>tutorial-getting-started.html</file>
+
+            <!-- Примеры -->
+            <file>examples-manifest.xml</file>
+            <file>qplotmarker-base-example-example.html</file>
+            <file>qplotmarker-base-example-cmakelists-txt.html</file>
+            <file>qplotmarker-base-example-main-cpp.html</file>
+            <file>qplotmarker-group-marker-example.html</file>
+            <file>qplotmarker-group-marker-cmakelists-txt.html</file>
+            <file>qplotmarker-group-marker-controlwindow-cpp.html</file>
+            <file>qplotmarker-group-marker-main-cpp.html</file>
+            <file>qplotmarker-inverted-markers-example.html</file>
+            <file>qplotmarker-inverted-markers-cmakelists-txt.html</file>
+            <file>qplotmarker-inverted-markers-main-cpp.html</file>
+            <file>qplotmarker-move-marker-example.html</file>
+            <file>qplotmarker-move-marker-cmakelists-txt.html</file>
+            <file>qplotmarker-move-marker-main-cpp.html</file>
+            <file>qplotmarker-move-marker-mainwindow-cpp.html</file>
+            <file>qplotmarker-plotmarker-distance-example.html</file>
+            <file>qplotmarker-plotmarker-distance-cmakelists-txt.html</file>
+            <file>qplotmarker-plotmarker-distance-main-cpp.html</file>
+            <file>qplotmarker-show-coord-marker-example.html</file>
+            <file>qplotmarker-show-coord-marker-cmakelists-txt.html</file>
+            <file>qplotmarker-show-coord-marker-main-cpp.html</file>
+            <file>qplotmarker-show-coord-marker-chart-event-filter-cpp.html</file>
+
+            <!-- Изображения и стили -->
+            <file>images/*</file>
+            <file>style/*</file>
+        </files>
+    </filterSection>
+</QtHelpProject>

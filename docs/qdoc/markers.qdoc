@@ -1,0 +1,74 @@
+/*!
+    \page markers All Marker Types
+    \brief Documentation for all classes in library.
+
+    \section1 features Basic features
+    \section2 styling Visual design
+    - Set marker and element colors
+    - Set icon sizes and intersection points
+    - Select orientation (normal/inverse)
+    - Set background and coordinate text colors
+
+    \section2 interaction Interaction
+    - Standard marker movement (drag-and-drop)
+    - Move by fixed points
+    - Several movement modes:
+    \list
+        \li By absolute coordinates
+        \li In relative coordinates [0.0;1.0]
+        \li To the beginning/end of the plot area
+        \li To the next/previous point
+    \endlist
+    - Set state icons for the move button
+
+    \section2 signals Change signals
+    The marker generates signals when:
+    - Position changes
+    - Color changes
+    - Move style changes
+    - Presses/clicks
+
+    \section1 advanced Additional functions
+    - Data binding:
+    \list
+        \li Setting a series that will be ignored
+    \endlist
+    - Coordinate display:
+    \list
+        \li Format settings display
+        \li Label positioning
+    \endlist
+    - Group operations (for QPlotMarkerGroup):
+    \list
+        \li Synchronous movement
+        \li Support movement for QPlotMarkerDistance
+    \endlist
+
+    \section1 group_features QPlotMarkerGroup
+    \brief Group marker management
+
+    \section2 group_main Main functionality:
+    - Synchronous movement of all markers in a group
+    - Enabling/disabling group mode via \c setGroupMovementEnabled()
+    - Automatic synchronization with QPlotMarkerDistance:
+    \list
+        \li If the distance is measured between group markers - updates the positions of all linked markers
+        \li Support for "chain" movement when dragging and dropping
+    \endlist
+
+    \section2 group_visual Visual settings:
+    - General design styles for a group
+    - Centralized visibility management
+
+    \section1 distance_features QPlotMarkerDistance
+    \brief Marker for measuring distances
+
+    \section2 distance_main Main characteristics:
+    - Automatic calculation of the distance between two markers
+    - Features of operation:
+    \list
+        \li Only positive values (absolute distance)
+        \li Gradient line for different marker colors
+        \li Automatic update when moving
+    \endlist
+*/

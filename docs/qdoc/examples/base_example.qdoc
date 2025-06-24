@@ -1,0 +1,26 @@
+/*!
+    \example base_example
+    \title Base Example
+    \ingroup qplotmarker_examples
+
+    \brief The example shows how to create a simple area chart.
+
+    \image {base_example.png} {Basic example}
+
+    For general library information, see \l{overview}.
+
+    \section1 Creating QPlotMarker
+
+    To create markers we will need to create a QChartView and place data on it
+
+    \snippet base_example/main.cpp 1
+
+    Create two markers, vertical and horizontal, in red
+
+    \snippet base_example/main.cpp 2
+
+    Adding markers to the scene
+
+    \snippet base_example/main.cpp 3
+
+*/

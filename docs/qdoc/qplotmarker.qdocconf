@@ -1,0 +1,42 @@
+# include($QT_INSTALL_DOCS/global/qt-module-defaults.qdocconf)
+
+QT_INSTALL_HEADERS = C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include
+
+project = QPlotMarker
+description = "Library for advanced plot markers"
+
+sourcedirs += ../../src
+sourcedirs += ../
+headerdirs += ../../include/QPlotMarker
+imagedirs += ../../screenshots
+depends += qtcore
+exampledirs += ../../examples
+
+indexdirs += C:/Developer/Qt/Qt6.4.2/Docs/Qt-6.4.2
+
+includepaths += \
+    C:\Developer\ProjectsC++\qplotmarker\include\QPlotMarker \
+    C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include \
+    C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include/QtCore \
+    C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include/QtWidgets \
+    C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include/QtCharts \
+    C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include/QtGui \
+    C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include/QtSvg \
+    C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include/QtSvgWidgets
+
+headers.fileextensions  += *.h *.hpp
+sources.fileextensions  += *.cpp *.qdoc
+
+outputdir = ../html
+
+cleandirs += ../html  # Очистит папку перед генерацией
+
+outputformats = HTML
+
+HTML.stylesheets = style/style.css
+
+HTML.headerstyles = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style/style.css\"/>\n"
+
+HTML.postheader = "<p class=\"header\"><small>[My awesome documentation]</small></p><hr/>"
+
+HTML.footer = "<hr/><p class=\"footer\"><small>[some footer and whatnot information]</small></p>"

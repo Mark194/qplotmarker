@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
+    //![1]
     auto *chart = new QChart();
     auto *series = new QLineSeries();
 
@@ -23,17 +23,31 @@ int main(int argc, char *argv[])
     chartView->setWindowTitle("Example of inverted markers");
     chartView->show();
 
+    //![1]
+
+    //![2]
+
     auto *oneMarker = new QPlotMarker(chart, Qt::red, QPlotMarker::HorizontalInverted);
     oneMarker->setLabelFormat("%.2f");
 
     auto *otherMarker = new QPlotMarker(chart, Qt::red, QPlotMarker::VerticalInverted);
     otherMarker->setLabelFormat("%.2f");
 
+    //![2]
+
+    //![3]
+
     chartView->scene()->addItem(oneMarker);
     chartView->scene()->addItem(otherMarker);
 
+    //![3]
+
+    //![4]
+
     oneMarker->move(.5);
     otherMarker->move(.5);
+
+    //![4]
 
     return a.exec();
 }

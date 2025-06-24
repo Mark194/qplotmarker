@@ -1,32 +1,28 @@
 #include "mainwindow.hpp"
 
-
 #include <QLineSeries>
 #include <QPushButton>
 #include <QVBoxLayout>
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    setWindowTitle( "Moving the marker by points" );
+    setWindowTitle("Moving the marker by points");
 
-    resize( 800, 600 );
+    resize(800, 600);
 
     createForm();
 }
 
 MainWindow::~MainWindow() = default;
 
-void MainWindow::loadData(QChart * chart)
+void MainWindow::loadData(QChart *chart)
 {
     constexpr int points = 10;
 
+    auto *series = new QLineSeries;
 
-    auto * series = new QLineSeries;
-
-    for ( int i = 0; i <= points; ++i )
-    {
+    for (int i = 0; i <= points; ++i) {
         constexpr double phase = 0.0;
         constexpr double frequency = 1.0;
         constexpr double amplitude = 1.0;
@@ -37,83 +33,78 @@ void MainWindow::loadData(QChart * chart)
         series->append(x, y);
     }
 
-    chart->addSeries( series );
+    chart->addSeries(series);
 }
-
+//![1]
 void MainWindow::createForm()
 {
-    auto * centralWidget = new QWidget;
+    auto *centralWidget = new QWidget;
 
-    setCentralWidget( centralWidget );
+    setCentralWidget(centralWidget);
 
+    auto *centralLayout = new QVBoxLayout;
 
-    auto * centralLayout = new QVBoxLayout;
-
-    centralWidget->setLayout( centralLayout );
-
+    centralWidget->setLayout(centralLayout);
 
     const auto view = createView();
 
-
-    loadData( view->chart() );
+    loadData(view->chart());
 
     view->chart()->createDefaultAxes();
 
-    createMarker( view->chart() );
-
+    createMarker(view->chart());
 
     const auto controls = createControls();
 
+    centralLayout->addWidget(view, 7);
 
-    centralLayout->addWidget( view, 7 );
-
-    centralLayout->addLayout( controls, 1 );
+    centralLayout->addLayout(controls, 1);
 }
 
-QChartView * MainWindow::createView()
+QChartView *MainWindow::createView()
 {
     const auto chart = new QChart();
 
-    chart->legend()->setVisible( false );
+    chart->legend()->setVisible(false);
 
-
-    const auto view = new QChartView( chart );
+    const auto view = new QChartView(chart);
 
     view->setRenderHint(QPainter::Antialiasing);
 
     return view;
 }
+//![1]
 
-QLayout * MainWindow::createControls()
+//![2]
+QLayout *MainWindow::createControls()
 {
-    auto * controlLayout = new QHBoxLayout;
+    auto *controlLayout = new QHBoxLayout;
 
+    auto *moveNextButton = new QPushButton("Next");
 
-    auto * moveNextButton = new QPushButton( "Next" );
+    connect(moveNextButton, &QPushButton::clicked, m_marker, &QPlotMarker::moveToNextPoint);
 
-    connect( moveNextButton, &QPushButton::clicked, m_marker, &QPlotMarker::moveToNextPoint );
+    auto *movePrevButton = new QPushButton("Back");
 
+    connect(movePrevButton, &QPushButton::clicked, m_marker, &QPlotMarker::moveToPreviousPoint);
 
-    auto * movePrevButton = new QPushButton( "Back"  );
+    controlLayout->addWidget(movePrevButton);
 
-    connect( movePrevButton, &QPushButton::clicked, m_marker, &QPlotMarker::moveToPreviousPoint );
-
-
-    controlLayout->addWidget( movePrevButton );
-
-    controlLayout->addWidget( moveNextButton );
-
+    controlLayout->addWidget(moveNextButton);
 
     return controlLayout;
 }
+//![2]
 
-void MainWindow::createMarker(QChart * chart)
+//![3]
+void MainWindow::createMarker(QChart *chart)
 {
-    m_marker = new QPlotMarker( chart, Qt::red, Qt::Vertical );
+    m_marker = new QPlotMarker(chart, Qt::red, Qt::Vertical);
 
-    m_marker->setMovementStyle( QPlotMarker::MOVEMENT_BY_POINTS );
+    m_marker->setMovementStyle(QPlotMarker::MOVEMENT_BY_POINTS);
 
-    m_marker->setLabelFormat( "%.2f" );
+    m_marker->setLabelFormat("%.2f");
 
-    chart->scene()->addItem( m_marker );
+    chart->scene()->addItem(m_marker);
 }
+//![3]

@@ -1,0 +1,29 @@
+/*!
+    \example show_coord_marker
+    \title Show coord marker
+    \ingroup qplotmarker_examples
+
+    \brief The example shows how to show the coordinates of the intersection points.
+
+    \image {show_coord_marker.png} {Displays the coordinates of the intersection points}
+
+    \section1 Creating app
+
+    To create markers we will need to create a QChartView and place data on it
+
+    \snippet show_coord_marker/main.cpp 1
+
+    Create a vertical marker, add it to the stage and move it to the middle of the plot area
+
+    \snippet show_coord_marker/main.cpp 2
+
+    Create a filter, link it to a widget and a marker
+
+    \snippet show_coord_marker/main.cpp 3
+
+    By pressing the B key we show the coordinates of the intersection points
+
+    \snippet show_coord_marker/chart_event_filter.cpp 1
+
+    Ready, to use!
+*/

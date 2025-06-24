@@ -1,0 +1,23 @@
+/*!
+    \example move_marker
+    \title Move Marker
+    \ingroup qplotmarker_examples
+
+    \brief Move marker by points.
+
+    \section1 Creating project
+
+    We create the basic structure of the application, create QChartView, and fill it with data
+
+    \snippet move_marker/mainwindow.cpp 1
+
+    We create two buttons that move the marker to the next and previous points respectively.
+
+    \snippet move_marker/mainwindow.cpp 2
+
+    Create a vertical marker with point-by-point movement
+
+    \snippet move_marker/mainwindow.cpp 3
+
+    Ready, to use!
+*/

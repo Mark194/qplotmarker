@@ -1,0 +1,76 @@
+/*!
+\page tutorial_getting_started Getting Started
+\title Quick Start with QPlotMarker Library
+\brief Learn how to create and configure markers in 5 minutes.
+
+\section1 1. Setup Prerequisites
+1. Qt 5.15+ or Qt 6
+2. CMake 3.16+
+3. Basic QChart/QGraphicsScene knowledge
+
+\section1 2. Installation Installation
+\section2 Step 1: Get the Library
+\code
+git clone https://github.com/yourorg/qplotmarker.git
+cd qplotmarker
+\endcode
+
+\section2 Step 2: Build
+\code
+mkdir build
+cd build
+cmake -DCMAKE_PREFIX_PATH=/path/to/qt ..
+make
+\endcode
+
+\section1 3. Creating Your First Marker
+\section2 Step 1: Basic Marker
+\code
+#include <QPlotMarker>
+
+// Create attached to chart
+auto * oneMarker = new QPlotMarker(chartView->chart(), Qt::red, Qt::Horizontal);
+chartView->scene()->addItem( oneMarker );
+\endcode
+
+\section2 Step 2: Distance Marker
+\code
+auto *one   = new QPlotMarker(chartView->chart(), Qt::red, Qt::Vertical);
+auto *other = new QPlotMarker(chartView->chart(), Qt::red, Qt::Vertical);
+
+auto * distance = new QPlotMarkerDistance();
+distance->setMarker( one, other );
+
+chartView->scene()->addItem( distance );
+
+\endcode
+
+\section1 Step 3: Using Marker Groups
+\code
+
+auto * m1 = new QPlotMarker( chartView->chart(), Qt::red, Qt::Vertical );
+auto * m2 = new QPlotMarker( chartView->chart(), Qt::red, Qt::Vertical );
+
+QPlotMarkerGroup *group = new QPlotMarkerGroup(chart);
+
+// Add existing markers
+group->addMarker(m1);
+group->addMarker(m2);
+
+\endcode
+
+\section1 Step 4: Visual Customization
+\table
+\header \li Component \li Customization
+\row \li Base Marker \li Color, movement style, format
+\row \li Distance \li Feature gradient, label format
+\row \li Group \li Common style, movement constraints
+\endtable
+
+\section1 What's Next?
+- Explore \l{examples} for advanced scenarios
+- Learn about \l{signals} and event handling
+- Check \l{QPlotMarkerGroup} for coordinated movement
+
+\caption Typical marker setup sequence
+*/

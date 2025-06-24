@@ -1,0 +1,21 @@
+/*!
+    \example group_marker
+    \title Group Marker
+    \ingroup qplotmarker_examples
+
+    \brief The example demonstrates the synchronous movement of markers.
+
+    \image {grouping_markers.png} {Grouping markers for synchronous movement}
+
+    \section1 Creating QPlotMarker
+
+    Method create marker
+
+    \snippet group_marker/controlwindow.cpp 1
+
+    Add markers to the group, pre-load data into the graphs
+
+    \snippet group_marker/controlwindow.cpp 2
+
+    Ready, to use!
+*/

@@ -1,0 +1,26 @@
+/*!
+    \page overview Overview
+    \title QPlotMarker Library Overview
+
+    \image logo.png "QPlotMarker"
+
+    \section1 Introduction
+    This library provides advanced marker functionality for Qt Charts.
+
+    \section1 Components
+    \list
+        \li \l QPlotMarker - Base marker class
+        \li \l QPlotMarkerGroup - Marker collections
+        \li \l QPlotMarkerDistance - Measurement tools
+    \endlist
+
+    \section1 Examples
+    \list
+        \li \l{base_example} Base Example
+        \li \l{group_marker} Group Marker
+        \li \l{inverted_markers} Inverted Markers
+        \li \l{move_marker} Move marker by points
+        \li \l{plotmarker_distance} Distance between two markers
+        \li \l{show_coord_marker} Show coord marker
+    \endlist
+*/

@@ -1,0 +1,25 @@
+/*!
+    \example plotmarker_distance
+    \title Distance between two markers
+    \ingroup qplotmarker_examples
+
+    \brief The example demonstrates the calc distance between two markers.
+
+    \image {qplotmarker_distance.png} {Distance between two markers}
+
+    \section1 Creating app
+
+    To create markers we will need to create a QChartView and place data on it
+
+    \snippet plotmarker_distance/main.cpp 1
+
+    Create two vertical markers and add to scene.
+
+    \snippet plotmarker_distance/main.cpp 2
+
+    Create a QPlotMarkerDistance and add two markers to it
+
+    \snippet plotmarker_distance/main.cpp 3
+
+    Ready, to use!
+*/

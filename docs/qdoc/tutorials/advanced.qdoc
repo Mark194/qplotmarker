@@ -1,0 +1,137 @@
+/*!
+\page advanced_usage Advanced Usage (v1.1.0)
+\title QPlotMarker Advanced Features
+\brief Advanced marker techniques: movement style, inversion, grouping, etc.
+
+\tableofcontents
+
+\section1 Marker movement options
+
+\section2 Movement Style
+Setting the movement style (default is normal):
+\code
+QPlotMarker * marker = new QPlotMarker( chart, Qt::red, Qt::Vertical );
+
+marker->setMovementStyle( QPlotMarker::MOVEMENT_BY_POINTS );
+
+chart->scene()->addItem( marker );
+\endcode
+
+\section2 Movement by points
+Moving the marker by points
+\code
+QPlotMarker * marker = new QPlotMarker( chart, Qt::red, Qt::Vertical );
+
+marker->setMovementStyle( QPlotMarker::MOVEMENT_BY_POINTS );
+
+chart->scene()->addItem( marker );
+
+marker->moveToNextPoint(); // Move to the next point
+
+marker->moveToPreviousPoint(); // Move to the previous point
+\endcode
+
+\section2 Movement by plotArea
+Move by the border of the plot area
+\code
+QPlotMarker * marker = new QPlotMarker( chart, Qt::red, Qt::Vertical );
+
+chart->scene()->addItem( marker );
+
+marker->moveToEnd(); // Move to the far right position of plotArea
+
+marker->moveToBegin(); // Move to the far left position plotArea
+\endcode
+
+\section2 Movement by coords
+Movement by coordinates
+\code
+QPlotMarker * marker = new QPlotMarker( chart, Qt::red, Qt::Vertical );
+
+chart->scene()->addItem( marker );
+
+marker->move( QPointF(5, 5 ); // Move to point [5; 5]
+
+marker->move(.5); // Move to the middle of plotArea
+\endcode
+
+\section1 Marker Orientation
+
+\section2 Standard orientation
+Standard marker orientation Qt::Horizontal or Qt::Vertical
+\code
+QPlotMarker * marker = new QPlotMarker( chart, Qt::red, Qt::Vertical );
+\endcode
+
+\section2 Inverted orientation
+Inverted marker orientation
+\code
+QPlotMarker * marker = new QPlotMarker( chart, Qt::red, QPlotMarker::VerticalInverted );
+\endcode
+
+\section2 Orientation compatibility
+QPlotMarker orientation is compatible with Qt::Orientation
+\code
+Qt::Orientation orientation = marker->orientation();
+\endcode
+Custom orientation extends the standard
+\code
+enum MarkerOrientation {
+Horizontal = Qt::Horizontal,
+Vertical = Qt::Vertical,
+HorizontalInverted,
+VerticalInverted
+};
+Q_ENUM(MarkerOrientation)
+
+QPlotMarker::MarkerOrientation orientation = marker->markerOrientation();
+\endcode
+Possibility to check for inverted orientation
+\code
+bool isInverted = marker->isInverted();
+\endcode
+
+\section1 QPlotMarkerDistance
+
+\section2 Alignment
+Alignment is possible both via Qt::AlignmentFlag and in the range [0.0; 1.0]
+\code
+QPlotMarkerDistance * distance = new QPlotMarkerDistance();
+distance->setAlignment(Qt::AlignTop);
+distance->setAlignment(.7);
+\endcode
+
+\section2 Calc distance
+Calculating the difference between two markers using the markersDistance method
+\code
+QPlotMarker * m1 = new QPlotMarker( chart, Qt::red, Qt::Vertical );
+QPlotMarker * m2 = new QPlotMarker( chart, Qt::red, Qt::Vertical );
+
+qreal dist = QPlotMarkerDistance::markerDistance(m1, m2);
+\endcode
+
+\section1 Group markers
+
+\section2 Sync movement markers
+Synchronous movement of markers:
+\code
+QPlotMarker * m1 = new QPlotMarker( chart1, Qt::red, Qt::Vertical );
+QPlotMarker * m2 = new QPlotMarker( chart2, Qt::red, Qt::Vertical );
+
+QPlotMarkerGroup * group = new QPlotMarkerGroup();
+group->addMarker(m1);
+group->addMarker(m2);
+group->setSyncMovement(true);
+group->move(QPointF(5, 5);
+\endcode
+
+\section2 Accounting QPlotMarkerDistance
+Moving based on QPlotMarkerDistance
+\code
+QPlotMarkerDistance * distance = new QPlotMarkerDistance();
+
+QPlotMarkerGroup * group = new QPlotMarkerGroup();
+group->addDistance(distance);
+group->move(QPointF(5, 5);
+\endcode
+*/

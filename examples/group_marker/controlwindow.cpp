@@ -5,47 +5,43 @@
 #include <QLineSeries>
 
 ControlWindow::ControlWindow(QWidget *parent)
-    : QMainWindow(parent),
-      m_groupMarker( new QPlotMarkerGroup )
+    : QMainWindow(parent)
+    , m_groupMarker(new QPlotMarkerGroup)
 {
-    setWindowTitle( "Grouping markers" );
+    setWindowTitle("Grouping markers");
 
-    resize( 800, 600 );
+    resize(800, 600);
 
     createForm();
 }
 
 ControlWindow::~ControlWindow() = default;
 
-
 void ControlWindow::createForm()
 {
-    auto * centralWidget = new QWidget;
+    auto *centralWidget = new QWidget;
 
-    setCentralWidget( centralWidget );
+    setCentralWidget(centralWidget);
 
+    auto *centralLayout = new QVBoxLayout;
 
-    auto * centralLayout = new QVBoxLayout;
-
-    centralWidget->setLayout( centralLayout );
-
+    centralWidget->setLayout(centralLayout);
 
     const auto layoutControls = createControls();
 
-    centralLayout->addLayout( layoutControls );
-
+    centralLayout->addLayout(layoutControls);
 
     const auto viewsLayout = createViews();
 
-    centralLayout->addLayout( viewsLayout );
+    centralLayout->addLayout(viewsLayout);
 }
 
-void ControlWindow::loadData(QChart * chart, const double ampl, const double freq, const double phase, const int count)
+void ControlWindow::loadData(
+    QChart *chart, const double ampl, const double freq, const double phase, const int count)
 {
-    auto * series = new QLineSeries;
+    auto *series = new QLineSeries;
 
-    for ( int i = 0; i <= count; ++i )
-    {
+    for (int i = 0; i <= count; ++i) {
         double x = 2 * M_PI * i / count;
 
         double y = ampl * std::sin(freq * x + phase);
@@ -53,86 +49,81 @@ void ControlWindow::loadData(QChart * chart, const double ampl, const double fre
         series->append(x, y);
     }
 
-    chart->addSeries( series );
+    chart->addSeries(series);
 }
 
-QChartView * ControlWindow::createView()
+QChartView *ControlWindow::createView()
 {
     auto *chart = new QChart();
 
-    chart->legend()->setVisible( false );
+    chart->legend()->setVisible(false);
 
-
-    auto * view = new QChartView( chart );
+    auto *view = new QChartView(chart);
 
     view->setRenderHint(QPainter::Antialiasing);
 
     return view;
 }
-
-QPlotMarker * ControlWindow::createMarker(QChart * chart)
+//![1]
+QPlotMarker *ControlWindow::createMarker(QChart *chart)
 {
-    auto * marker = new QPlotMarker( chart, Qt::red, Qt::Vertical );
+    auto *marker = new QPlotMarker(chart, Qt::red, Qt::Vertical);
 
-    marker->setMovementStyle( QPlotMarker::MOVEMENT_BY_POINTS );
+    marker->setMovementStyle(QPlotMarker::MOVEMENT_BY_POINTS);
 
-    marker->setLabelFormat( "%.2f" );
+    marker->setLabelFormat("%.2f");
 
-    chart->scene()->addItem( marker );
+    chart->scene()->addItem(marker);
 
     return marker;
 }
 
-QLayout * ControlWindow::createViews()
+//![1]
+
+QLayout *ControlWindow::createViews()
 {
-    auto * layout = new QHBoxLayout;
+    auto *layout = new QHBoxLayout;
 
-
-    const auto viewOne   = createView();
+    const auto viewOne = createView();
 
     const auto viewOther = createView();
 
-    layout->addWidget( viewOne );
+    layout->addWidget(viewOne);
 
-    layout->addWidget( viewOther );
+    layout->addWidget(viewOther);
 
+    loadData(viewOne->chart());
 
-    loadData( viewOne->chart() );
-
-    loadData( viewOther->chart() );
-
+    loadData(viewOther->chart());
 
     viewOne->chart()->createDefaultAxes();
 
     viewOther->chart()->createDefaultAxes();
 
+    //![2]
 
-    m_oneMarker = createMarker( viewOne->chart() );
+    m_oneMarker = createMarker(viewOne->chart());
 
-    m_otherMarker = createMarker( viewOther->chart() );
+    m_otherMarker = createMarker(viewOther->chart());
 
-    m_groupMarker->addMarker( m_oneMarker );
+    m_groupMarker->addMarker(m_oneMarker);
 
-    m_groupMarker->addMarker( m_otherMarker );
+    m_groupMarker->addMarker(m_otherMarker);
+
+    //![2]
 
     return layout;
 }
 
-QLayout * ControlWindow::createControls()
+QLayout *ControlWindow::createControls()
 {
-    auto * controlLayout = new QHBoxLayout;
+    auto *controlLayout = new QHBoxLayout;
 
+    auto *syncEditor = new QCheckBox("Synchronize");
 
-    auto * syncEditor = new QCheckBox( "Synchronize" );
+    connect(syncEditor, &QCheckBox::clicked, m_groupMarker, &QPlotMarkerGroup::setSyncMovement);
 
-    connect(syncEditor, &QCheckBox::clicked, m_groupMarker, &QPlotMarkerGroup::setSyncMovement );
-
-
-    controlLayout->addWidget( syncEditor );
-
+    controlLayout->addWidget(syncEditor);
 
     return controlLayout;
 }
-
-
-

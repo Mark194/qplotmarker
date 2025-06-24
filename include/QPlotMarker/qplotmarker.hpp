@@ -25,11 +25,9 @@ class QPLOTMARKER_EXPORT QPlotMarker : public QGraphicsWidget
     Q_PROPERTY(
         MovementStyle movement READ movementStyle WRITE setMovementStyle NOTIFY movementStyleChanged)
     Q_PROPERTY(Qt::Orientation orientation READ orientation)
-
 public:
     enum MovementStyle { MOVEMENT_DEFAULT, MOVEMENT_BY_POINTS };
     Q_ENUM(MovementStyle)
-
     enum MarkerButtonIcon {
         MARKER_BUTTON_ICON,
         MARKER_BUTTON_CONTROL,
