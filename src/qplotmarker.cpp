@@ -114,7 +114,8 @@ QPlotMarker::~QPlotMarker() = default;
 
     \brief Sets the marker color.
 
-    \a color The new color to apply to the marker. This should be a valid QColor.
+    \a color
+    The new color to apply to the marker. This should be a valid QColor.
 
     \note This function will emit the \c colorChanged() signal after updating all components.
 
@@ -168,7 +169,8 @@ QColor QPlotMarker::color() const
 
     \brief Sets the movement style for the marker.
 
-    \a style The movement behavior (see also QPlotMarker::MovementStyle)
+    \a style
+    The movement behavior (see also QPlotMarker::MovementStyle)
 
     \sa movementStyle()
 */
@@ -267,7 +269,8 @@ QChart *QPlotMarker::chart() const
     \fn void QPlotMarker::setSelected(bool isSelect)
     \brief Sets the selection state of the marker.
 
-    \a isSelect True to select, false to deselect
+    \a isSelect
+    True to select, false to deselect
 
     \sa isIgnoreSelected()
 */
@@ -310,7 +313,8 @@ bool QPlotMarker::isIgnoreSelected() const
     \fn void QPlotMarker::setIsIgnoreSelected(bool isIgnore)
     \brief Sets whether selection should be ignored.
 
-    \a isIgnore If true, selected markers will be excluded from calculations
+    \a isIgnore
+    If true, selected markers will be excluded from calculations
 
     \sa isIgnoreSelected()
 */
@@ -325,7 +329,8 @@ void QPlotMarker::setIsIgnoreSelected(bool isIgnore)
     \fn void QPlotMarker::move(const QPointF &position)
     \brief Moves the marker to the specified position.
 
-    \a position The new position in chart coordinates
+    \a position
+    The new position in chart coordinates
 */
 void QPlotMarker::move(const QPointF &position)
 {
@@ -338,7 +343,8 @@ void QPlotMarker::move(const QPointF &position)
     \fn void QPlotMarker::move(qreal percent)
     \brief Moves the marker by percentage of plot area.
 
-    percent Value between -1.0 and 1.0 representing percentage
+    \a percent
+    Value between -1.0 and 1.0 representing percentage
 */
 void QPlotMarker::move(qreal percent)
 {
@@ -497,7 +503,8 @@ QRectF QPlotMarker::boundingRect() const
     \brief Shows or hides coordinate labels.
     \ingroup slots
 
-    \a isVisible true to show coordinates
+    \a isVisible
+    true to show coordinates
 */
 void QPlotMarker::showCoordinates(bool isVisible)
 {
@@ -514,7 +521,8 @@ void QPlotMarker::showCoordinates(bool isVisible)
     \fn void QPlotMarker::activate(bool isActivated)
     \brief Activates or deactivates the marker appearance.
 
-    \a isActivated true for active state
+    \a isActivated
+    true for active state
 */
 void QPlotMarker::activate(bool isActivated)
 {
@@ -543,7 +551,8 @@ void QPlotMarker::activate(bool isActivated)
     \fn void QPlotMarker::setIntersectionPointSize(qreal size)
     \brief Sets the size of intersection points.
 
-    \a size New size in pixels
+    \a size
+    New size in pixels
 */
 void QPlotMarker::setIntersectionPointSize(qreal size)
 {
@@ -556,7 +565,8 @@ void QPlotMarker::setIntersectionPointSize(qreal size)
     \fn void QPlotMarker::setIntersectionLineSize(quint8 size)
     \brief Sets the line width for intersection lines.
 
-    \a size New width in pixels
+    \a size
+    New width in pixels
 
     \sa intersectionLineSize()
 */
@@ -590,7 +600,8 @@ quint8 QPlotMarker::intersectionLineSize() const
     \fn void QPlotMarker::setLabelFormat(const QString &format)
     \brief Sets the format string for coordinate labels.
 
-    \a format A printf-style format string (e.g. "%.2f, %.2f")
+    \a format
+    A printf-style format string (e.g. "%.2f, %.2f")
 */
 void QPlotMarker::setLabelFormat(const QString &format)
 {
@@ -606,9 +617,10 @@ void QPlotMarker::setLabelFormat(const QString &format)
 /*!
     \fn void QPlotMarker::addIgnoreSeries(QAbstractSeries *series)
     \brief Adds a series to ignore during intersection calculations.
-    \a series The QAbstractSeries-derived object (e.g., QLineSeries, QScatterSeries)
-       that should be ignored by this marker. If the series is already in the
-       ignore list, this function does nothing.
+    \a series
+    The QAbstractSeries-derived object (e.g., QLineSeries, QScatterSeries)
+    that should be ignored by this marker. If the series is already in the
+    ignore list, this function does nothing.
     \sa removeIgnoreSeries()
 */
 void QPlotMarker::addIgnoreSeries(QAbstractSeries *series)
@@ -624,8 +636,9 @@ void QPlotMarker::addIgnoreSeries(QAbstractSeries *series)
 /*!
     \fn void QPlotMarker::removeIgnoreSeries(QAbstractSeries *series)
     \brief Removes a series from ignore list.
-    \a series The series to remove from the ignore list. If the series is not
-       currently in the ignore list, this function has no effect.
+    \a series
+    The series to remove from the ignore list. If the series is not
+    currently in the ignore list, this function has no effect.
     \sa addIgnoreSeries()
 */
 void QPlotMarker::removeIgnoreSeries(QAbstractSeries *series)
@@ -639,9 +652,10 @@ void QPlotMarker::removeIgnoreSeries(QAbstractSeries *series)
     \fn void QPlotMarker::setIgnoreSeries(const QList<QAbstractSeries *> &series)
     \brief Sets the complete list of series to ignore.
 
-    \a series A list of QAbstractSeries pointers representing all series that should be ignored.
-       The list can be empty to clear all ignores. The marker does not take ownership
-       of the series objects.
+    \a series
+    A list of QAbstractSeries pointers representing all series that should be ignored.
+    The list can be empty to clear all ignores. The marker does not take ownership
+    of the series objects.
 
     \sa ignoreSeries()
 */
@@ -681,7 +695,8 @@ qreal QPlotMarker::controlIconSize() const
 /*!
     \fn void QPlotMarker::setControlIconSize(qreal size)
     \brief Sets the control icon size.
-    \a size The new size for control icons in pixels. Must be a positive value.
+    \a size
+    The new size for control icons in pixels. Must be a positive value.
     \sa controlIconSize()
 */
 void QPlotMarker::setControlIconSize(qreal size)
@@ -694,8 +709,9 @@ void QPlotMarker::setControlIconSize(qreal size)
 /*!
     \fn void QPlotMarker::setCoordFont(const QFont &font)
     \brief Sets the font for coordinate labels.
-    \a font The QFont to use for coordinate text display. The font will be applied
-       immediately to all existing coordinate labels.
+    \a font
+    The QFont to use for coordinate text display. The font will be applied
+    immediately to all existing coordinate labels.
 */
 void QPlotMarker::setCoordFont(const QFont &font)
 {
@@ -711,7 +727,8 @@ void QPlotMarker::setCoordFont(const QFont &font)
 /*!
     \fn void QPlotMarker::setCoordPen(const QPen &pen)
     \brief Sets the pen for coordinate labels.
-    \a pen The QPen to use for coordinate styling. This controls:
+    \a pen
+    The QPen to use for coordinate styling. This controls:
         \list
             \li Text outline (if enabled)
             \li Border styling (if applicable)
@@ -732,7 +749,8 @@ void QPlotMarker::setCoordPen(const QPen &pen)
 /*!
     \fn QString QPlotMarker::markerIcon(MarkerButtonIcon typeIcon) const
     \brief Returns the specified marker icon.
-    \a typeIcon The type of marker icon to retrieve.
+    \a typeIcon
+    The type of marker icon to retrieve.
     \sa setMarkerIcon()
 */
 QString QPlotMarker::markerIcon(MarkerButtonIcon typeIcon) const
@@ -760,8 +778,13 @@ QString QPlotMarker::markerIcon(MarkerButtonIcon typeIcon) const
 /*!
     \fn void QPlotMarker::setMarkerIcon(const QString &fileName, MarkerButtonIcon typeIcon)
     \brief Sets a marker icon.
-    \a typeIcon Which icon to replace (MARKER_BUTTON_ICON etc.)
-    \a fileName Path to image file (empty to reset to default)
+
+    \a typeIcon
+    Which icon to replace (MARKER_BUTTON_ICON etc.)
+
+    \a fileName
+    Path to image file (empty to reset to default)
+
     \sa markerIcon()
 */
 void QPlotMarker::setMarkerIcon(const QString &fileName, MarkerButtonIcon typeIcon)

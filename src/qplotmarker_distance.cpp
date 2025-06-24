@@ -47,8 +47,11 @@ QPair<QPlotMarker *, QPlotMarker *> QPlotMarkerDistance::markers() const
     \fn void QPlotMarkerDistance::setMarker(QPlotMarker *one, QPlotMarker *other)
     \brief Sets the two markers to measure distance between.
 
-    \a one First marker
-    \a other Second marker
+    \a one
+    First marker
+
+    \a other
+    Second marker
 
     \warning Both markers must belong to the same QChart
     \sa markers()
@@ -65,7 +68,9 @@ void QPlotMarkerDistance::setMarker(QPlotMarker *one, QPlotMarker *other)
 /*!
     \fn void QPlotMarkerDistance::setLabelFormat(const QString &format)
     \brief Sets the format string for distance display.
-    \a format printf-style format string (e.g., "%.2f units")
+
+    \a format
+    printf-style format string (e.g., "%.2f units")
 */
 void QPlotMarkerDistance::setLabelFormat(const QString &format)
 {
@@ -77,7 +82,9 @@ void QPlotMarkerDistance::setLabelFormat(const QString &format)
 /*!
     \fn void QPlotMarkerDistance::setCoordFont(const QFont &font)
     \brief Sets the font for distance display.
-    \a font The QFont to use for coordinate text display. The font will be applied
+
+    \a font
+    The QFont to use for coordinate text display. The font will be applied
 
 */
 void QPlotMarkerDistance::setCoordFont(const QFont &font)
@@ -90,12 +97,14 @@ void QPlotMarkerDistance::setCoordFont(const QFont &font)
 /*!
     \fn void QPlotMarkerDistance::setCoordPen(const QPen &pen)
     \brief Sets the pen for distance display.
-    \a pen The QPen to use for coordinate styling. This controls:
-        \list
-            \li Text outline (if enabled)
-            \li Border styling (if applicable)
-            \li General stroke properties for coordinate element
-        \endlist
+
+    \a pen
+    The QPen to use for coordinate styling. This controls:
+    \list
+        \li Text outline (if enabled)
+        \li Border styling (if applicable)
+        \li General stroke properties for coordinate element
+    \endlist
 */
 void QPlotMarkerDistance::setCoordPen(const QPen &pen)
 {
@@ -107,7 +116,10 @@ void QPlotMarkerDistance::setCoordPen(const QPen &pen)
 /*!
     \fn void QPlotMarkerDistance::setAlignment(Qt::AlignmentFlag alignment)
     \brief Sets the label alignment using Qt flags.
-    \a alignment Qt alignment flag (AlignTop, AlignBottom, or AlignCenter)
+
+    \a alignment
+    Qt alignment flag (AlignTop, AlignBottom, or AlignCenter)
+
     \sa setAlignment(qreal)
 */
 void QPlotMarkerDistance::setAlignment(Qt::AlignmentFlag alignment)
@@ -132,7 +144,10 @@ void QPlotMarkerDistance::setAlignment(Qt::AlignmentFlag alignment)
 /*!
     \fn void QPlotMarkerDistance::setAlignment(qreal precentAlignment)
     \brief Sets precise label alignment using percentage.
-    \a precentAlignment Assertion failure if value outside [0.0, 1.0]
+
+    \a precentAlignment
+    Assertion failure if value outside [0.0, 1.0]
+
     \sa setAlignment(Qt::AlignmentFlag)
 */
 void QPlotMarkerDistance::setAlignment(qreal precentAlignment)
@@ -153,8 +168,11 @@ void QPlotMarkerDistance::setAlignment(qreal precentAlignment)
     \fn qreal QPlotMarkerDistance::markersDistance(QPlotMarker *one, QPlotMarker *other)
     \brief Static method to calculate distance between any two markers.
 
-    \a one The first marker
-    \a other The second marker
+    \a one
+    The first marker
+
+    \a other
+    The second marker
 
     Return absolute distance between marker values
 

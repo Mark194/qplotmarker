@@ -1,0 +1,20 @@
+/*!
+    \page api_references Api References
+    \title QPlotMarker Api References
+
+    C++ classes for the QPlotMarker API.
+
+    \section1 Classes
+
+    \table
+        \row
+            \li \l QPlotMarker
+            \li Base marker class
+        \row
+            \li \l QPlotMarkerGroup
+            \li Marker collections
+        \row
+            \li \l QPlotMarkerDistance
+            \li Measurement tools
+    \endtable
+*/

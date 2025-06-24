@@ -1,0 +1,27 @@
+/*!
+    \page examples Examples
+    \title QPlotMarker Examples
+
+    QPlotMarker examples show how to use markers in widget-based applications.
+
+    \table
+        \row
+            \li \l{base_example}
+            \li Base Example
+        \row
+            \li \l{group_marker}
+            \li Group Marker
+        \row
+            \li \l{inverted_markers}
+            \li Inverted Markers
+        \row
+            \li \l{move_marker}
+            \li Move marker by points
+        \row
+            \li \l{plotmarker_distance}
+            \li Distance between two markers
+        \row
+            \li \l{show_coord_marker}
+            \li Show coord marker
+    \endtable
+*/

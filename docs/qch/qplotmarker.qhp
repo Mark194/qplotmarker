@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QtHelpProject version="1.0">
-    <namespace>org.qcustomplot.qplotmarker</namespace>
+    <namespace>org.qchart.qplotmarker</namespace>
     <virtualFolder>doc</virtualFolder>
     <customFilter name="QPlotMarker">
         <filterAttribute>qplotmarker</filterAttribute>
@@ -8,19 +8,12 @@
     <filterSection>
         <filterAttribute>qplotmarker</filterAttribute>
 
-        <!-- Оглавление (TOC) -->
         <toc>
             <section title="QPlotMarker Documentation" ref="qplotmarker.html">
                 <section title="Overview" ref="overview.html"/>
-                <section title="API Reference">
-                    <section title="QPlotMarker Class" ref="qplotmarker.html"/>
-                    <section title="QPlotMarkerGroup" ref="qplotmarkergroup.html"/>
-                    <section title="QPlotMarkerDistance" ref="qplotmarkerdistance.html"/>
-                    <section title="Class Members" ref="qplotmarker-members.html"/>
-                </section>
+                <section title="Getting Started" ref="tutorial-getting-started.html"/>
                 <section title="Advanced Usage" ref="advanced-usage.html"/>
-                <section title="Tutorial" ref="tutorial-getting-started.html"/>
-                <section title="Examples">
+                <section title="Examples" ref="examples.html">
                     <section title="Base Example" ref="qplotmarker-base-example-example.html"/>
                     <section title="Group Marker" ref="qplotmarker-group-marker-example.html"/>
                     <section title="Inverted Markers" ref="qplotmarker-inverted-markers-example.html"/>
@@ -28,10 +21,16 @@
                     <section title="PlotMarker Distance" ref="qplotmarker-plotmarker-distance-example.html"/>
                     <section title="Show Coord Marker" ref="qplotmarker-show-coord-marker-example.html"/>
                 </section>
+                <section title="C++ Classes" ref="api-references.html">
+                    <section title="QPlotMarker Class" ref="qplotmarker.html"/>
+                    <section title="QPlotMarkerGroup" ref="qplotmarkergroup.html"/>
+                    <section title="QPlotMarkerDistance" ref="qplotmarkerdistance.html"/>
+                    <section title="Class Members" ref="qplotmarker-members.html"/>
+                </section>
+
             </section>
         </toc>
 
-        <!-- Ключевые слова (поиск в Qt Assistant) -->
         <keywords>
             <keyword name="QPlotMarker" ref="qplotmarker.html"/>
             <keyword name="QPlotMarkerGroup" ref="qplotmarkergroup.html"/>
@@ -44,6 +43,8 @@
         <files>
             <!-- Основные HTML-документы -->
             <file>advanced-usage.html</file>
+            <file>api-references.html</file>
+            <file>examples.html</file>
             <file>markers.html</file>
             <file>overview.html</file>
             <file>qplotmarker.html</file>
