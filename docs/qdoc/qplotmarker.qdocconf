@@ -36,7 +36,3 @@ outputformats = HTML
 HTML.stylesheets = style/style.css
 
 HTML.headerstyles = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style/style.css\"/>\n"
-
-HTML.postheader = "<p class=\"header\"><small>[My awesome documentation]</small></p><hr/>"
-
-HTML.footer = "<hr/><p class=\"footer\"><small>[some footer and whatnot information]</small></p>"

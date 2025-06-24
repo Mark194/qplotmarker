@@ -74,9 +74,14 @@
 
     \brief Constructs a QPlotMarker with the given parent chart, color and orientation.
 
-    \a parent The parent chart to which this marker will be added
-    \a color The color of the marker
-    \a orientation The orientation of the marker (horizontal or vertical)
+    \a parent
+    The parent chart to which this marker will be added
+
+    \a color
+    The color of the marker
+
+    \a orientation
+    The orientation of the marker (horizontal or vertical)
 */
 QPlotMarker::QPlotMarker(QChart *parent, const QColor &color, MarkerOrientation orientation)
     : d_ptr(new QPlotMarkerPrivate(this))
