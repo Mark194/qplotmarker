@@ -15,8 +15,10 @@
 
 /*!
     \class QPlotMarker
-    \inmodule QPlotMarker
+
     \brief A customizable marker that can be placed on QChart plots.
+
+    \inmodule QPlotMarker
 
     The QPlotMarker class provides interactive markers that can be placed on Qt charts.
     It supports dragging, snapping to data points, and various visual customizations.

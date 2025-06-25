@@ -8,6 +8,10 @@ body {
     background-color: #fff;
 }
 
+body > li:first-child {
+  display: none;
+}
+
 p {
     line-height: 20px
 }

@@ -22,10 +22,16 @@
                     <section title="Show Coord Marker" ref="qplotmarker-show-coord-marker-example.html"/>
                 </section>
                 <section title="C++ Classes" ref="api-references.html">
-                    <section title="QPlotMarker Class" ref="qplotmarker.html"/>
-                    <section title="QPlotMarkerGroup" ref="qplotmarkergroup.html"/>
-                    <section title="QPlotMarkerDistance" ref="qplotmarkerdistance.html"/>
-                    <section title="Class Members" ref="qplotmarker-members.html"/>
+                    <section title="QPlotMarker Class" ref="qplotmarker.html">
+						<section title="Class Members" ref="qplotmarker-members.html"/>
+					</section>
+                    <section title="QPlotMarkerGroup" ref="qplotmarkergroup.html">
+						<section title="Class Members" ref="qplotmarkergroup-members.html"/>
+					</section>
+                    <section title="QPlotMarkerDistance" ref="qplotmarkerdistance.html">
+						<section title="Class Members" ref="qplotmarkerdistance-members.html"/>
+					</section>
+                    
                 </section>
 
             </section>

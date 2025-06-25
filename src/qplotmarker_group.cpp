@@ -156,7 +156,6 @@ void QPlotMarkerGroup::setSyncMovement(bool isSync)
 /*!
     \fn void QPlotMarkerGroup::move(const QPointF &point)
     \brief Synchronizes movement of all markers in the group.
-    \internal
 
     \a point
     The new position to move markers to point
