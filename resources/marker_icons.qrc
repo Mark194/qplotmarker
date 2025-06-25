@@ -4,5 +4,6 @@
         <file alias="marker_icon">marker/marker_icon.svg</file>
         <file alias="marker_selected_eye">marker_selected/marker_selected_control.svg</file>
         <file alias="marker_selected_icon">marker_selected/marker_selected_icon.svg</file>
+        <file alias="logo">logo.ico</file>
     </qresource>
 </RCC>
