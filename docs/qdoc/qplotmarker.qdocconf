@@ -1,5 +1,3 @@
-# include(C:/Developer/Qt/Qt6.4.2/Docs/Qt-6.4.2/global/qt-module-defaults.qdocconf)
-
 QT_INSTALL_HEADERS = C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include
 
 project = QPlotMarker
