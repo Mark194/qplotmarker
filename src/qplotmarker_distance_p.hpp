@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QPlotMarker/QPlotMarker>
-#include <QPlotMarker/qplotmarker_distance>
+#include <QPlotMarker/QPlotMarkerDistance>
 
 class GraphicsCoordItem;
 
