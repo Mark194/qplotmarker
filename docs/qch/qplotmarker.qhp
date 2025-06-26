@@ -9,7 +9,7 @@
         <filterAttribute>qplotmarker</filterAttribute>
 
         <toc>
-            <section title="QPlotMarker Documentation" ref="qplotmarker.html">
+            <section title="QPlotMarker Documentation" ref="overview.html">
                 <section title="Overview" ref="overview.html"/>
                 <section title="Getting Started" ref="tutorial-getting-started.html"/>
                 <section title="Advanced Usage" ref="advanced-usage.html"/>
@@ -23,15 +23,15 @@
                 </section>
                 <section title="C++ Classes" ref="api-references.html">
                     <section title="QPlotMarker Class" ref="qplotmarker.html">
-						<section title="Class Members" ref="qplotmarker-members.html"/>
-					</section>
+                        <section title="Class Members" ref="qplotmarker-members.html"/>
+                    </section>
                     <section title="QPlotMarkerGroup" ref="qplotmarkergroup.html">
-						<section title="Class Members" ref="qplotmarkergroup-members.html"/>
-					</section>
+                        <section title="Class Members" ref="qplotmarkergroup-members.html"/>
+                    </section>
                     <section title="QPlotMarkerDistance" ref="qplotmarkerdistance.html">
-						<section title="Class Members" ref="qplotmarkerdistance-members.html"/>
-					</section>
-                    
+                        <section title="Class Members" ref="qplotmarkerdistance-members.html"/>
+                    </section>
+
                 </section>
 
             </section>
