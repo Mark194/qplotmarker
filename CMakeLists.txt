@@ -18,27 +18,27 @@ option(BUILD_EXAMPLES "Build examples" OFF)
 
 
 # Проверка доступности статического Qt
-if(NOT BUILD_SHARED_LIBS)
+if (NOT BUILD_SHARED_LIBS)
     message("-- Build static library")
     set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
     set(QT_USE_STATIC_LIBS ON)
 
     # Для MinGW/GCC
-    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc -static-libstdc++")
-    endif()
+    endif ()
 
     # Для MSVC
-    if(MSVC)
+    if (MSVC)
         set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-    endif()
+    endif ()
 
     add_definitions(-DSTATICLIB)
 
-else()
+else ()
     message("-- Build dynamic library")
-endif()
+endif ()
 
 
 # Поиск Qt
@@ -46,52 +46,58 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Charts Svg)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Charts Svg)
 
 
-if(QT_VERSION_MAJOR EQUAL 5)
+if (QT_VERSION_MAJOR EQUAL 5)
     find_package(Qt5 REQUIRED COMPONENTS Svg)
-elseif(QT_VERSION_MAJOR EQUAL 6)
+elseif (QT_VERSION_MAJOR EQUAL 6)
     find_package(Qt6 REQUIRED COMPONENTS SvgWidgets Svg)
-endif()
+endif ()
 
 # Подпроекты
 add_subdirectory(src)
 
-if(BUILD_TESTS)
+if (BUILD_TESTS)
     add_subdirectory(tests)
-endif()
+endif ()
 
-if(BUILD_EXAMPLES)
+if (BUILD_EXAMPLES)
     add_subdirectory(examples)
-endif()
+endif ()
 
 # Установка
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
 install(
-    DIRECTORY include/QPlotMarker
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        DIRECTORY include/QPlotMarker
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 configure_package_config_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/QPlotMarkerConfig.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/QPlotMarkerConfig.cmake
-    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/QPlotMarker
+        ${CMAKE_CURRENT_SOURCE_DIR}/QPlotMarkerConfig.cmake.in
+        ${CMAKE_CURRENT_BINARY_DIR}/QPlotMarkerConfig.cmake
+        INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/QPlotMarker
 )
 
 write_basic_package_version_file(
-    ${CMAKE_CURRENT_BINARY_DIR}/QPlotMarkerConfigVersion.cmake
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY SameMajorVersion
+        ${CMAKE_CURRENT_BINARY_DIR}/QPlotMarkerConfigVersion.cmake
+        VERSION ${PROJECT_VERSION}
+        COMPATIBILITY SameMajorVersion
 )
 
 install(
-    FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/QPlotMarkerConfig.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/QPlotMarkerConfigVersion.cmake
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/QPlotMarker
+        FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/QPlotMarkerConfig.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/QPlotMarkerConfigVersion.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/QPlotMarker
 )
 
 export(EXPORT QPlotMarkerTargets
-    FILE ${CMAKE_CURRENT_BINARY_DIR}/QPlotMarkerTargets.cmake
-    NAMESPACE QPlotMarker::
+        FILE ${CMAKE_CURRENT_BINARY_DIR}/QPlotMarkerTargets.cmake
+        NAMESPACE QPlotMarker::
+)
+
+install(
+        FILES docs/qch/qplotmarker.qch
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/doc
+        COMPONENT documentation
 )
