@@ -1,8 +1,4 @@
-# include(C:/Developer/Qt/Qt6.4.2/Docs/Qt-6.4.2/global/html-header-offline.qdocconf)
-# include(C:/Developer/Qt/Qt6.4.2/Docs/Qt-6.4.2/global/html-config.qdocconf)
-include(C:/Developer/Qt/Qt6.4.2/Docs/Qt-6.4.2/global/qt-html-templates-offline.qdocconf)
-
-QT_INSTALL_HEADERS = C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include
+include($$QT_INSTALL_DOCS/global/qt-html-templates-offline.qdocconf)
 
 project = QPlotMarker
 description = "Library for advanced plot markers"
@@ -14,17 +10,17 @@ imagedirs += ../../screenshots
 depends += qtcore
 exampledirs += ../../examples
 
-indexdirs += C:/Developer/Qt/Qt6.4.2/Docs/Qt-6.4.2
+indexdirs += $$QT_INSTALL_DOCS
 
 includepaths += \
-    C:\Developer\Projects C++\qplotmarker\include\QPlotMarker \
-    C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include \
-    C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include/QtCore \
-    C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include/QtWidgets \
-    C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include/QtCharts \
-    C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include/QtGui \
-    C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include/QtSvg \
-    C:/Developer/Qt/Qt6.4.2/6.4.2/mingw_64/include/QtSvgWidgets
+    ../../include/QPlotMarker \
+    $$QT_INSTALL_HEADERS \
+    $$QT_INSTALL_HEADERS/QtCore \
+    $$QT_INSTALL_HEADERS/QtWidgets \
+    $$QT_INSTALL_HEADERS/QtCharts \
+    $$QT_INSTALL_HEADERS/QtGui \
+    $$QT_INSTALL_HEADERS/QtSvg \
+    $$QT_INSTALL_HEADERS/QtSvgWidgets
 
 headers.fileextensions  += *.h *.hpp
 sources.fileextensions  += *.cpp *.qdoc
