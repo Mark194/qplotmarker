@@ -13,7 +13,7 @@ exampledirs += ../../examples
 indexdirs += $$QT_INSTALL_DOCS
 
 includepaths += \
-    ../../include/QPlotMarker \
+    $$PWD../../include/QPlotMarker \
     $$QT_INSTALL_HEADERS \
     $$QT_INSTALL_HEADERS/QtCore \
     $$QT_INSTALL_HEADERS/QtWidgets \

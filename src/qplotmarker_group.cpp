@@ -4,6 +4,7 @@
 #include "QPlotMarker/qplotmarker_distance.hpp"
 /*!
     \class QPlotMarkerGroup
+    \inmodule QPlotMarker
     \brief A container class that manages groups of QPlotMarker and QPlotMarkerDistance objects.
 
     The QPlotMarkerGroup enables synchronized movement and management of multiple
