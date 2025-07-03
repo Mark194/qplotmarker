@@ -45,9 +45,7 @@ public:
     Q_ENUM(MarkerOrientation)
 
     explicit QPlotMarker(
-        QChart *parent,
-        const QColor &color = "black",
-        QPlotMarker::MarkerOrientation orientation = QPlotMarker::Horizontal);
+        QChart *parent, const QColor &color = "black", MarkerOrientation orientation = Horizontal);
 
     explicit QPlotMarker(
         QChart *parent, const QColor &color = "black", Qt::Orientation orientation = Qt::Horizontal);
@@ -118,7 +116,6 @@ Q_SIGNALS:
     void released(Qt::MouseButton button);
 
     void doubleClicked(Qt::MouseButton button);
-
 public slots:
 
     void showCoordinates(bool isVisible);
