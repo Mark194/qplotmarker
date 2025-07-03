@@ -8,6 +8,21 @@
 orientation (vertical/horizontal) changes, snaps to data points, and displays
 intersection coordinates.
 
+### 🛠 Technology
+
+[![C++](https://img.shields.io/badge/C++-00599C?logo=c%2B%2B&logoColor=white)](https://isocpp.org/)
+[![CMake](https://img.shields.io/badge/CMake-064F8C?logo=cmake&logoColor=white)](https://cmake.org/)  
+[![Qt](https://img.shields.io/badge/Qt-41CD52?logo=qt&logoColor=white)](https://qt.io)
+[![QtCharts](https://img.shields.io/badge/QtCharts-8A2BE2?logo=qt&logoColor=white)](https://doc.qt.io/qt-6/qtcharts-index.html)  
+[![QDoc](https://img.shields.io/badge/QDoc-41CD52?logo=qt&logoColor=white&labelColor=lightgray)](https://doc.qt.io/qtdoc/)
+
+### 🧰 Instruments
+
+[![JetBrains CLion](https://img.shields.io/badge/JetBrains_CLion-000000?logo=jetbrains&logoColor=white&labelColor=F5842C)](https://jetbrains.com/clion)
+[![Terminal](https://img.shields.io/badge/Terminal-4D4D4D?logo=windowsterminal&logoColor=white)](https://learn.microsoft.com/en-us/windows/terminal/)  
+[![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white)](https://git-scm.com/)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/)
+
 <!--Установка-->
 
 # Install
