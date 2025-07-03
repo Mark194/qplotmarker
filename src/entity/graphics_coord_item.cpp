@@ -11,6 +11,8 @@ GraphicsCoordItem::GraphicsCoordItem(QGraphicsItem *parent)
     const QPalette vistaPalette = QApplication::palette();
 
     m_coordPen = vistaPalette.color(QPalette::WindowText);
+
+    m_backgroundColor = vistaPalette.color(QPalette::Base);
 }
 
 void GraphicsCoordItem::setCoord(qreal value)
@@ -49,6 +51,18 @@ void GraphicsCoordItem::setItemColor(const QColor &itemColor)
     update();
 }
 
+QColor GraphicsCoordItem::backgroundColor() const
+{
+    return m_backgroundColor;
+}
+
+void GraphicsCoordItem::setBackgroundColor(const QColor &backgroundColor)
+{
+    m_backgroundColor = backgroundColor;
+
+    update();
+}
+
 void GraphicsCoordItem::setLabelFormat(const QString &format)
 {
     m_labelFormat = format;
@@ -65,7 +79,7 @@ void GraphicsCoordItem::paint(
 
     QPalette vistaPalette = QApplication::palette();
 
-    painter->setBrush(vistaPalette.color(QPalette::Base));
+    painter->setBrush(QBrush(m_backgroundColor));
 
     painter->setPen(QPen(m_itemColor, 2));
 

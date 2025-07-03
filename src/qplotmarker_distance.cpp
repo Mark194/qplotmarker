@@ -116,6 +116,18 @@ void QPlotMarkerDistance::setCoordPen(const QPen &pen)
 
     d->m_coordInfo->setPen(pen);
 }
+void QPlotMarkerDistance::setCoordBackgroundColor(const QColor &color)
+{
+    Q_D(QPlotMarkerDistance);
+
+    d->m_coordInfo->setBackgroundColor(color);
+}
+void QPlotMarkerDistance::setCoordItemColor(const QColor &color)
+{
+    Q_D(QPlotMarkerDistance);
+
+    d->m_coordInfo->setItemColor(color);
+}
 
 /*!
     \fn void QPlotMarkerDistance::setAlignment(Qt::AlignmentFlag alignment)

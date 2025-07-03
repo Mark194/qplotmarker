@@ -21,6 +21,9 @@ public:
 
     void setItemColor(const QColor &itemColor);
 
+    QColor backgroundColor() const;
+    void setBackgroundColor(const QColor &backgroundColor);
+
     void setLabelFormat(const QString &format);
 
     // QGraphicsItem interface
@@ -38,6 +41,8 @@ protected:
 
 private:
     QColor m_itemColor;
+
+    QColor m_backgroundColor;
 
     qreal m_coord{};
 

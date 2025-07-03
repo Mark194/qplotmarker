@@ -139,6 +139,25 @@ void QPlotMarker::setColor(const QColor &color)
 
     emit colorChanged(color);
 }
+QColor QPlotMarker::backgroundColor() const
+{
+    Q_D(const QPlotMarker);
+
+    return d->m_coordInfo->backgroundColor();
+}
+
+void QPlotMarker::setBackgroundColor(const QColor &color)
+{
+    Q_D(QPlotMarker);
+
+    d->m_coordInfo->setBackgroundColor(color);
+
+    for (auto &item : d->m_intersectionItems)
+
+        item.coord->setBackgroundColor(color);
+
+    emit backgroundColorChanged(color);
+}
 
 /*!
     \property QPlotMarker::markerColor

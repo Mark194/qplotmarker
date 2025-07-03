@@ -55,6 +55,9 @@ public:
     QColor color() const;
     void setColor(const QColor &color);
 
+    QColor backgroundColor() const;
+    void setBackgroundColor(const QColor &color);
+
     MovementStyle movementStyle() const;
     void setMovementStyle(MovementStyle style);
 
@@ -109,6 +112,7 @@ public:
 
 Q_SIGNALS:
     void colorChanged(const QColor &color);
+    void backgroundColorChanged(const QColor &color);
     void movementStyleChanged(MovementStyle style);
     void positionChanged(const QPointF &position);
 

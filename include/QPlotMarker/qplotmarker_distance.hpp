@@ -25,6 +25,8 @@ public:
 
     void setCoordFont(const QFont &font);
     void setCoordPen(const QPen &pen);
+    void setCoordBackgroundColor(const QColor &color);
+    void setCoordItemColor(const QColor &color);
 
     void setAlignment(Qt::AlignmentFlag alignment);
 
