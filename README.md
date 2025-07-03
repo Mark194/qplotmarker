@@ -164,6 +164,35 @@ repository or write to email
 Found compatibility issues? Please report
 in [Issues](https://github.com/Mark194/qplotmarker/issues).
 
+# 📚 Documentation in Qt Assistant
+
+## 🔍 Summary
+
+- **📦 Format**: Documentation provided in **Qt Compressed Help (.qch)** format, viewable in **Qt Assistant**.
+- **📂 Main File**: [`qplotmarker.qch`](https://github.com/Mark194/qplotmarker/tree/main/docs) – QPlotMarker module
+  documentation.
+- **🚫 Not Included**: `documentation.qch` file (only `qplotmarker.qch` is used).
+- **⚙️ Integration**: Two methods supported (GUI or command-line).
+
+## ⬇️ Download
+
+Get the `.qch` file from the repository:  
+🔗 [docs/ in qplotmarker](https://github.com/Mark194/qplotmarker/tree/main/docs)
+
+## 🔧 Integration with Qt Assistant
+
+### 🖥️ Method 1: GUI Setup
+
+1. Launch **Qt Assistant** (`assistant` in terminal).
+2. Go to: **Edit → Preferences → Documentation → Add...**.
+3. Select `qplotmarker.qch`.
+4. Click **OK** – docs will appear in the content tab.
+
+### ⌨️ Method 2: Command Line
+
+```bash
+assistant -register qplotmarker.qch
+```
 
 <!--examples-->
 
