@@ -34,7 +34,7 @@ QPlotMarkerDistance::~QPlotMarkerDistance() {}
 
     Return QPair containing the two markers (maybe null)
 
-    \sa setMarker()
+    \sa setMarkers()
 */
 QPair<QPlotMarker *, QPlotMarker *> QPlotMarkerDistance::markers() const
 {
@@ -56,7 +56,7 @@ QPair<QPlotMarker *, QPlotMarker *> QPlotMarkerDistance::markers() const
     \warning Both markers must belong to the same QChart
     \sa markers()
 */
-void QPlotMarkerDistance::setMarker(QPlotMarker *one, QPlotMarker *other)
+void QPlotMarkerDistance::setMarkers(QPlotMarker *one, QPlotMarker *other)
 {
     Q_D(QPlotMarkerDistance);
 
@@ -65,6 +65,10 @@ void QPlotMarkerDistance::setMarker(QPlotMarker *one, QPlotMarker *other)
     d->paint();
 }
 
+void QPlotMarkerDistance::clearMarkers()
+{
+    Q_D(QPlotMarkerDistance);
+}
 /*!
     \fn void QPlotMarkerDistance::setLabelFormat(const QString &format)
     \brief Sets the format string for distance display.
@@ -180,6 +184,8 @@ void QPlotMarkerDistance::setAlignment(qreal precentAlignment)
 */
 qreal QPlotMarkerDistance::markersDistance(QPlotMarker *one, QPlotMarker *other)
 {
+    Q_ASSERT_X(one and other, "QPlotMarkerDistance::markersDistance()", "QPlotMarker is null!");
+
     return std::abs(other->markerValue() - one->markerValue());
 }
 

@@ -65,10 +65,19 @@ void QPlotMarkerDistancePrivate::init(QPlotMarker *one, QPlotMarker *other)
 
     QObject::connect(
         m_otherMarker, &QPlotMarker::positionChanged, q_ptr, &QPlotMarkerDistance::update);
+
+    QObject::connect(m_oneMarker, &QObject::destroyed, q_ptr, &QPlotMarkerDistance::clearMarkers);
+
+    QObject::connect(m_otherMarker, &QObject::destroyed, q_ptr, &QPlotMarkerDistance::clearMarkers);
 }
 
 void QPlotMarkerDistancePrivate::paint()
 {
+    Q_ASSERT_X(
+        m_oneMarker and m_otherMarker,
+        "QPlotMarkerDistancePrivate::paint()",
+        "QPlotMarker is null!");
+
     const QPointF pointOne = m_oneMarker->pos();
 
     const QPointF pointOther = m_otherMarker->pos();
@@ -116,9 +125,23 @@ void QPlotMarkerDistancePrivate::setAlignment(Qt::AlignmentFlag alignment)
 
     paint();
 }
+void QPlotMarkerDistancePrivate::detachAndClearMarkers()
+{
+    QObject::disconnect(
+        m_oneMarker, &QPlotMarker::positionChanged, q_ptr, &QPlotMarkerDistance::update);
+
+    QObject::disconnect(
+        m_otherMarker, &QPlotMarker::positionChanged, q_ptr, &QPlotMarkerDistance::update);
+
+    m_oneMarker = nullptr;
+
+    m_otherMarker = nullptr;
+}
 
 qreal QPlotMarkerDistancePrivate::controlDifference()
 {
+    Q_ASSERT_X(m_oneMarker, "QPlotMarkerDistancePrivate::controlDifference()", "QPlotMarker is null!");
+
     auto orientation = m_oneMarker->orientation();
 
     auto controlRect = m_oneMarker->controlRect();
@@ -148,6 +171,9 @@ qreal QPlotMarkerDistancePrivate::controlDifference()
 
 void QPlotMarkerDistancePrivate::changeVisibleCoordItem()
 {
+    Q_ASSERT_X(
+        m_oneMarker, "QPlotMarkerDistancePrivate::changeVisibleCoordItem()", "QPlotMarker is null!");
+
     auto orientation = m_oneMarker->orientation();
 
     auto controlRect = m_oneMarker->isSelected() ? m_otherMarker->controlRect()
@@ -166,8 +192,6 @@ void QPlotMarkerDistancePrivate::normalizeCoordItem(
     const QPointF &coordPoint, const QRectF &sceneRect)
 {
     QRectF textRect = m_coordInfo->boundingRect();
-
-    auto chart = m_oneMarker->chart()->margins();
 
     qreal boundedX = qBound(
         sceneRect.left(),

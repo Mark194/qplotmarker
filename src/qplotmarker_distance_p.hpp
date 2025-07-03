@@ -18,6 +18,8 @@ public:
 
     void setAlignment(Qt::AlignmentFlag alignment);
 
+    void detachAndClearMarkers();
+
     QPlotMarkerDistance *const q_ptr;
 
     QPlotMarker *m_oneMarker = nullptr;

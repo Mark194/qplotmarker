@@ -18,7 +18,8 @@ public:
     ~QPlotMarkerDistance();
 
     QPair<QPlotMarker *, QPlotMarker *> markers() const;
-    void setMarker(QPlotMarker *one, QPlotMarker *other);
+    void setMarkers(QPlotMarker *one, QPlotMarker *other);
+    void clearMarkers();
 
     void setLabelFormat(const QString &format);
 
