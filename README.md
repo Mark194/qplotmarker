@@ -8,19 +8,21 @@
 orientation (vertical/horizontal) changes, snaps to data points, and displays
 intersection coordinates.
 
-### 🛠 Technology
+## 🛠 Technology
 
 [![C++](https://img.shields.io/badge/C++-00599C?logo=c%2B%2B&logoColor=white)](https://isocpp.org/)
 [![CMake](https://img.shields.io/badge/CMake-064F8C?logo=cmake&logoColor=white)](https://cmake.org/)
 [![Qt](https://img.shields.io/badge/Qt-41CD52?logo=qt&logoColor=white)](https://qt.io)
 [![QtCharts](https://img.shields.io/badge/QtCharts-8A2BE2?logo=qt&logoColor=white)](https://doc.qt.io/qt-6/qtcharts-index.html)
 [![QDoc](https://img.shields.io/badge/QDoc-41CD52?logo=qt&logoColor=white&labelColor=lightgray)](https://doc.qt.io/qtdoc/)
-[![CLion](https://img.shields.io/badge/CLion-000000?logo=clion&logoColor=white&labelColor=F5842C)](https://jetbrains.com/clion)
-[![Terminal](https://img.shields.io/badge/Terminal-4D4D4D?logo=windowsterminal&logoColor=white)](https://learn.microsoft.com/en-us/windows/terminal/)
+[![Qt Help](https://img.shields.io/badge/Qt_Help-3498DB?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI4Ij48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTMgMjFWM2MwLTEuMS45LTIgMi0yaDE2YzEuMSAwIDIgLjkgMiAydjE4YzAgMS4xLS45IDItMiAySDVjLTEuMSAwLTItLjktMi0yem01LjUtMTBoM3YzaC0zdi0zem0wIDQuNWgzdjNoLTN2LTN6bTQuNS00LjVoM3YzaC0zdi0zem0wIDQuNWgzdjNoLTN2LTN6TTYgMTZoMTJ2Mkg2di0yeiIvPjwvc3ZnPg==)](https://doc.qt.io/qt-6/qthelp-framework.html)
+
+## 🧰 Tools
+
+[![CLion](https://img.shields.io/badge/CLion-F5842C?logo=clion&logoColor=000000&labelColor=FFFFFF)](https://jetbrains.com/clion)
+[![Terminal](https://img.shields.io/badge/CMD-4D4D4D?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTIgNGEyIDIgMCAwIDEtMi0ydjE0YTIgMiAwIDAgMSAyIDJoMjBhMiAyIDAgMCAxIDIgMnYtMTRhMiAyIDAgMCAxLTItMnptMiAyaDJ2Mkg0em0wIDRoMnYySDR6bTAgNGgydjJINHptNCAwaDJ2Mkg4em00IDBoMnYyaC0yem0wLTRoMnYyaC0yem00IDBoMnYyaC0yem0wLTRoMnYyaC0yem00IDBoMnYyaC0yem0wLTRoMnYyaC0yem0tOC00aDJ2Mkg4em00IDBoMnYyaC0yem00IDBoMnYyaC0yem0tMTIgNGgydjJINHptNCAwaDJ2Mkg4eiIvPjwvc3ZnPg==)](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands)
 [![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white)](https://git-scm.com/)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/)
-
-<!--Установка-->
 
 # ⬇️ Install
 
