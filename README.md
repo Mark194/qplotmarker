@@ -26,7 +26,7 @@ intersection coordinates.
 You must have
 installed [project dependencies](https://github.com/Mark194/qplotmarker#dependencies)
 
-```
+```bash
 # Clone repository
 
 git clone https://github.com/Mark194/qplotmarker
@@ -61,8 +61,7 @@ cmake --build .
 
 cmake --install .
 
-# By default, installation goes to /usr/local/ on Linux/macOS or C:\Program
-Files (x86)\ on Windows. To change the path, specify
+# By default, installation goes to /usr/local/ on Linux/macOS or C:\ProgramFiles (x86)\ on Windows. To change the path, specify
 
 -DCMAKE_INSTALL_PREFIX=/your/path 
 ```
@@ -75,7 +74,7 @@ Files (x86)\ on Windows. To change the path, specify
 
 ## 🔧 QMake Integration
 
-```
+```makefile
 
 # Add include path
 
@@ -96,8 +95,7 @@ HEADERS += $$PWD/thirdparty/qplotmarker/include/*.h
 
 ### Method 1: Using find_package (Recommended if installed system-wide)
 
-```
-cmake
+```cmake
 
 find_package(qplotmarker REQUIRED)
 
@@ -106,31 +104,31 @@ target_link_libraries(your_target PRIVATE qplotmarker::qplotmarker)
 
 ### Method 2: Manual configuration (For custom locations)
 
-```
+```cmake
 # For header files
 
 target_include_directories(your_target PRIVATE
-    path/to/qplotmarker/include
+        path/to/qplotmarker/include
 )
 
 # For static library
-target_link_libraries(your_target PRIVATE 
-    path/to/qplotmarker/lib/libqplotmarker.a
+target_link_libraries(your_target PRIVATE
+        path/to/qplotmarker/lib/libqplotmarker.a
 )
 
 # Or for shared library
-target_link_libraries(your_target PRIVATE 
-    path/to/qplotmarker/lib/libqplotmarker.so
+target_link_libraries(your_target PRIVATE
+        path/to/qplotmarker/lib/libqplotmarker.so)
 ```
 
 ### Method 3: Using FetchContent (For direct GitHub integration)
 
-```
+```cmake
 include(FetchContent)
 FetchContent_Declare(
-    qplotmarker
-    GIT_REPOSITORY https://github.com/Mark194/qplotmarker.git
-    GIT_TAG        v1.0.0
+        qplotmarker
+        GIT_REPOSITORY https://github.com/Mark194/qplotmarker.git
+        GIT_TAG v1.0.0
 )
 FetchContent_MakeAvailable(qplotmarker)
 target_link_libraries(your_target PRIVATE qplotmarker)
