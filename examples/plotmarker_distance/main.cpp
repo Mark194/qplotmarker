@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     //![3]
     auto *distance = new QPlotMarkerDistance();
 
-    distance->setMarker(one, other);
+    distance->setMarkers(one, other);
 
     distance->setLabelFormat(markerFormat);
 

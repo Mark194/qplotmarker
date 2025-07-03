@@ -44,7 +44,7 @@ QPair<QPlotMarker *, QPlotMarker *> QPlotMarkerDistance::markers() const
 }
 
 /*!
-    \fn void QPlotMarkerDistance::setMarker(QPlotMarker *one, QPlotMarker *other)
+    \fn void QPlotMarkerDistance::setMarkers(QPlotMarker *one, QPlotMarker *other)
     \brief Sets the two markers to measure distance between.
 
     \a one
@@ -116,12 +116,36 @@ void QPlotMarkerDistance::setCoordPen(const QPen &pen)
 
     d->m_coordInfo->setPen(pen);
 }
+/*!
+    \fn void QPlotMarkerDistance::setCoordBackgroundColor(const QColor &color)
+    \brief Sets the background color of the coordinate information display.
+
+    This function sets the background color of the coordinate information
+
+    displayed by the marker. The coordinate information typically shows
+
+    the position or other relevant data associated with the marker.
+
+    \a color The QColor to be used as the background color for the coordinate info.
+*/
 void QPlotMarkerDistance::setCoordBackgroundColor(const QColor &color)
 {
     Q_D(QPlotMarkerDistance);
 
     d->m_coordInfo->setBackgroundColor(color);
 }
+/*!
+    \fn void QPlotMarkerDistance::setCoordItemColor(const QColor &color)
+    \brief Sets the item color of the coordinate information display.
+
+    This function sets the color used for drawing items (such as text or symbols)
+
+    in the coordinate information display. This affects the visual appearance
+
+    of the coordinate data shown by the marker.
+
+    \a color The QColor to be used for coordinate information items.
+    */
 void QPlotMarkerDistance::setCoordItemColor(const QColor &color)
 {
     Q_D(QPlotMarkerDistance);

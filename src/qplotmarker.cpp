@@ -139,6 +139,19 @@ void QPlotMarker::setColor(const QColor &color)
 
     emit colorChanged(color);
 }
+
+/*!
+    \fn QColor QPlotMarker::backgroundColor() const
+    \brief Returns the current background color of the coordinate information display.
+
+    This function retrieves the background color used for the coordinate information
+    display associated with this marker.
+
+    Return The current background color as a QColor.
+
+    \sa setBackgroundColor()
+    \sa backgroundColorChanged()
+*/
 QColor QPlotMarker::backgroundColor() const
 {
     Q_D(const QPlotMarker);
@@ -146,6 +159,21 @@ QColor QPlotMarker::backgroundColor() const
     return d->m_coordInfo->backgroundColor();
 }
 
+/*!
+    \fn void QPlotMarker::setBackgroundColor(const QColor &color)
+    \brief Sets the background color for the coordinate information display and all related items.
+
+    This function sets the background color for:
+    - The main coordinate information display
+    - All intersection items' coordinate displays
+
+    After setting the color, it emits the backgroundColorChanged() signal.
+
+    \a color The QColor to set as the new background color.
+
+    \sa backgroundColor()
+    \sa backgroundColorChanged()
+*/
 void QPlotMarker::setBackgroundColor(const QColor &color)
 {
     Q_D(QPlotMarker);
