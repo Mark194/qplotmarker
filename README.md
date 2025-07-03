@@ -22,81 +22,88 @@ intersection coordinates.
 
 <!--Установка-->
 
-# Install
+# ⬇️ Install
 
 You must have
 installed [project dependencies](https://github.com/Mark194/qplotmarker#dependencies)
 
-1. Clone repository
+```
+# Clone repository
 
-```git clone https://github.com/Mark194/qplotmarker```
+git clone https://github.com/Mark194/qplotmarker
 
-2. Go to directory
+# Go to directory
 
-```cd qplotmarker```
+cd qplotmarker
 
-3. Create and go to the build directory
+# Create and go to the build directory
 
-```mkdir build```
+mkdir build
 
-```cd build```
+cd build
 
-4. Project configuration via CMake
+# Project configuration via CMake
 
-```cmake ..```
+cmake ..
 
-If you need to specify a specific generator, use
+# If you need to specify a specific generator, use
 
-```cmake -G "Visual Studio 17 2022" ..```
+cmake -G "Visual Studio 17 2022" ..
 
-If you want to configure the library as static, add the option
+# If you want to configure the library as static, add the option
 
-```-DBUILD_SHARED_LIBS=OFF```
+-DBUILD_SHARED_LIBS=OFF
 
-5. Build project
+# Build project
 
-```cmake --build .```
+cmake --build .
 
-6. Installing the library into the system
+# Installing the library into the system
 
-```cmake --install .```
+cmake --install .
 
-By default, installation goes to /usr/local/ on Linux/macOS or C:\Program
+# By default, installation goes to /usr/local/ on Linux/macOS or C:\Program
 Files (x86)\ on Windows. To change the path, specify
 
-```-DCMAKE_INSTALL_PREFIX=/your/path ```
-
+-DCMAKE_INSTALL_PREFIX=/your/path 
+```
 
 [Library releases]: https://github.com/Mark194/qplotmarker/releases
 
 <!--Integration-->
 
-# Integration
+# 🧩 Integration
 
-## QMake Integration
+## 🔧 QMake Integration
 
-### 1. Add include path
+```
+
+# Add include path
 
 INCLUDEPATH += $$PWD/thirdparty/qplotmarker/include
 
-### 2. Link static library
+# Link static library
 
 LIBS += -L$$PWD/thirdparty/qplotmarker/lib -lqplotmarker
 
-### OR compile sources directly (if needed)
+# OR compile sources directly (if needed)
 
 SOURCES += $$PWD/thirdparty/qplotmarker/src/*.cpp
 HEADERS += $$PWD/thirdparty/qplotmarker/include/*.h
 
-## CMake Integration
+```
+
+## 🧱 CMake Integration
 
 ### Method 1: Using find_package (Recommended if installed system-wide)
 
-```cmake```
+```
+cmake
 
-```find_package(qplotmarker REQUIRED)```
+find_package(qplotmarker REQUIRED)
 
-```target_link_libraries(your_target PRIVATE qplotmarker::qplotmarker)```
+target_link_libraries(your_target PRIVATE qplotmarker::qplotmarker)
+```
 
 ### Method 2: Manual configuration (For custom locations)
 
@@ -132,7 +139,7 @@ target_link_libraries(your_target PRIVATE qplotmarker)
 
 <!--Support-->
 
-# Support
+# 🆘 Support
 
 If you have any difficulties or questions about using the package, create a
 [discussion](https://github.com/Mark194/qplotmarker/issues/new/choose) in this
@@ -141,7 +148,7 @@ repository or write to email
 
 <!--dependencies-->
 
-# Dependencies
+# 📦 Dependencies
 
 - **Qt Core**: Version **5.15.2+** or **6.4.2+**
 - **Required Modules**:
@@ -161,7 +168,7 @@ in [Issues](https://github.com/Mark194/qplotmarker/issues).
 
 <!--examples-->
 
-# Examples
+# 💻 Examples
 
 Ready-to-use code examples are available in
 the [examples](https://github.com/Mark194/qplotmarker/tree/main/examples)
@@ -171,7 +178,7 @@ folder. These demonstrate:
 - Advanced marker customization
 - Integration with Qt widgets
 
-## Visual Examples
+## 👁️ Visual Examples
 
 | Miniature                                                                                                                                            | Description                                                                  |
 |------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
@@ -183,7 +190,7 @@ folder. These demonstrate:
 
 <!--special thanks-->
 
-# Special Thanks
+# 🙏 Special Thanks
 
 We would like to express our special gratitude to *
 *[ShonZelno](https://github.com/ShonZelno)** for their valuable contributions to
