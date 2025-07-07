@@ -170,7 +170,6 @@ in [Issues](https://github.com/Mark194/qplotmarker/issues).
 - **📦 Format**: Documentation provided in **Qt Compressed Help (.qch)** format, viewable in **Qt Assistant**.
 - **📂 Main File**: [`qplotmarker.qch`](https://github.com/Mark194/qplotmarker/tree/main/docs) – QPlotMarker module
   documentation.
-- **🚫 Not Included**: `documentation.qch` file (only `qplotmarker.qch` is used).
 - **⚙️ Integration**: Two methods supported (GUI or command-line).
 
 ## ⬇️ Download
