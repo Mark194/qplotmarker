@@ -129,7 +129,7 @@ include(FetchContent)
 FetchContent_Declare(
         qplotmarker
         GIT_REPOSITORY https://github.com/Mark194/qplotmarker.git
-        GIT_TAG v1.0.0
+        GIT_TAG v1.1.0
 )
 FetchContent_MakeAvailable(qplotmarker)
 target_link_libraries(your_target PRIVATE qplotmarker)
