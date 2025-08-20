@@ -82,7 +82,7 @@ void QPlotMarkerGroup::removeMarker(QPlotMarker *marker)
 */
 void QPlotMarkerGroup::addDistance(QGraphicsItem *item)
 {
-    if (auto distance = dynamic_cast<QPlotMarkerDistance *>(item))
+    if (const auto distance = dynamic_cast<QPlotMarkerDistance *>(item))
 
         addDistance(distance);
 }
@@ -143,7 +143,7 @@ void QPlotMarkerGroup::setSyncMovement(bool isSync)
 
     m_isSyncMovement = isSync;
 
-    for (const auto marker : m_markers)
+    for (const auto &marker : m_markers)
 
         if (m_isSyncMovement)
 
