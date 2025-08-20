@@ -157,9 +157,8 @@ QPointF PlotGeometryUtils::findNearestVisiblePoint(
         for (const QPointF &point : xySeries->points()) {
             const auto distance = PlotGeometryUtils::distance(point, valueTargetPoint);
 
-            auto pixelPoint = chart->mapToPosition(point, xySeries);
-
-            if (isPositionAcceptable(marker, pixelPoint) and distance < minDistance) {
+            if (auto pixelPoint = chart->mapToPosition(point, xySeries);
+                isPositionAcceptable(marker, pixelPoint) and distance < minDistance) {
                 minDistance = distance;
                 nearestPoint = chart->mapToPosition(point, xySeries);
                 found = true;

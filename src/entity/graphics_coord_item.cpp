@@ -77,8 +77,6 @@ void GraphicsCoordItem::paint(
 
     Q_UNUSED(widget)
 
-    QPalette vistaPalette = QApplication::palette();
-
     painter->setBrush(QBrush(m_backgroundColor));
 
     painter->setPen(QPen(m_itemColor, 2));

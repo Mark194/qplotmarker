@@ -68,6 +68,8 @@ void QPlotMarkerDistance::setMarkers(QPlotMarker *one, QPlotMarker *other)
 void QPlotMarkerDistance::clearMarkers()
 {
     Q_D(QPlotMarkerDistance);
+
+    d->detachAndClearMarkers();
 }
 /*!
     \fn void QPlotMarkerDistance::setLabelFormat(const QString &format)
