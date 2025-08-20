@@ -167,7 +167,7 @@ void QPlotMarkerGroup::move(const QPointF &point)
 {
     const auto senderMarker = dynamic_cast<QPlotMarker *>(sender());
 
-    for (const auto marker : m_markers) {
+    for (const auto &marker : m_markers) {
         if (marker == senderMarker)
             continue;
 
@@ -178,7 +178,7 @@ void QPlotMarkerGroup::move(const QPointF &point)
         marker->blockSignals(false);
     }
 
-    for (const auto distance : m_distances)
+    for (const auto &distance : m_distances)
 
         distance->update();
 }
